@@ -20,9 +20,14 @@ module.exports = {
           SRC_DIR,
         ],
         loader: 'babel-loader',
+        exclude: /node_modules/,
         options: {
           presets: ['react', 'es2015'],
         },
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
