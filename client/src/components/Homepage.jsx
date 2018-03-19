@@ -78,68 +78,77 @@ ResponsiveContainer.propTypes = {
   children: PropTypes.node,
 }
 
-const HomepageLayout = () => (
-  <ResponsiveContainer>
-    <Segment style={{ padding: '8em 0em' }} vertical>
-      <Grid container stackable verticalAlign='middle'>
-          <Grid.Row>
-            <Grid.Column width={6}>
-            
-            </Grid.Column>
-         
-            <Grid.Column width={8} >
+class HomepageLayout extends Component {
+
+  componentWillMount() {
+    this.props.fetchUsers();
+    console.log(this.props)
+  }
+
+  render() {
+
+    console.log(this.props.users[0]);
+
+    return (
+      this.props.users[0] ? 
+      <ResponsiveContainer>
+        <Segment style={{ padding: '8em 0em' }} vertical>
+          <Grid container stackable verticalAlign='middle'>
+              <Grid.Row>
+                <Grid.Column width={6}>
+                  <ProfilePic />
+                </Grid.Column>
              
-              <p style={{ fontSize: '1.33em' }}>
-                We can give your company superpowers to do things that they never thought possible. Let us delight
-                your customers and empower your needs... through pure data analytics.
-              </p>
+                <Grid.Column width={8} >
+                <Header size='large' verticalalign='text-top'>Welcome,  {this.props.users[0].name}!</Header>
+                  {/* <p style={{ fontSize: '1.33em' }}>
+                  
+                    We can give your company superpowers to do things that they never thought possible. Let us delight
+                    your customers and empower your needs... through pure data analytics.
+                  </p>
+                 
+                  <p style={{ fontSize: '1.33em' }}>
+                    Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.
+                  </p> */}
              
-              <p style={{ fontSize: '1.33em' }}>
-                Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.
-              </p>
-         
-            </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column textAlign='center'>
-            <Button size='huge'>Check Them Out</Button>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Segment>
-    
-    <Segment inverted vertical style={{ padding: '5em 0em' }}>
-      <Container>
-        <Grid divided inverted stackable>
-          <Grid.Row>
-            <Grid.Column width={3}>
-              <Header inverted as='h4' content='About' />
-              <List link inverted>
-                <List.Item as='a'>Sitemap</List.Item>
-                <List.Item as='a'>Contact Us</List.Item>
-                <List.Item as='a'>Religious Ceremonies</List.Item>
-                <List.Item as='a'>Gazebo Plans</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header inverted as='h4' content='Services' />
-              <List link inverted>
-                <List.Item as='a'>Banana Pre-Order</List.Item>
-                <List.Item as='a'>DNA FAQ</List.Item>
-                <List.Item as='a'>How To Access</List.Item>
-                <List.Item as='a'>Favorite X-Men</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={7}>
-              <Header as='h4' inverted>Footer Header</Header>
-              <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Container>
-    </Segment>
-  </ResponsiveContainer>
-)
+                </Grid.Column>
+            </Grid.Row>
+            {/* <Grid.Row>
+              <Grid.Column textAlign='center'>
+                <Button size='huge'>Check Them Out</Button>
+              </Grid.Column>
+            </Grid.Row> */}
+          </Grid>
+        </Segment>
+        
+        <Segment inverted vertical style={{ padding: '5em 0em' }}>
+          <Container>
+            <Grid divided inverted stackable>
+              <Grid.Row>
+                <Grid.Column width={3}>
+                  <Header inverted as='h4' content='About' />
+                  <List link inverted>
+                    <List.Item as='a'>Placeholder</List.Item>
+                  </List>
+                </Grid.Column>
+                <Grid.Column width={3}>
+                  <Header inverted as='h4' content='Services' />
+                  <List link inverted>
+                    <List.Item as='a'>Placeholder</List.Item>
+                  </List>
+                </Grid.Column>
+                <Grid.Column width={7}>
+                  <Header as='h4' inverted>Footer Header</Header>
+                  <p>Placeholder</p>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Container>
+        </Segment>
+      </ResponsiveContainer> : null
+    )
+  }
+}
 
 HomepageLayout.propTypes = {
   fetchUsers: PropTypes.func.isRequired
@@ -147,8 +156,8 @@ HomepageLayout.propTypes = {
 
 
 const mapStateToProps = state => ({
-  // posts: state.posts.items,
-  // newPost: state.posts.item,
+  users: state.users.users,
+  user: state.users.user
 });
 
 //export default HomepageLayout;

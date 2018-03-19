@@ -10,7 +10,8 @@ export default function(state = initialState, action) {
     case FETCH_USER:
       return {
         ...state,
-        items: action.payload
+        users: action.payload,
+        user:  action.payload[0]
       };
     default: 
       return state;

@@ -17,8 +17,7 @@ class App extends Component {
   }
 
   render() {
-    // main app render component aka dashboard
-    // import components here
+
     return (
       <Provider store={store}>
         <Router history={history}>
