@@ -9,9 +9,9 @@ const app = express();
 app.use(parser.json());
 app.use(express.static(__dirname + '/../client/dist'));
 
-app.set('port', 9001);
+app.set('port', 8001);
 
-const port = 9001;
+const port = 8001;
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
