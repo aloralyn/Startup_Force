@@ -1,28 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { Button } from 'semantic-ui-react';
+import { Provider } from 'react-redux';
+import store from '../store.js';
+import {  Router, Route, browserHistory } from 'react-router';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import HomepageLayout from './Homepage.jsx'
 
-// @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
-// @ IMPORT COMPONENTS AND ACTIONS HERE
-// @ I'm leaving it here as an example
+import { createBrowserHistory } from 'history';
 
-// import UserList from './UserList.jsx';
-// import { fetchUsers } from '../actions/userActions';
-// import { testButton } from '../actions/buttonPressAction';
+const history = syncHistoryWithStore(createBrowserHistory(), store);
 
-
-// @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
-// @ Not sure if we're going to use this style of connecting to the store
-// @ I'm leaving it here as an example
-// @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
-// @connect((store) => {
-//   return {
-//     users: store.users.users,
-//     something: store
-//   };
-// })
-
-export default class App extends React.Component {
+class App extends Component {
   componentWillMount() {
     // starting actions can be invoked here
     // this.props.dispatch(fetchUsers());
@@ -32,9 +20,13 @@ export default class App extends React.Component {
     // main app render component aka dashboard
     // import components here
     return (
-      <div>
-        My App Component
-      </div>
+      <Provider store={store}>
+        <Router history={history}>
+          <Route exact path="/" component={HomepageLayout} />
+        </Router>
+    </Provider>
     );
   }
 }
+
+export default App;
