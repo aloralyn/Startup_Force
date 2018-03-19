@@ -22,7 +22,17 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          presets: ['react', 'es2015'],
+          presets: [
+            'react',
+            'es2015',
+            'stage-2',
+          ],
+          plugins: [
+            'react-html-attrs',
+            'transform-class-properties',
+            'transform-decorators-legacy',
+            'add-module-exports',
+          ],
         },
       },
       {
