@@ -45,7 +45,6 @@ class DesktopContainer extends Component {
     return (
       <Responsive {...Responsive.onlyComputer}>
         <div>
-        {/* <Segment > */}
           <Container style={{ padding: '1.5em 0em' }}>
             <Image src='http://www.hipsterpig.com/wp-content/uploads/2014/05/fc550x550orange17.jpg' style={{height: '100px', width: '100px'}}/>
           </Container>
