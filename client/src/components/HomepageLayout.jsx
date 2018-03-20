@@ -6,18 +6,10 @@ import { connect } from 'react-redux'; // connects to the redux store
 import { fetchUsers } from '../actions/dashboardActions.js';
 
 import {
-  Button,
   Container,
-  Divider,
   Grid,
   Header,
-  Icon,
-  List,
-  Menu,
-  Responsive,
-  Segment,
-  Sidebar,
-  Visibility,
+  Segment
 } from 'semantic-ui-react'
 
 

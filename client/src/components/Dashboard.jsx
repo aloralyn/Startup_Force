@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import ProfilePic from './ProfilePic.jsx'
-import { connect } from 'react-redux'; // connects to the redux store
-import { fetchUsers } from '../actions/dashboardActions.js';
 
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import store from '../store.js';
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-import { createBrowserHistory } from 'history';
+
+import ProfilePic from './ProfilePic.jsx'
 
 import HomepageLayout from './HomepageLayout.jsx';
 import MyInfo from './MyInfo.jsx';
@@ -17,9 +13,7 @@ import Reports from './Reports.jsx'
 import Messages from './Messages.jsx'
 
 import {
-  Button,
   Container,
-  Divider,
   Grid,
   Header,
   Icon,
@@ -29,7 +23,6 @@ import {
   Menu,
   Responsive,
   Segment,
-  Sidebar,
   Visibility,
 } from 'semantic-ui-react'
 
