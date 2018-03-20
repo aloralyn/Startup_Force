@@ -23,6 +23,7 @@ import {
   Grid,
   Header,
   Icon,
+  Input,
   Image,
   List,
   Menu,
@@ -51,8 +52,11 @@ class DesktopContainer extends Component {
     return (
       <Responsive {...Responsive.onlyComputer}>
         <div>
+        {/* <Segment > */}
+          <Container style={{ padding: '1.5em 0em' }}>
+            <Image src='http://www.hipsterpig.com/wp-content/uploads/2014/05/fc550x550orange17.jpg' style={{height: '100px', width: '100px'}}/>
+          </Container>
           <Router>
-    
           <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
             <Segment inverted textAlign='center'  vertical>
           
@@ -61,7 +65,7 @@ class DesktopContainer extends Component {
                 inverted={!fixed}
                 pointing={!fixed}
                 secondary={!fixed}
-                size='large'
+                size='small'
               >
             
                 <Container>
@@ -70,9 +74,12 @@ class DesktopContainer extends Component {
                   <Menu.Item><Link to="/job_openings">Job Openings</Link></Menu.Item>
                   <Menu.Item><Link to="/reports">Reports</Link></Menu.Item>
                   <Menu.Item><Link to="/messages">Messages</Link></Menu.Item>
-                  <Menu.Item position='right'>
-                    <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>Sign Out</Button>
-                  </Menu.Item>
+                  <Menu.Menu position='right'>
+                    <Menu.Item>
+                      <Input icon='search' placeholder='Search...' />
+                      <Menu.Item name='logout'  />
+                    </Menu.Item>
+                  </Menu.Menu>
                 </Container>
           
               </Menu>
