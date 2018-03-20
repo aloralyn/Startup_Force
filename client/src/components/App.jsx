@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { connect, Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import store from '../store.js';
 import { Router } from 'react-router-dom';
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import { syncHistoryWithStore } from 'react-router-redux';
 import Dashboard from './Dashboard.jsx'
 
 import { createBrowserHistory } from 'history';
