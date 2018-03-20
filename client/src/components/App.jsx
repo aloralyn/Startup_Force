@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Provider } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import store from '../store.js';
-import {  Router, Route, browserHistory } from 'react-router';
+import { Router } from 'react-router-dom';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-import HomepageLayout from './Homepage.jsx'
+import Dashboard from './Dashboard.jsx'
 
 import { createBrowserHistory } from 'history';
 
@@ -21,7 +20,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <Route exact path="/" component={HomepageLayout} />
+          <Dashboard />
         </Router>
     </Provider>
     );
