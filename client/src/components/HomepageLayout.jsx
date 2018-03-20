@@ -12,7 +12,6 @@ import {
   Grid,
   Header,
   Icon,
-  Image,
   List,
   Menu,
   Responsive,
