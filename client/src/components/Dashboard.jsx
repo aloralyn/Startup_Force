@@ -29,7 +29,7 @@ import {
 
 class DesktopContainer extends Component {
   // constructor(props) {
-    
+
   // }
   state = {
     fixed: undefined
@@ -41,7 +41,7 @@ class DesktopContainer extends Component {
   render() {
 
     const { fixed } = this.state
-    
+
     return (
       <Responsive {...Responsive.onlyComputer}>
         <div>
@@ -51,7 +51,7 @@ class DesktopContainer extends Component {
           <Router>
           <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
             <Segment inverted textAlign='center'  vertical>
-          
+
               <Menu
                 fixed={fixed ? 'top' : null}
                 inverted={!fixed}
@@ -59,7 +59,7 @@ class DesktopContainer extends Component {
                 secondary={!fixed}
                 size='small'
               >
-            
+
                 <Container>
                   <Menu.Item><Link to="/">Home</Link></Menu.Item>
                   <Menu.Item><Link to="/my_info">My Info</Link></Menu.Item>
@@ -73,9 +73,9 @@ class DesktopContainer extends Component {
                     </Menu.Item>
                   </Menu.Menu>
                 </Container>
-          
+
               </Menu>
-          
+
             </Segment>
            <Switch>
               <Route exact path="/" component={HomepageLayout} />
@@ -86,7 +86,7 @@ class DesktopContainer extends Component {
             </Switch>
 
           </Visibility>
-     
+
           </Router>
           </div>
       </Responsive>
@@ -122,7 +122,7 @@ const Footer = () => (
         </Grid.Row>
       </Grid>
     </Container>
-  </Segment> 
+  </Segment>
 )
 
 const Dashboard = () => (
@@ -133,5 +133,3 @@ const Dashboard = () => (
 );
 
 export default withRouter(Dashboard);
-
-

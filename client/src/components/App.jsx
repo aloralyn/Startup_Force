@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import store from '../store.js';
 import { Router } from 'react-router-dom';
 import { syncHistoryWithStore } from 'react-router-redux';
-import Dashboard from './Dashboard.jsx'
-
 import { createBrowserHistory } from 'history';
+import store from '../store.js';
+import Dashboard from './Dashboard.jsx';
 
 const history = syncHistoryWithStore(createBrowserHistory(), store);
 
