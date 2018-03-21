@@ -48,6 +48,31 @@ bmtRouter.post('/api/update_department/:id', async (req, res) => {
   }
 });
 
+bmtRouter.get('/api/all_employees/:id', async (req, res) => {
+  let id = req.params.id;
+  try {
+    let result = await employeeController.retrieveEmployees(id)
+    res.status(200).send(result);
+  } catch(e) {
+    res.status(400).end();
+  }
+});
+
+
+
+bmtRouter.post('/api/employee/:id', async (req, res) => {
+  let id = req.params.id;
+  let employeeId = req.body.id;
+  try {
+    let result = await employeeController.retrieveEmployeeData(id, employeeId)
+    res.status(200).send(result[0]);
+  } catch(e) {
+    res.status(400).end();
+  }
+});
+
+
+
 bmtRouter.post('/api/create_employee_profile', async (req, res) => {
   try {
     await employeeController.createEmployeeProfile(req.body)
