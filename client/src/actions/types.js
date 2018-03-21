@@ -1,3 +1,5 @@
 export const FETCH_USER = 'FETCH_USER';
 export const GET_MESSAGES = 'GET_MESSAGES';
 export const MESSAGE_USER = 'MESSAGE_USER';
+export const ADD_EMPLOYEE = 'ADD_EMPLOYEE';
+export const ADD_DEPARTMENT = 'ADD_DEPARTMENT';
