@@ -5,7 +5,7 @@ class ProfilePic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Unicorn',
+      name: 'Leanne Graham',
       title: 'Head of HR',
       startDate: 'May 2016'
     }
