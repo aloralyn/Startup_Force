@@ -8,9 +8,10 @@ import ProfilePic from './ProfilePic.jsx'
 
 import HomepageLayout from './HomepageLayout.jsx';
 import MyInfo from './MyInfo.jsx';
-import JobOpenings from './JobOpenings.jsx'
-import Reports from './Reports.jsx'
-import Messages from './Messages.jsx'
+import JobOpenings from './JobOpenings.jsx';
+import Onboarding from './Onboarding.jsx'
+import Reports from './Reports.jsx';
+import Messages from './Messages.jsx';
 
 import {
   Container,
@@ -64,6 +65,7 @@ class DesktopContainer extends Component {
                   <Menu.Item><Link to="/">Home</Link></Menu.Item>
                   <Menu.Item><Link to="/my_info">My Info</Link></Menu.Item>
                   <Menu.Item><Link to="/job_openings">Job Openings</Link></Menu.Item>
+                  <Menu.Item><Link to="/onboarding">Onboarding</Link></Menu.Item>
                   <Menu.Item><Link to="/reports">Reports</Link></Menu.Item>
                   <Menu.Item><Link to="/messages">Messages</Link></Menu.Item>
                   <Menu.Menu position='right'>
@@ -81,6 +83,7 @@ class DesktopContainer extends Component {
               <Route exact path="/" component={HomepageLayout} />
               <Route path="/my_info" component={MyInfo} />
               <Route path="/job_openings" component={JobOpenings} />
+              <Route path="/onboarding" component={Onboarding} />
               <Route path="/reports" component={Reports} />
               <Route path="/messages" component={Messages} />
             </Switch>

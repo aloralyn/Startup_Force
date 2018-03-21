@@ -12,7 +12,6 @@ import {
   Segment
 } from 'semantic-ui-react'
 
-
 class HomepageLayout extends Component {
 
   // shouldComponentUpdate(nextProps, nextState) {
@@ -22,13 +21,9 @@ class HomepageLayout extends Component {
 
   componentWillMount() {
     this.props.fetchUsers();
-    console.log(this.props)
   }
 
   render() {
-
-    console.log(this.props.users[0]);
-
     return (
       this.props.users[0] ? 
       <div>
@@ -39,7 +34,7 @@ class HomepageLayout extends Component {
                   <ProfilePic />
                 </Grid.Column>
                 <Grid.Column width={8} >
-                <Header size='large' verticalalign='text-top'>Welcome,  {this.props.users[0].name}!</Header>
+                <Header size='large' verticalalign='text-top'>Welcome,  {this.props.users[0].first_name} {this.props.users[0].last_name}!</Header>
                 </Grid.Column>
             </Grid.Row>
           </Grid>
