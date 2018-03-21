@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'; 
 import { sendMessage } from '../actions/messageActions.js';
+import { nameFromId } from './Messages.jsx';
 
 class MessageForm extends React.Component {
   constructor(props) {
@@ -17,8 +18,9 @@ class MessageForm extends React.Component {
   }
 
   handleSubmit(event) {
+    const time = new Date().toString();
     event.preventDefault()
-    this.props.sendMessage(this.state.input, this.props.userId, this.props.messageUserId);
+    this.props.sendMessage(this.state.input, time, nameFromId(this.props.userId, this.props.users), this.props.userId, this.props.messageUserId);
     this.setState({ input: '' });
   }
 
@@ -37,6 +39,7 @@ class MessageForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
+  users: state.users.users,
   username: state.users.user.username,
   userId: state.users.user.id,
   messageUserId: state.messages.messageUserId

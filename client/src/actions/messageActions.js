@@ -8,8 +8,14 @@ const setUser = (userFrom, userTo) => {
   if (userFrom < userTo) { return firebase.database().ref(userFrom + '_' + userTo); }
 };
 
-export const sendMessage =  (message, userFrom, userTo) => dispatch => {
-  setUser(userFrom, userTo).push().set(message);
+export const sendMessage =  (message, time, name, userFrom, userTo) => dispatch => {
+  // console.log('message, time', message, time)
+  // console.log('log more')
+  setUser(userFrom, userTo).push().set({
+    name: name,
+    time: time,
+    message: message
+  });
 };
 
 export const getMessages = (userFrom, userTo) => dispatch => {

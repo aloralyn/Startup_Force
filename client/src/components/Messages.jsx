@@ -4,11 +4,28 @@ import { connect } from 'react-redux';
 import { messageUser, getMessages } from '../actions/messageActions.js';
 import MessageForm from './MessageForm.jsx';
 
-const userNameFromId = (id, users) => {
+export const nameFromId = (id, users) => {
   for (var i = 0; i < users.length; i++) {
   	if (users[i].id === id) { return users[i].name; }
   }
 }
+
+const timeFromDate = date => {
+  //const now = new Date();
+  let hours = parseInt(date.slice(16, 18));
+  let period = 'am'
+  if (hours >= 12) {
+  	period = 'pm';
+  }
+  if (hours > 12) {
+  	hours = hours % 12;
+  }
+  if (hours === 0) {
+  	hours = 12;
+  }
+  let minutes = date.slice(18, 21);
+  return (hours + minutes + period);
+};
 
 class Messages extends Component {
   constructor(props) {
@@ -40,10 +57,14 @@ class Messages extends Component {
 		      }
 	        })}
 	      </ul>
-	      <h2>{userNameFromId(this.props.userId, this.props.users)}'s messages with {userNameFromId(this.props.messageUserId, this.props.users)}</h2>
+	      <h2>{nameFromId(this.props.userId, this.props.users)}'s messages with {nameFromId(this.props.messageUserId, this.props.users)}</h2>
 	      <ul>
 	        {this.props.messages.map((message, index) => {
-	          return (<li key={index}>{message}</li>)
+	          if (message.name) {
+	            return (<li key={index}>{message.name + ', ' + timeFromDate(message.time)}<br />{message.message}</li>)
+	          } else {
+	          	return (<li key={index}>{message}</li>)
+	          }
 	        })}
 	      </ul>
 	      <MessageForm />
