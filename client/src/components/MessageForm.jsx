@@ -18,8 +18,7 @@ class MessageForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    // dispatch send message action with payload this.state.input
-    this.props.sendMessage(this.state.input, this.props.username);
+    this.props.sendMessage(this.state.input, this.props.userId, this.props.messageUserId);
     this.setState({ input: '' });
   }
 
@@ -28,7 +27,7 @@ class MessageForm extends React.Component {
      <form>
         <input 
           type="text" 
-          placeholder="Chat with yourself!" 
+          placeholder="Type a message!" 
           value={this.state.input} 
           onChange={this.handleChange} />
         <button onClick={this.handleSubmit}>Send</button>
@@ -38,7 +37,9 @@ class MessageForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  username: state.users.user.username
+  username: state.users.user.username,
+  userId: state.users.user.id,
+  messageUserId: state.messages.messageUserId
 });
 
 export default connect(mapStateToProps, { sendMessage })(MessageForm);

@@ -4,19 +4,25 @@ import { connect } from 'react-redux';
 import { messageUser, getMessages } from '../actions/messageActions.js';
 import MessageForm from './MessageForm.jsx';
 
+const userNameFromId = (id, users) => {
+  for (var i = 0; i < users.length; i++) {
+  	if (users[i].id === id) { return users[i].name; }
+  }
+}
+
 class Messages extends Component {
   constructor(props) {
   	super(props);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.username !== this.props.username) {
-      this.props.getMessages(nextProps.username);
+    if (nextProps.messageUserId !== this.props.messageUserId) {
+      this.props.getMessages(this.props.userId, nextProps.messageUserId);
     }
   }
 
   componentWillMount() {
-  	this.props.getMessages(this.props.username);
+  	//this.props.getMessages(this.props.userId, this.props.messageUserId);
   }
 
   render() {
@@ -25,14 +31,16 @@ class Messages extends Component {
 	  	  <h2>Employees</h2>
 	  	  <ul>
 	        {this.props.users.map((user) => {
-	          return (<li 
-	          	key={user.id}
-	          	value={user.id}
-	          	onClick={(e) => {this.props.messageUser(e.target.value)}}
-	          	>{user.name}</li>)
+	          if (user.id !== this.props.userId) {
+		          return (<li 
+		          	key={user.id}
+		          	value={user.id}
+		          	onClick={(e) => {this.props.messageUser(e.target.value)}}
+		          	>{user.name}</li>)
+		      }
 	        })}
 	      </ul>
-	      <h2>Leanne's Notes to Leanne{/* reference name? this.props.messageUser*/}</h2>
+	      <h2>{userNameFromId(this.props.userId, this.props.users)}'s messages with {userNameFromId(this.props.messageUserId, this.props.users)}</h2>
 	      <ul>
 	        {this.props.messages.map((message, index) => {
 	          return (<li key={index}>{message}</li>)
@@ -45,11 +53,13 @@ class Messages extends Component {
 	  	  <h2>Employees</h2>
 	  	  <ul>
 	        {this.props.users.map((user) => {
-	          return (<li 
-	          	key={user.id}
-	          	value={user.id}
-	          	onClick={(e) => {this.props.messageUser(e.target.value)}}
-	          	>{user.name}</li>)
+	          if (user.id !== this.props.userId) {
+		          return (<li 
+		          	key={user.id}
+		          	value={user.id}
+		          	onClick={(e) => {this.props.messageUser(e.target.value)}}
+		          	>{user.name}</li>)
+		      }
 	        })}
 	      </ul>
 	  	</div>)	
@@ -60,6 +70,7 @@ class Messages extends Component {
 const mapStateToProps = state => ({
   users: state.users.users,
   username: state.users.user.username,
+  userId: state.users.user.id,
   messages: state.messages.messages,
   messageUserId: state.messages.messageUserId
 });
