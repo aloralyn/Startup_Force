@@ -42,7 +42,7 @@ CREATE TABLE employees (
   start_date VARCHAR(25) NOT NULL,
   department VARCHAR(255) NOT NULL,
   division VARCHAR(255) NOT NULL,
-  reports_to INTEGER NOT NULL,
+  reports_to VARCHAR(255) NOT NULL,
   wage MONEY NOT NULL,
   pay_per VARCHAR(255) NOT NULL,
   pay_type VARCHAR(255) NOT NULL,
