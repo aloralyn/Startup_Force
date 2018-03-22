@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'; 
-import { sendMessage } from '../actions/messageActions.js';
+import { sendMessage } from '../../actions/messageActions.js';
 import { nameFromId } from './Messages.jsx';
 
 class MessageForm extends React.Component {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import ProfilePic from './ProfilePic.jsx';
+import ProfilePic from '../ProfilePic.jsx';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addEmployee } from '../actions/onboardingActions.js';
+import { addEmployee } from '../../actions/onboardingActions.js';
 
 import {
   Container,

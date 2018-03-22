@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addDepartment } from '../actions/onboardingActions.js';
+import { addDepartment } from '../../actions/onboardingActions.js';
 
 import {
   Button,
