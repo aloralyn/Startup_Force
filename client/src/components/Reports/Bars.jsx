@@ -20,12 +20,12 @@ export default class Bars extends Component {
     const bars = (data.map((datum) => {
       return (
         <rect
-          key={datum.title}
-          x={xScale(datum.title)}
-          y={yScale(datum.value)}
-          height={height - margins.bottom - scales.yScale(datum.value)}
+          key={datum.name}
+          x={xScale(datum.name)}
+          y={yScale(datum.sales)}
+          height={height - margins.bottom - scales.yScale(datum.sales)}
           width={xScale.bandwidth()}
-          fill={this.colorScale(datum.value)}
+          fill={this.colorScale(datum.sales)}
         />
       );
     }));
