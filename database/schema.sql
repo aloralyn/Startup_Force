@@ -46,5 +46,6 @@ CREATE TABLE employees (
   wage MONEY NOT NULL,
   pay_per VARCHAR(255) NOT NULL,
   pay_type VARCHAR(255) NOT NULL,
+  is_manager boolean,
   FOREIGN KEY (company_id) REFERENCES companies(id)
 );
