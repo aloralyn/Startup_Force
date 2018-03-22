@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import ProfilePic from './ProfilePic.jsx'
+import ProfilePic from '../ProfilePic.jsx'
 import { connect } from 'react-redux'; // connects to the redux store
-import { fetchUsers } from '../actions/dashboardActions.js';
+import { fetchUsers } from '../../actions/dashboardActions.js';
 
 import {
   Container,

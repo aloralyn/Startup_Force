@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
- class JobOpenings extends Component {
+ class Schedules extends Component {
   render() {
     return (
       <div>
@@ -10,4 +10,4 @@ import React, { Component } from 'react'
   }
 }
 
-export default JobOpenings;
+export default Schedules;

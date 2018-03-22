@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { messageUser, getMessages } from '../actions/messageActions.js';
+import { messageUser, getMessages } from '../../actions/messageActions.js';
 import MessageForm from './MessageForm.jsx';
 
 export const nameFromId = (id, users) => {
