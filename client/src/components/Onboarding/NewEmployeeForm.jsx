@@ -47,6 +47,11 @@ const payScheduleOptions = [
   { text: 'Monthly', value: 'monthly' }
 ];
 
+const managerCred = [
+  { text: 'true', value: true },
+  { text: 'false', value: false },
+]
+
  class NewEmployeeForm extends Component {
    constructor(props) {
      super(props);
@@ -75,11 +80,13 @@ const payScheduleOptions = [
       reports_to: '',
       wage: '',
       pay_per: '',
-      pay_type: ''
+      pay_type: '',
+      is_manager: ''
      }
      
      this.handleChange = this.handleChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
+     this.handleFrequency = this.handleFrequency.bind(this); 
    }
 
    handleChange(e, name) {
@@ -96,8 +103,15 @@ const payScheduleOptions = [
    
    handleSubmit(e) {
      e.preventDefault();
+    // console.log(this.state)
      this.props.addEmployee(this.state)
    }
+
+   handleFrequency(value) {
+    this.setState({
+      frequency: value
+    });
+  }
 
   render() {
     return (
@@ -138,6 +152,9 @@ const payScheduleOptions = [
           <Form.Group widths='equal'>
             <Form.Field control={Input} label='Start Date' name='start_date' placeholder='Start Date' onChange={this.handleChange} />
             <Form.Field control={Input} label='Reports to' name='reports_to' placeholder='Reports to' onChange={this.handleChange}/>
+          </Form.Group>
+          <Form.Group widths='equal'>
+          <Form.Field control={Select} label='Manager Role' options={ managerCred } name='is_manager' placeholder='false' onChange={(e, {value, name}) => {this.handleChange(value, name)}} />
           </Form.Group>
           <Form.Group widths='equal'>
             <Form.Field control={Input} label='Department' name='department' placeholder='Department' onChange={this.handleChange}/>
