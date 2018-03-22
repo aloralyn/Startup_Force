@@ -49,7 +49,7 @@ class Messages extends Component {
 	  	  <ul>
 	        {this.props.users.map((user) => {
 	          if (user.id !== this.props.userId) {
-		          return (<li 
+		          return (<li
 		          	key={user.id}
 		          	value={user.id}
 		          	onClick={(e) => {this.props.messageUser(e.target.value)}}
@@ -75,7 +75,7 @@ class Messages extends Component {
 	  	  <ul>
 	        {this.props.users.map((user) => {
 	          if (user.id !== this.props.userId) {
-		          return (<li 
+		          return (<li
 		          	key={user.id}
 		          	value={user.id}
 		          	onClick={(e) => {this.props.messageUser(e.target.value)}}
@@ -83,7 +83,7 @@ class Messages extends Component {
 		      }
 	        })}
 	      </ul>
-	  	</div>)	
+	  	</div>)
 	}
   }
 }

@@ -14,7 +14,6 @@ class Reports extends React.Component {
     console.log('something');
     return (
       <div className="App-chart-container">
-        HiHiHi
         <Chart />
       </div>
     );

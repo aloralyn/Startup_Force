@@ -10,46 +10,50 @@ const styles = {
   padding: 30,
 };
 
-const movieData = [
-  { title: 'Terminator', value: 21, year: 1984 },
-  { title: 'Commando', value: 81, year: 1985 },
-  { title: 'Predator', value: 25, year: 1987 },
-  { title: 'Raw Deal', value: 26, year: 1986 },
-  { title: 'The Running Man', value: 11, year: 1987 },
-  { title: 'Total Recall', value: 44, year: 1990 },
-  { title: 'Terminator 2', value: 0, year: 1991 },
-  { title: 'Last Action Hero', value: 22, year: 1993 },
-  { title: 'True Lies', value: 51, year: 1994 },
-  { title: 'Eraser', value: 29, year: 1996 },
-  { title: 'Terminator 3', value: 2, year: 2003 },
+const empData = [
+  { name: 'Tommy', sales: 21, year: 1984 },
+  { name: 'Kim', sales: 81, year: 1985 },
+  { name: 'Jason', sales: 25, year: 1987 },
+  { name: 'Zach', sales: 26, year: 1986 },
+  { name: 'Trini', sales: 11, year: 1987 },
+  { name: 'Billy', sales: 10, year: 1990 },
 ];
 
 export default class Chart extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      placeholder: '',
-    };
     this.xScale = scaleBand();
     this.yScale = scaleLinear();
   }
 
   render() {
-    const margins = { top: 50, right: 20, bottom: 100, left: 60 };
-    const svgDimensions = { width: 800, height: 500 };
-    const maxValue = Math.max(...movieData.map(d => d.value));
+    const margins = {
+      top: 50,
+      right: 20,
+      bottom: 100,
+      left: 60,
+    };
+
+    const svgDimensions = {
+      width: 800,
+      height: 500,
+    };
+
+    // const maxValue = Math.max(...movieData.map(d => d.value));
+    const maxValue = Math.max(...empData.map(d => d.sales));
     // scaleBand type
     const xScale = this.xScale
       .padding(0.5)
-      .domain(movieData.map(d => d.title))
+      .domain(empData.map(d => d.name))
       .range([margins.left, svgDimensions.width - margins.right]);
 
     const yScale = this.yScale
       .domain([0, maxValue])
-      .range([svgDimensions.height - margins.bottom, margins.top])
+      .range([svgDimensions.height - margins.bottom, margins.top]);
+
     return (
       <div>
-        <Header size="large">Chart</Header>
+        <Header size="large">Sales By Team Members</Header>
         <svg width={svgDimensions.width} height={svgDimensions.height}>
           <Axes
             scales={{ xScale, yScale }}
@@ -59,7 +63,7 @@ export default class Chart extends React.Component {
           <Bars
             scales={{ xScale, yScale }}
             margins={margins}
-            data={movieData}
+            data={empData}
             maxValue={maxValue}
             svgDimensions={svgDimensions}
           />
