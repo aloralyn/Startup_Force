@@ -14,7 +14,7 @@ bmtRouter.post('/api/create_company', async (req, res) => {
     res.status(400).end();
   }
 });
-  
+
 bmtRouter.post('/api/update_company/:id', async (req, res) => {
   let id = req.params.id;
 
