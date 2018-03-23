@@ -2,11 +2,11 @@ const db = require('../index.js');
 const bcrypt = require('bcrypt');
 const firebase = require('firebase');
 const passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 
 // configuration?
-passport.use(new LocalStrategy((username, password, done) => {
-  User.findOne({ username: username }, (err, user) => {
+passport.use(new LocalStrategy((email, password, done) => {
+  User.findOne({ email: email }, (err, user) => {
     if (err) {}
     if (!user) {
 
@@ -19,8 +19,8 @@ passport.use(new LocalStrategy((username, password, done) => {
 }));
 
 // compare password
-const comparePassword = (rawPass, encryptPass) => {
-  bcrypt.compare(rawPass, encryptPass, (err, exists) => !!exists);
+const comparePassword = (rawPw, encryptPw) => {
+  bcrypt.compare(rawPw, encryptPw, (err, exists) => !!exists);
 };
 
 // generate token, including firebase info
@@ -29,17 +29,21 @@ const generateToken = (name) => {
 };
 
 // return token if password matches, otherwise??
-exports.loginCheck = async (preferred_name, password) => {
-  let queryStr = `SELECT * FROM employees WHERE preferred_name = ${preferred_name};`;
+exports.loginCheck = async (email, password) => {
+  let queryStr = `SELECT * FROM employees WHERE email = ${email};`;
 
   return db.query(queryStr)
     .then(res => {
         // what is proper formatting for password?
-        if (comparePassword(password, res.password)) {
-          return generateToken(preferred_name);
+        if (comparePassword(password, res.pw)) {
+          return generateToken(email);
         } else {
           return false;
         }
       }
     ).catch(err => console.log(err.stack))
 };
+
+exports.logout = async () => {
+  // to complete
+}

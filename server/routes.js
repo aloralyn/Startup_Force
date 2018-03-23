@@ -122,4 +122,3 @@ bmtRouter.get('/api/logout', async (req, res) => {
 });
 
 module.exports = bmtRouter;
-
