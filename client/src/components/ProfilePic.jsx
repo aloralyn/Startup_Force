@@ -18,7 +18,7 @@ class ProfilePic extends React.Component {
   render() {
     return (
       <Card>
-        <Image src='https://res.cloudinary.com/teepublic/image/private/s--UvSUNgzW--/b_rgb:fffffe,t_Heather%20Preview/c_lpad,f_jpg,h_630,q_90,w_1200/v1494469473/production/designs/1595608_1.jpg' />
+        <Image src='https://scontent-lga3-1.xx.fbcdn.net/v/t31.0-8/11834699_10100745305693490_6590435011584098904_o.jpg?_nc_cat=0&oh=adf8464d3eb0e95d5eafa6feb83ca49c&oe=5B44C41D' />
         <Card.Content>
           <Card.Header>
             {this.props.users[0].first_name}
