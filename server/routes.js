@@ -2,6 +2,7 @@ const bmtRouter = require('express').Router();
 const companyController = require('../database/models/companies.js');
 const departmentController = require('../database/models/departments.js');
 const employeeController = require('../database/models/employees.js');
+const authController = require('../database/models/auth.js');
 
 const async = require('asyncawait/async');
 const await = require('asyncawait/await');
@@ -98,11 +99,27 @@ bmtRouter.post('/api/upload_photo/:id', async (req, res) => {
   try {
     await employeeController.uploadProfilePic(id, req.body)
     res.status(200).end();
+
+bmtRouter.get('/api/login', async (req, res) => {
+  try {
+    let result = await authController.loginCheck(req.body.preferred_name, req.body.password)
+    // if result, send result; otherwise send 403
+    if (result) { res.status(200).send(result); }
+    else { res.status(403).end(); }
   } catch(e) {
     res.status(400).end();
   }
 });
 
+bmtRouter.get('/api/logout', async (req, res) => {
+  //let id = req.params.id;
+  try {
+    await authController.logout(id)
+    res.status(202).end();
+  } catch(e) {
+    res.status(400).end();
+  }
+});
 
 module.exports = bmtRouter;
 
