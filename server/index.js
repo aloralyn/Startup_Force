@@ -1,15 +1,20 @@
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
-// @ BOILER PLATE SERVER CONNECTION
+// @ BOILER PLATE SERVER CONNECTION @
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 
 const express = require('express');
 const parser = require('body-parser');
 const router = require('./routes.js');
+
+const scheduleRouter = require('./scheduleRoutes.js');
+
 const app = express();
 
 app.use(parser.json());
 app.use(express.static(__dirname + '/../client/dist'));
+
 app.use('/', router);
+app.use('/', scheduleRouter);
 
 app.set('port', 8001);
 
