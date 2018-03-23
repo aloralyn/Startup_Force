@@ -81,7 +81,8 @@ const managerCred = [
       wage: '',
       pay_per: '',
       pay_type: '',
-      is_manager: ''
+      is_manager: '',
+      pw: ''
      }
      
      this.handleChange = this.handleChange.bind(this);
@@ -154,9 +155,6 @@ const managerCred = [
             <Form.Field control={Input} label='Reports to' name='reports_to' placeholder='Reports to' onChange={this.handleChange}/>
           </Form.Group>
           <Form.Group widths='equal'>
-          <Form.Field control={Select} label='Manager Role' options={ managerCred } name='is_manager' placeholder='false' onChange={(e, {value, name}) => {this.handleChange(value, name)}} />
-          </Form.Group>
-          <Form.Group widths='equal'>
             <Form.Field control={Input} label='Department' name='department' placeholder='Department' onChange={this.handleChange}/>
             <Form.Field control={Select} label='Division' options={ divisionOptions } name='division' placeholder='Placeholder Divs' onChange={(e, {value, name}) => {this.handleChange(value, name)}} />
           </Form.Group>
@@ -168,6 +166,11 @@ const managerCred = [
           <Form.Group>
             <Form.Field control={Select} label='Pay Type' options={ payTypeOptions } name='pay_type' placeholder='Salary' onChange={(e, {value, name}) => {this.handleChange(value, name)}}/>
           </Form.Group>
+          <Header size='small'>Profile Credentials</Header>
+          <Form.Group widths='equal'>
+            <Form.Field control={Select} label='Manager Role' options={ managerCred } name='is_manager' placeholder='false' onChange={(e, {value, name}) => {this.handleChange(value, name)}} />
+            <Form.Field control={Input} label='Temporary Password' name='pw' placeholder='password123' onChange={this.handleChange}/>
+            </Form.Group>
           <Form.Field control={Button} type='submit' onClick={this.handleSubmit}>Update</Form.Field>
         </Form>
       </Grid.Column> 

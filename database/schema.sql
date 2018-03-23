@@ -1,11 +1,3 @@
--- When you run this file, use this command in your terminal: psql -d bmttools -a -f schema.sql
-
--- DROP DATABASE IF EXISTS bmttools;
-
-CREATE DATABASE bmttools;
-
-\c bmttools;
-
 DROP TABLE IF EXISTS "companies";
 
 CREATE TABLE companies (
@@ -52,6 +44,7 @@ CREATE TABLE employees (
   wage MONEY NOT NULL,
   pay_per VARCHAR(255) NOT NULL,
   pay_type VARCHAR(255) NOT NULL,
+  is_manager boolean,
   pw VARCHAR(255) NOT NULL,
   FOREIGN KEY (company_id) REFERENCES companies(id)
 );
@@ -72,5 +65,24 @@ INSERT INTO departments (company_id, name, division) VALUES (2, 'Sales', 'East C
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
   linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
-  VALUES (1, 'chris', 'rig', 'chris', '11/4', '111-11-1111', 'male', '875 Tree St', '', 'Somewhere', 'NY', '10001', 'chris@hr.com', '123-123-1234', 'www.linkedin.com', 'CEO', 'Employed',
+  VALUES (1, 'Christopher', 'Rigoli', 'Chris', '11/4', '111-11-1111', 'male', '875 Tree St', '', 'Somewhere', 'NY', '10001', 'chris@hr.com', '123-123-1234', 'www.linkedin.com', 'CEO', 'Employed',
   'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
+
+INSERT INTO employees
+(company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
+  VALUES (1, 'Artem', 'Ipatev', 'Arty', '11/4', '111-11-1111', 'male', '875 Tree St', '', 'Somewhere', 'NY', '10001', 'artem@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
+  'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
+
+INSERT INTO employees
+(company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
+  VALUES (1, 'Brent', 'Hagen', 'Brenty', '11/4', '111-11-1111', 'male', '875 Tree St', '', 'Somewhere', 'NY', '10001', 'Brent@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
+  'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
+
+  INSERT INTO employees
+(company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
+  VALUES (1, 'Aloralyn', 'Ayran', 'Lyn', '11/4', '111-11-1111', 'female', '875 Tree St', '', 'Somewhere', 'NY', '10001', 'Aloralyn@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
+  'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
+
