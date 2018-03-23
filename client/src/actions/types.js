@@ -3,3 +3,8 @@ export const GET_MESSAGES = 'GET_MESSAGES';
 export const MESSAGE_USER = 'MESSAGE_USER';
 export const ADD_EMPLOYEE = 'ADD_EMPLOYEE';
 export const ADD_DEPARTMENT = 'ADD_DEPARTMENT';
+
+export const GET_SCHEDULES = 'GET_SCHEDULES';
+export const POST_SCHEDULE = 'POST_SCHEDULE';
+export const EDIT_SCHEDULE = 'EDIT_SCHEDULE';
+export const DELETE_SCHEDULE = 'DELETE_SCHEDULE';
