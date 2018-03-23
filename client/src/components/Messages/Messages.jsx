@@ -3,10 +3,24 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { messageUser, getMessages } from '../../actions/messageActions.js';
 import MessageForm from './MessageForm.jsx';
+import {
+  Button,
+  Container,
+  Grid,
+  Header,
+  Icon,
+  Input,
+  Image,
+  List,
+  Menu,
+  Responsive,
+  Segment,
+  Visibility,
+} from 'semantic-ui-react';
 
 export const nameFromId = (id, users) => {
   for (var i = 0; i < users.length; i++) {
-  	if (users[i].id === id) { return users[i].name; }
+  	if (users[i].id === id) { return users[i].preferred_name; }
   }
 }
 
@@ -42,51 +56,66 @@ class Messages extends Component {
   	//this.props.getMessages(this.props.userId, this.props.messageUserId);
   }
 
-  render() {
-  	if (this.props.messageUserId) {
-	  	return ( <div>
-	  	  <h2>Employees</h2>
-	  	  <ul>
-	        {this.props.users.map((user) => {
-	          if (user.id !== this.props.userId) {
-		          return (<li
-		          	key={user.id}
-		          	value={user.id}
-		          	onClick={(e) => {this.props.messageUser(e.target.value)}}
-		          	>{user.name}</li>)
-		      }
-	        })}
-	      </ul>
-	      <h2>{nameFromId(this.props.userId, this.props.users)}'s messages with {nameFromId(this.props.messageUserId, this.props.users)}</h2>
-	      <ul>
-	        {this.props.messages.map((message, index) => {
-	          if (message.name) {
-	            return (<li key={index}>{message.name + ', ' + timeFromDate(message.time)}<br />{message.message}</li>)
-	          } else {
-	          	return (<li key={index}>{message}</li>)
-	          }
-	        })}
-	      </ul>
-	      <MessageForm />
-	  	</div>)
-	} else {
-	  	return ( <div>
-	  	  <h2>Employees</h2>
-	  	  <ul>
-	        {this.props.users.map((user) => {
-	          if (user.id !== this.props.userId) {
-		          return (<li
-		          	key={user.id}
-		          	value={user.id}
-		          	onClick={(e) => {this.props.messageUser(e.target.value)}}
-		          	>{user.name}</li>)
-		      }
-	        })}
-	      </ul>
-	  	</div>)
-	}
+render() {
+    if (this.props.messageUserId) {
+      return (<Container style={{ padding: '8em 0em' }}>
+        <Grid container stackable divided>
+          <Grid.Row>
+            <Grid.Column width={6}>
+              <Header as='h2'>Employees</Header>
+              <List as='ul'>
+                {this.props.users.map((user) => {
+                  if (user.id !== this.props.userId) {
+                    return (<List.Item as='li' key={user.id}><Button
+                      value={user.id.toString()}
+                      onClick={(e) => {this.props.messageUser(parseInt(e.target.value, 10))}}
+                      >{user.first_name + ' ' + user.last_name}</Button></List.Item>)
+                }
+                })}
+              </List>
+            </Grid.Column>
+            <Grid.Column width={8}>
+              <Header as='h2'>{nameFromId(this.props.userId, this.props.users)}'s messages with {nameFromId(this.props.messageUserId, this.props.users)}</Header>
+              <List as='ul'>
+                {this.props.messages.map((message, index) => {
+                  if (message.name) {
+                    return (<List.Item as='li' key={index}>{message.name + ', ' + timeFromDate(message.time)}<br />{message.message}</List.Item>)
+                  } else {
+                    return (<List.Item as='li' key={index}>{message}</List.Item>)
+                  }
+                })}
+              </List>
+              <Grid.Row>{/*trying to set in row below*/}
+                <MessageForm />
+              </Grid.Row>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>)
+  } else {
+      return (<Container style={{ padding: '8em 0em' }}>
+        <Grid container stackable>
+          <Grid.Row>
+            <Grid.Column width={6}>
+              <Header as='h2'>Employees</Header>
+              <List as='ul'>
+                {this.props.users.map((user) => {
+                  if (user.id !== this.props.userId) {
+                    return (<List.Item as='li' key={user.id}><Button 
+                      value={user.id.toString()}
+                      onClick={(e) => {this.props.messageUser(parseInt(e.target.value, 10))}}
+                      >{user.first_name + ' ' + user.last_name}</Button></List.Item>)
+                }
+                })}
+              </List>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>) 
+  }
   }
 }
+
 
 const mapStateToProps = state => ({
   users: state.users.users,
