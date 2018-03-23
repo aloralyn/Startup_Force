@@ -29,6 +29,7 @@ class MessageForm extends React.Component {
      <form>
         <input 
           type="text" 
+          size="50"
           placeholder="Type a message!" 
           value={this.state.input} 
           onChange={this.handleChange} />
