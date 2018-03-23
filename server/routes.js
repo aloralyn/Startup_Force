@@ -82,4 +82,17 @@ bmtRouter.post('/api/create_employee_profile', async (req, res) => {
   }
 });
 
+bmtRouter.post('/api/upload_photo/:id', async (req, res) => {
+  let id = req.params.id;
+  
+  try {
+    await employeeController.uploadProfilePic(id, req.body)
+    res.status(200).end();
+  } catch(e) {
+    res.status(400).end();
+  }
+});
+
+
+
 module.exports = bmtRouter;
