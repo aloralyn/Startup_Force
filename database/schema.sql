@@ -1,3 +1,6 @@
+-- use that command in the terminal to update schema
+-- psql -d bmttools -a -f schema.sql
+
 DROP TABLE IF EXISTS "companies";
 
 CREATE TABLE companies (
@@ -85,4 +88,3 @@ INSERT INTO employees
   linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
   VALUES (1, 'Aloralyn', 'Ayran', 'Lyn', '11/4', '111-11-1111', 'female', '875 Tree St', '', 'Somewhere', 'NY', '10001', 'Aloralyn@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
   'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
-
