@@ -7,6 +7,7 @@ const parser = require('body-parser');
 const router = require('./routes.js');
 
 const scheduleRouter = require('./scheduleRoutes.js');
+const reportsRouter = require('./reportsRoutes.js');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 app.use('/', router);
 app.use('/', scheduleRouter);
+app.use('/', reportsRouter);
 
 app.set('port', 8001);
 

@@ -34,7 +34,7 @@ import {
 
     console.log(data)
     // data.append('file', this.u)
-  } 
+  }
 
   render() {
     return (
@@ -48,7 +48,7 @@ import {
              </Grid.Column>
              <Grid.Column width={8}>
                <Header size='small'>Employee Profile</Header>
-               
+
             <Table attached='bottom' celled>
               <Table.Header>
                 <Table.HeaderCell>First Name</Table.HeaderCell>
