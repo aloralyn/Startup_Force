@@ -33,12 +33,14 @@ var strategy = new JwtStrategy(jwtOptions, (jwt_payload, next) => {
   // var user = users[_.findIndex(users, {id: jwt_payload.id})];
   // var user = users[0];
   // substitute with database call: 
-  //db.query(`SELECT * FROM employees WHERE id = ${jwt_payload.id};`, )
-  if (user) {
-    next(null, user);
-  } else {
-    next(null, false);
-  }
+  db.query(`SELECT * FROM employees WHERE id = ${jwt_payload.id};`, (err, data) => {
+    console.log(data)
+    // if (user) {
+    //   next(null, user);
+    // } else {
+    //   next(null, false);
+    // }
+  });
 });
 
 passport.use(strategy);
@@ -85,35 +87,23 @@ const logout = async () => {
 
 loginRouter.post('/login', (req, res) => {
   if (req.body.email && req.body.pw) {
-    var email = req.body.name;
-    var pw = req.body.password;
+    var email = req.body.email;
+    var pw = req.body.pw;
   }
-  // check db for user
-  // var user = users[_.findIndex(users, {name: name})];
-  var user = users[0]
-  if (!user) {
-    res.status(401).json({message: 'no such user'});
-  }
-  if (user.pw === req.body.pw) {
-    var payload = {id: user.id};
-    var token = jwt.sign(payload, jwtOptions.secretOrKey);
-    res.json({message: 'ok', token: token});
-  } else {
-    res.status(401).json({message: 'passwords did not match'});
-  }
+  db.query(`SELECT * FROM employees WHERE email = '${email}';`, (err, data) => {
+    if (err) { console.log(err); }
+    if (!data.rows.length) {
+      res.status(401).json({message: 'no such user'});
+    }
+    else if (comparePassword(pw, data.rows[0].pw)) {
+      var payload = {id: data.rows[0].id};
+      var token = jwt.sign(payload, jwtOptions.secretOrKey);
+      res.json({message: 'ok', token: token});
+    } else {
+      res.status(401).json({message: 'passwords did not match'});
+    }
+  });
 });
-
-// async / await version
-// loginRouter.post('/login', async (req, res) => {
-//   try {
-//     let result = await loginCheck(req.body.preferred_name, req.body.password)
-//     // if result, send result; otherwise send 403
-//     if (result) { res.status(200).send(result); }
-//     else { res.status(403).end(); }
-//   } catch(e) {
-//     res.status(400).end();
-//   }
-// });
 
 loginRouter.get('/logout', async (req, res) => {
   //let id = req.params.id;
