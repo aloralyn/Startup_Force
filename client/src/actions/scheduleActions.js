@@ -30,7 +30,7 @@ const editSchedule = ({ start, startEdit, finish, finishEdit, first_name, id }) 
 }
 
 const postSchedule = ({ start, finish, month, first_name, year }) => dispatch => {
-	
+
 	axios.post('/postSchedule', { first_name, start, finish, month, year } ).then(data => {
 		console.log("--------",data)
 		dispatch({

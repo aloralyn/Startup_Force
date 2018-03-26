@@ -1,90 +1,115 @@
 -- use that command in the terminal to update schema
 -- psql -d bmttools -a -f schema.sql
 
-DROP TABLE IF EXISTS "companies";
+DROP TABLE IF EXISTS "companies" CASCADE;
 
 CREATE TABLE companies (
   id SERIAL NOT NULL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  address VARCHAR(255) NOT NULL
+  name VARCHAR(30) NOT NULL,
+  street_1 VARCHAR(25),
+  street_2 VARCHAR(25),
+  city VARCHAR(25),
+  zip_code VARCHAR(15),
+  state VARCHAR(15),
+  website VARCHAR(25)
 );
 
-DROP TABLE IF EXISTS "departments";
+DROP TABLE IF EXISTS "departments" CASCADE;
 
 CREATE TABLE departments (
   id SERIAL NOT NULL PRIMARY KEY,
   company_id INTEGER NOT NULL,
   name VARCHAR(255) NOT NULL,
-  division VARCHAR(255) NOT NULL,
+  division VARCHAR(255),
   FOREIGN KEY (company_id) REFERENCES companies(id)
 );
 
-DROP TABLE IF EXISTS "employees";
+DROP TABLE IF EXISTS "employees" CASCADE;
 
 CREATE TABLE employees (
   id SERIAL NOT NULL PRIMARY KEY,
   company_id INTEGER NOT NULL,
-  first_name VARCHAR(255) NOT NULL,
-  last_name VARCHAR(255) NOT NULL,
-  preferred_name VARCHAR(255) NOT NULL,
-  dob VARCHAR(255) NOT NULL,
-  ssn VARCHAR(255) NOT NULL,
-  gender VARCHAR(255) NOT NULL,
-  street_1 VARCHAR(255) NOT NULL,
-  street_2 VARCHAR(255) NOT NULL,
-  city VARCHAR(255) NOT NULL,
-  zip_code VARCHAR(15) NOT NULL,
-  state VARCHAR(25) NOT NULL,
-  email VARCHAR(255) NOT NULL,
-  phone_number VARCHAR(255) NOT NULL,
-  linkedin_url VARCHAR(255) NOT NULL,
-  position VARCHAR(255) NOT NULL,
-  employee_status VARCHAR(25) NOT NULL,
-  start_date VARCHAR(25) NOT NULL,
-  department VARCHAR(255) NOT NULL,
-  division VARCHAR(255) NOT NULL,
-  reports_to VARCHAR(255) NOT NULL,
-  wage MONEY NOT NULL,
-  pay_per VARCHAR(255) NOT NULL,
-  pay_type VARCHAR(255) NOT NULL,
+  first_name VARCHAR(15) NOT NULL,
+  last_name VARCHAR(15) NOT NULL,
+  preferred_name VARCHAR(15),
+  dob VARCHAR(25),
+  ssn VARCHAR(11),
+  gender VARCHAR(6),
+  street_1 VARCHAR(25),
+  street_2 VARCHAR(25),
+  city VARCHAR(255),
+  zip_code VARCHAR(15),
+  state VARCHAR(15),
+  email VARCHAR(25) NOT NULL,
+  phone_number VARCHAR(15),
+  linkedin_url VARCHAR(25),
+  position VARCHAR(50),
+  employee_status VARCHAR(10),
+  start_date VARCHAR(25),
+  department VARCHAR(25),
+  division VARCHAR(25),
+  reports_to VARCHAR(50),
+  wage MONEY,
+  pay_per VARCHAR(20),
+  pay_type VARCHAR(10),
   is_manager boolean,
-  pw VARCHAR(255) NOT NULL,
+  pw VARCHAR(50) NOT NULL,
   FOREIGN KEY (company_id) REFERENCES companies(id)
 );
 
-INSERT INTO companies (name, address) VALUES ('Hack Reactor', '369 Lexington');
-INSERT INTO companies (name, address) VALUES ('CodingCo', '1001 6th Avenue');
+DROP TABLE IF EXISTS "contracts" CASCADE;
+
+CREATE TABLE contracts (
+  id SERIAL NOT NULL PRIMARY KEY,
+  awaredTo_ID INTEGER NOT NULL,
+  company_id INTEGER NOT NULL,
+  clientName VARCHAR(255) NOT NULL,
+  contractName VARCHAR(255) NOT NULL,
+  contractAmount MONEY NOT NULL,
+  contractStartDate VARCHAR(30) NOT NULL,
+  contractEndDate VARCHAR(30) NOT NULL,
+  FOREIGN KEY (awaredTo_ID) REFERENCES employees(id),
+  FOREIGN KEY (company_id) REFERENCES companies(id)
+);
+
+INSERT INTO companies (name, street_1, street_2, city, zip_code, state, website) VALUES ('Hack Reactor', '369 Lexington Ave', 'Floor 11', 'New York', '10017', 'NY', 'www.hackreactor.com');
 
 INSERT INTO departments (company_id, name, division) VALUES (1, 'Marketing', 'West Coast');
 INSERT INTO departments (company_id, name, division) VALUES (1, 'Sales', 'West Coast');
 INSERT INTO departments (company_id, name, division) VALUES (1, 'Marketing', 'East Coast');
 INSERT INTO departments (company_id, name, division) VALUES (1, 'Sales', 'East Coast');
 
-INSERT INTO departments (company_id, name, division) VALUES (2, 'Marketing', 'West Coast');
-INSERT INTO departments (company_id, name, division) VALUES (2, 'Sales', 'West Coast');
-INSERT INTO departments (company_id, name, division) VALUES (2, 'Marketing', 'East Coast');
-INSERT INTO departments (company_id, name, division) VALUES (2, 'Sales', 'East Coast');
-
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
   linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
-  VALUES (1, 'Christopher', 'Rigoli', 'Chris', '11/4', '111-11-1111', 'male', '875 Tree St', '', 'Somewhere', 'NY', '10001', 'chris@hr.com', '123-123-1234', 'www.linkedin.com', 'CEO', 'Employed',
+  VALUES (1, 'Christopher', 'Rigoli', 'Chris', '11/4/85', '111-11-1111', 'male', '2268 31st Street', '', 'Astoria', '11105', 'NY', 'chris@hr.com', '123-123-1234', 'www.linkedin.com', 'CEO', 'Employed',
   'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
 
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
   linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
-  VALUES (1, 'Artem', 'Ipatev', 'Arty', '11/4', '111-11-1111', 'male', '875 Tree St', '', 'Somewhere', 'NY', '10001', 'artem@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
+  VALUES (1, 'Artem', 'Ipatev', 'Arty', '01/12/93', '111-11-1111', 'male', '217 W 18th Street', '', 'New York', '10011', 'NY', 'artem@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
   'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
 
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
   linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
-  VALUES (1, 'Brent', 'Hagen', 'Brenty', '11/4', '111-11-1111', 'male', '875 Tree St', '', 'Somewhere', 'NY', '10001', 'Brent@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
+  VALUES (1, 'Janelle', 'De la Cruz', 'Jay', '11/4/91', '111-11-1111', 'female', '406 6th Ave', 'Apt 23', 'New York', '10011', 'NY', 'janelle@hr.com', '123-123-1234', 'www.linkedin.com', 'Office Manager', 'Employed',
+  'today', 'Sales', 'East Coast', 'No One', '$60,000', 'Every other week', 'Salary', 'password');
+
+INSERT INTO employees
+(company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
+  VALUES (1, 'Brent', 'Hagen', 'Brenty', '06/15/84', '111-11-1111', 'male', '875 Tree St', '', 'Astoria', '11105', 'NY', 'Brent@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
   'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
 
   INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
   linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
-  VALUES (1, 'Aloralyn', 'Ayran', 'Lyn', '11/4', '111-11-1111', 'female', '875 Tree St', '', 'Somewhere', 'NY', '10001', 'Aloralyn@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
+  VALUES (1, 'Aloralyn', 'Ayran', 'Lyn', '11/16/88', '111-11-1111', 'female', '123 Troutman Street', '', 'Brooklyn',  '11221', 'NY','Aloralyn@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
   'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
+
+INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (1, 1, 'Chris', 'JS Immersive', '$17,000', '01-15-2018', '04-13-2018');
+INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (2, 1, 'Artem', 'JS Immersive', '$15,000', '01-19-2018', '04-27-2018');
+INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (3, 1, 'Brent', 'JS Immersive', '$19,000', '01-15-2018', '04-13-2018');
+INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (4, 1, 'Aloralyn', 'JS Immersive', '$21,000', '01-19-2018', '04-27-2018');
