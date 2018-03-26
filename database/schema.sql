@@ -52,6 +52,21 @@ CREATE TABLE employees (
   FOREIGN KEY (company_id) REFERENCES companies(id)
 );
 
+DROP TABLE IF EXISTS "contracts";
+
+CREATE TABLE contracts (
+  id SERIAL NOT NULL PRIMARY KEY,
+  awaredTo_ID INTEGER NOT NULL,
+  company_id INTEGER NOT NULL,
+  clientName VARCHAR(255) NOT NULL,
+  contractName VARCHAR(255) NOT NULL,
+  contractAmount MONEY NOT NULL,
+  contractStartDate VARCHAR(30) NOT NULL,
+  contractEndDate VARCHAR(30) NOT NULL,
+  FOREIGN KEY (awaredTo_ID) REFERENCES employees(id),
+  FOREIGN KEY (company_id) REFERENCES companies(id)
+);
+
 INSERT INTO companies (name, address) VALUES ('Hack Reactor', '369 Lexington');
 INSERT INTO companies (name, address) VALUES ('CodingCo', '1001 6th Avenue');
 
@@ -88,3 +103,8 @@ INSERT INTO employees
   linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
   VALUES (1, 'Aloralyn', 'Ayran', 'Lyn', '11/4', '111-11-1111', 'female', '875 Tree St', '', 'Somewhere', 'NY', '10001', 'Aloralyn@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
   'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
+
+INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (1, 1, 'Chris', 'JS Immersive', '$17,000', '01-15-2018', '04-13-2018');
+INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (2, 1, 'Artem', 'JS Immersive', '$15,000', '01-19-2018', '04-27-2018');
+INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (3, 2, 'Brent', 'JS Immersive', '$19,000', '01-15-2018', '04-13-2018');
+INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (4, 2, 'Aloralyn', 'JS Immersive', '$21,000', '01-19-2018', '04-27-2018');
