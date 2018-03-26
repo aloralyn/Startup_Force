@@ -3,21 +3,25 @@ const pg = require('pg');
 const { Pool, Client } = require('pg');
 //Guys, be sure to create your database in your postgres cli first before running your schema.sql file
 
-const config = {
-  user: 'christopherrigoli',
-  host: 'localhost',
-  password: '',
-  database: 'bmttools',
-  port: 5432,
-};
-
+// @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
+// @ DO NOT DELETE, CHRIS IS USING THIS CONFIG FOR LOCAL TESTING
+// @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 // const config = {
-//   user: "greyjoy",
-//   host: "bmttools.co5tjr5irgfy.us-east-2.rds.amazonaws.com",
-//   password: "chrisbrentartemlyn369",
-//   database: "bmt",
-//   port: 5432
-// }
+//   user: 'christopherrigoli',
+//   host: 'localhost',
+//   password: '',
+//   database: 'bmttools',
+//   port: 5432,
+// };
+// @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
+
+const config = {
+  user: "greyjoy",
+  host: "bmttools.co5tjr5irgfy.us-east-2.rds.amazonaws.com",
+  password: "chrisbrentartemlyn369",
+  database: "bmt",
+  port: 5432
+}
 
 const client = new Client(config)
 
