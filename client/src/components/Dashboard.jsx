@@ -12,6 +12,7 @@ import Schedules from './Schedules/Schedules.jsx';
 import Onboarding from './Onboarding/Onboarding.jsx'
 import Reports from './Reports/Reports.jsx';
 import Messages from './Messages/Messages.jsx';
+import SignUpForm from './SignUp/SignUp.jsx';
 
 import {
   Container,
@@ -68,9 +69,9 @@ class DesktopContainer extends Component {
                   <Menu.Item><Link to="/onboarding">Onboarding</Link></Menu.Item>
                   <Menu.Item><Link to="/reports">Reports</Link></Menu.Item>
                   <Menu.Item><Link to="/messages">Messages</Link></Menu.Item>
+                  <Menu.Item><Link to="/sign-up">Sign Up</Link></Menu.Item>
                   <Menu.Menu position='right'>
                     <Menu.Item>
-                      <Input icon='search' placeholder='Search...' />
                       <Menu.Item name='logout'  />
                     </Menu.Item>
                   </Menu.Menu>
@@ -86,6 +87,7 @@ class DesktopContainer extends Component {
               <Route path="/onboarding" component={Onboarding} />
               <Route path="/reports" component={Reports} />
               <Route path="/messages" component={Messages} />
+              <Route path="/sign-up" component={SignUpForm} />
             </Switch>
 
           </Visibility>
