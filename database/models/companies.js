@@ -1,9 +1,7 @@
 const db = require('../index.js');
 
 exports.createCompany = function(input) {
-  let name = input.name;
-  let address = input.address;
-  let queryStr = `INSERT INTO companies (name, address) VALUES ('${name}', '${address}');`;
+  let queryStr = `INSERT INTO companies (name, street_1, street_2, city, zip_code, state, website) VALUES ('${input.name}', '${input.street_1}', '${input.street_2}', '${input.city}', '${input.zip_code}', '${input.state}', '${input.website}');`;
   
   return db.query(queryStr, function(err, results) {
     if (err) 
@@ -12,9 +10,8 @@ exports.createCompany = function(input) {
 }
 
 exports.updateCompany = function(id, input) {
-  let name = input.name;
-  let address = input.address;
-  let queryStr = `UPDATE companies SET name='${name}', address='${address}' WHERE id=${id};`;
+  console.log(input)
+  let queryStr = `UPDATE companies SET name='${input.name}', street_1='${input.street_1}', street_2='${input.street_2}', city='${input.city}', zip_code='${input.zip_code}', state='${input.state}', website='${input.website}' WHERE id=${id};`;
 
   return db.query(queryStr, function(err, results) {
     if (err) 

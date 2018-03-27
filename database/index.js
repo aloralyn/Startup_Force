@@ -1,4 +1,5 @@
 const pg = require('pg');
+const cf = require('../server/config.js');
 
 const { Pool, Client } = require('pg');
 //Guys, be sure to create your database in your postgres cli first before running your schema.sql file
@@ -16,11 +17,11 @@ const { Pool, Client } = require('pg');
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 
 const config = {
-  user: "greyjoy",
-  host: "bmttools.co5tjr5irgfy.us-east-2.rds.amazonaws.com",
-  password: "chrisbrentartemlyn369",
-  database: "bmt",
-  port: 5432
+  user: cf.pgUser,
+  host: cf.pgHost,
+  password: cf.pgPassword,
+  database: cf.pgDatabase,
+  port: cf.pgPort
 }
 
 const client = new Client(config)
