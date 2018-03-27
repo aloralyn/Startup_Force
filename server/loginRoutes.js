@@ -8,54 +8,31 @@ const passportjwt = require('passport-jwt');
 const ExtractJwt = passportjwt.ExtractJwt;
 const JwtStrategy = passportjwt.Strategy;
 
-// passport.use(new LocalStrategy((email, password, done) => {
-//   User.findOne({ email: email }, (err, user) => {
-//     if (err) {}
-//     if (!user) {
-
-//     }
-//     if (!user.validPassword(password)) {
-
-//     }
-//     return done(null, user);    
-//   });
-// }));
-
 var jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
-  secretOrKey: 'itisbettertobecruelthanweak'
+  secretOrKey: 'itisbettertobecruelthanweak' // use firebase key
 };
-
-var users = [{id: 1, email: 'user@user.com', pw: 'pw'}];
 
 var strategy = new JwtStrategy(jwtOptions, (jwt_payload, next) => {
   console.log('payload received', jwt_payload); 
-  // var user = users[_.findIndex(users, {id: jwt_payload.id})];
-  // var user = users[0];
-  // substitute with database call: 
   db.query(`SELECT * FROM employees WHERE id = ${jwt_payload.id};`, (err, data) => {
     console.log(data)
-    // if (user) {
-    //   next(null, user);
-    // } else {
-    //   next(null, false);
-    // }
+    if (data.rows.length) {
+      next(null, data.rows[0].id);
+    } else {
+      next(null, false);
+    }
   });
 });
 
 passport.use(strategy);
 
 // compare password
-const comparePassword = (rawPw, encryptPw) => {
+const comparePassword = (rawPw, hashedPw) => {
   // add bcrypt later
   // bcrypt.compare(rawPw, encryptPw, (err, exists) => !!exists);
-  console.log('passwords', rawPw, encryptPw);
-  return (rawPw === encryptPw);
-};
-
-// generate token
-const generateToken = (name) => {
-
+  console.log('passwords', rawPw, hashedPw);
+  return (rawPw === hashedPw);
 };
 
 // once token is generated, send to Firebase (from Firebase docs)
@@ -65,25 +42,6 @@ const generateToken = (name) => {
 //   var errorMessage = error.message;
 //   // ...
 // });
-
-// return token if password matches, otherwise??
-const loginCheck = async (email, password) => {
-  let queryStr = `SELECT * FROM employees WHERE email = ${email};`;
-  return db.query(queryStr)
-    .then(res => {
-        // what is proper formatting for password from db?
-        if (comparePassword(password, res.pw)) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    ).catch(err => console.log(err.stack))
-};
-
-const logout = async () => {
-  // to complete
-}
 
 loginRouter.post('/login', (req, res) => {
   if (req.body.email && req.body.pw) {
@@ -96,7 +54,16 @@ loginRouter.post('/login', (req, res) => {
       res.status(401).json({message: 'no such user'});
     }
     else if (comparePassword(pw, data.rows[0].pw)) {
-      var payload = {id: data.rows[0].id};
+      var iat = Math.floor(new Date().getTime() / 1000);
+      var payload = {
+        uid: data.rows[0].id,
+        alg: 'RS256',
+        iss: 'brent.timothy.hagen@gmail.com',
+        sub: 'brent.timothy.hagen@gmail.com',
+        aud: 'https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit',
+        iat: iat,
+        exp: iat + 3600
+      };
       var token = jwt.sign(payload, jwtOptions.secretOrKey);
       res.json({message: 'ok', token: token});
     } else {
@@ -105,14 +72,13 @@ loginRouter.post('/login', (req, res) => {
   });
 });
 
-loginRouter.get('/logout', async (req, res) => {
-  //let id = req.params.id;
-  try {
-    await logout(id)
-    res.status(202).end();
-  } catch(e) {
-    res.status(400).end();
-  }
+loginRouter.get('/secret', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json('yer token works');
+});
+
+loginRouter.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/login');
 });
 
 module.exports = loginRouter;
