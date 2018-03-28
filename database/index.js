@@ -7,6 +7,8 @@ const { Pool, Client } = require('pg');
 // @ DO NOT DELETE, CHRIS IS USING THIS CONFIG FOR LOCAL TESTING
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 const config = {
+  // user: 'aloralynayran',
+  // user: 'artemipatev',
   user: 'christopherrigoli',
   host: 'localhost',
   password: '',
