@@ -13,6 +13,7 @@ import Onboarding from './Onboarding/Onboarding.jsx'
 import Reports from './Reports/Reports.jsx';
 import Messages from './Messages/Messages.jsx';
 import SignUpForm from './SignUp/SignUp.jsx';
+import { logout } from '../actions/dashboardActions.js';
 
 import {
   Container,
@@ -72,7 +73,7 @@ class DesktopContainer extends Component {
                   <Menu.Item><Link to="/sign-up">Sign Up</Link></Menu.Item>
                   <Menu.Menu position='right'>
                     <Menu.Item>
-                      <Menu.Item name='logout'  />
+                      <Menu.Item name='logout' onClick={() => logout()}  />
                     </Menu.Item>
                   </Menu.Menu>
                 </Container>

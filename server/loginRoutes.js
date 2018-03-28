@@ -76,9 +76,10 @@ loginRouter.get('/secret', passport.authenticate('jwt', { session: false }), (re
   res.json('yer token works');
 });
 
-loginRouter.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/login');
-});
+// possible logout route
+// loginRouter.get('/logout', (req, res) => {
+//   req.logout();
+//   res.redirect('/login');
+// });
 
 module.exports = loginRouter;
