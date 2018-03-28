@@ -8,8 +8,8 @@ const await = require('asyncawait/await');
 
 bmtRouter.post('/api/create_company', async (req, res) => {
   try {
-    await companyController.createCompany(req.body)
-    res.status(200).end();
+    let result = await companyController.createCompany(req.body)
+    res.status(200).send(result.toString());
   } catch(e) {
     res.status(400).end();
   }
@@ -73,6 +73,15 @@ bmtRouter.post('/api/employee/:id', async (req, res) => {
 
 
 
+bmtRouter.post('/api/create_first_employee', async (req, res) => {
+  try {
+    await employeeController.createFirstEmployee(req.body)
+    res.status(200).end();
+  } catch(e) {
+    res.status(400).end();
+  }
+});
+
 bmtRouter.post('/api/create_employee_profile', async (req, res) => {
   try {
     await employeeController.createEmployeeProfile(req.body)
@@ -81,6 +90,7 @@ bmtRouter.post('/api/create_employee_profile', async (req, res) => {
     res.status(400).end();
   }
 });
+
 
 bmtRouter.post('/api/upload_photo/:id', async (req, res) => {
   let id = req.params.id;
