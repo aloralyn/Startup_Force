@@ -1,4 +1,4 @@
-import { HANDLE_SIGNUPCHANGE } from '../actions/types';
+import { HANDLE_FORMCHANGE } from '../actions/types';
 
 const initialState = {
   company_name: '',
@@ -15,7 +15,7 @@ const initialState = {
 
 function newCompanyReducer(state = initialState, action){
   switch(action.type) {
-    case HANDLE_SIGNUPCHANGE:
+    case HANDLE_FORMCHANGE:
       return {
         ...state,
         [action.payload.eName]: action.payload.val

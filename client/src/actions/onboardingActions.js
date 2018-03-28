@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export function addEmployee(state) {
+export const addEmployee = (state) => {
   return (dispatch) => {
     axios.post('/api/create_employee_profile', state)
       .then((response) => {
@@ -12,7 +12,7 @@ export function addEmployee(state) {
   };
 };
 
-export function addDepartment(state) {
+export const addDepartment = (state) => {
   return (dispatch) => {
     axios.post('/api/create_department/1', state)
       .then((response) => {

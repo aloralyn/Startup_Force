@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { handleChange, createCompany } from '../../actions/newCompanyActions.js';
+import { createCompany } from '../../actions/newCompanyActions.js';
+import { handleChange } from '../../actions/formChangeActions.js';
 
 import {
   Button,

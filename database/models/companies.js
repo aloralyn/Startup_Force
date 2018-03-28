@@ -1,6 +1,6 @@
 const db = require('../index.js');
 
-exports.createCompany = async = (input) => {
+exports.createCompany = (input) => {
   let queryStr = `INSERT INTO companies (company_name, street_1, street_2, city, zip_code, state, website) VALUES ('${input.company_name}', '${input.street_1}', '${input.street_2}', '${input.city}', '${input.zip_code}', '${input.state}', '${input.website}') RETURNING id;`;
   
   return db.query(queryStr) 
