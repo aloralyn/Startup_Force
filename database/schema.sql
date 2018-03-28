@@ -138,3 +138,10 @@ insert into schedules (user_id, start, finish, month, year) values (3, '2018-03-
 insert into schedules (user_id, start, finish, month, year) values (1, '2018-03-13T09:00:00-04:00', '2018-03-13T17:00:00-04:00', 'Mar', 2018);
 insert into schedules (user_id, start, finish, month, year) values (1, '2018-02-13T09:00:00-04:00', '2018-02-13T17:00:00-04:00', 'Feb', 2018);
 
+insert into schedules (user_id, start, finish, month, year) values (2, '2017-11-09T09:00:00-04:00', '2018-03-09T17:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (2, '2017-11-11T09:00:00-04:00', '2018-03-11T17:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (5, '2017-11-12T11:00:00-04:00', '2018-03-12T19:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (5, '2017-12-13T09:00:00-04:00', '2018-03-13T14:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (5, '2017-12-14T09:00:00-04:00', '2018-03-13T17:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (1, '2017-12-13T09:00:00-04:00', '2018-02-13T17:00:00-04:00', 'Feb', 2018);
+

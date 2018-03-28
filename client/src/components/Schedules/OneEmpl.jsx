@@ -16,7 +16,6 @@ class OneEmpl extends Component {
 	var ind;
 	console.log("ONE EMPL: ", schedules)
 	schedules.forEach((one, i) => {
-			console.log(first_name, one.first_name, one.first_name===first_name, day,  moment(day).format("YYYY MMM DD") ,moment(one.start).format("YYYY MMM DD"), moment(one.start).format("YYYY MMM DD")===moment(day).format("YYYY MMM DD"))
 		if (one.first_name === first_name && moment(day).format("YYYY MMM DD") === moment(one.start).format("YYYY MMM DD")) {
 			needed = one;
 			ind = i;
@@ -26,7 +25,7 @@ class OneEmpl extends Component {
 		return (
 			<div>
 			{
-				needed !== undefined &&
+				needed && moment(moment(new Date())).isBefore(day) &&
 					<Button animated='fade' fluid 
 					onClick={()=>this.props.showEdit(needed.start, needed.finish, ind, first_name, day, needed.id)}>
 			      <Button.Content hidden>
@@ -38,7 +37,18 @@ class OneEmpl extends Component {
 			      </Button.Content>
 			    </Button>
 			    ||
+			   needed && !moment(moment(new Date())).isBefore(day) &&
+			   	<Button>
+			      <Button.Content>
+				      <div>{`${moment(needed.start).format("h:mm a")}`}</div>
+							<div>{`${moment(needed.finish).format("h:mm a")}`}</div>
+			      </Button.Content>
+			    </Button>
+			    ||
+			    
+			   	moment(moment(new Date())).isBefore(day) &&
 			    <Button size='mini' onClick={()=>this.props.showAdd(first_name, day)}><Icon name='plus'/></Button>
+			    
 				
 
 			}

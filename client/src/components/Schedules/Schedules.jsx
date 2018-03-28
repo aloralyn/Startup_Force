@@ -3,13 +3,10 @@ import ReactDOM from 'react-dom';
 import './App.css'
 import 'rc-time-picker/assets/index.css';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import { withRouter } from 'react-router';
-import { 
-	getSchedule, 
-	postSchedule, 
-	editSchedule,
-	deleteSchedule,
-} from '../../actions/scheduleActions'
+import * as Actions from '../../actions/scheduleActions'
 import OneEmpl from './OneEmpl.jsx'
 import axios from 'axios';
 import moment from 'moment-timezone';
@@ -28,7 +25,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import TimePicker from 'rc-time-picker';
 
-
+import 'babel-polyfill';
 import { Resizable, ResizableBox } from 'react-resizable';
 
 
@@ -41,15 +38,21 @@ class Schedules extends Component {
 			openEdit: false, openAdd: false,
 			emptyFieldStyle: {borderRadius: '5px'},
 			emptySH: true, emptySM: true, emptyFM: true, emptyFH: true,
-			startGreaterFinish: false
+			startGreaterFinish: false,
+			
 		}
 	}
-	componentWillMount() {
-		console.log(this.props)
-		this.props.getSchedule(2018, 'mar', '1'); // hard coded - NEED TO BE CHANGED
+	componentDidMount() {
 		var date = new Date()
 		var weekNum = this.getWeekNumber(date)
-		var week = this.getDateOfWeek(weekNum[1], weekNum[0], date)
+		var week = this.getDateOfWeek(weekNum[1], weekNum[0], date);
+		var arr = [];
+		var date = moment(date).format("YYYY MMM").toString();
+		var month = moment(date).format("MMM").toString();
+		var year = moment(date).format("YYYY").toString();
+		this.props.getSchedules(year, month, 1); // hard coded - NEED TO BE CHANGED
+		arr.push(month)
+		this.setState({ week, fetchedMonths: arr})
 	}
 
 	showEdit = (start, finish, ind, first_name, day, id) => this.setState({openEdit: true, id: id, first_name, day, finish, start})
@@ -67,12 +70,13 @@ class Schedules extends Component {
 			
 	getDateOfWeek = (w, y, clickedDay) => {
 		var week = [];
+		let month = moment(clickedDay).format("MMM");
+		let year = moment(clickedDay).format("YYYY")
 		for (var i = 0; i < 7; i++) {
 			var day = new Date(y, 0, 1+ i +( (w-1)*7 ) )
 			week.push(moment(`${y}-${day.getMonth() + 1}-${day.getDate()}`).format("YYYY MMM DD"))
 		}
-		console.log( moment(clickedDay).format("YYYY MMM DD"), week)
-		this.setState({ week, clickedDay: moment(clickedDay).format("YYYY MMM DD").toString() })
+		return week
 	}	
 
 	render() {
@@ -111,8 +115,6 @@ class Schedules extends Component {
 			    format={'h a'}
 			    use12Hours
 			    inputReadOnly
-			    style={this.state.emptySH ? this.state.emptyFieldStyle : {}}
-			    placeholder={this.state.emptySH ? "Please pick the time" : ""}
 			  />
 			  
 			  Minutes:
@@ -124,8 +126,6 @@ class Schedules extends Component {
 			    format={'mm'}
 			    minuteStep={15}
 			    inputReadOnly
-			    style={this.state.emptySM ? this.state.emptyFieldStyle : {}}
-			    placeholder={this.state.emptySM ? "Please pick the time" : ""}
 			  />
 			  <br />
 			  <br />
@@ -148,8 +148,6 @@ class Schedules extends Component {
 			    }
 			    format={'hh a'}
 			    use12Hours
-			    style={this.state.emptyFH ? this.state.emptyFieldStyle : {}}
-			    placeholder={this.state.emptyFH ? "Please pick the time" : ""}
 			  />
 			  
 			  Minutes:
@@ -160,8 +158,6 @@ class Schedules extends Component {
 			    onChange={(finish) => this.setState({finishMinuteEdit: moment(finish).format('mm'), emptyFM: false})}
 			    format={'mm'}
 			    minuteStep={15}
-			    style={this.state.emptyFM ? this.state.emptyFieldStyle : {}}
-			    placeholder={this.state.emptyFM ? "Please pick the time" : ""}
 			  />
 			  <br />
 			  <br />
@@ -177,7 +173,7 @@ class Schedules extends Component {
         }>
           Delete shift
         </Button>
-        <Button color='black' onClick={this.closeEdit}>
+        <Button color='black' onClick={()=>this.closeEdit()}>
           Cancel
         </Button>
         <Button 
@@ -191,7 +187,6 @@ class Schedules extends Component {
         	const copy = start.slice();
         	const startEdit = moment(moment(copy).set({ h : startHourEdit, m : startMinuteEdit })).format()
         	const finishEdit = moment(moment(copy).set({ h : finishHourEdit, m : finishMinuteEdit })).format()
-        	console.log(first_name, start, startEdit, finish, finishEdit, id )
         	if (moment(startEdit).isBefore(finishEdit)) {
         	this.props.editSchedule({first_name, start, startEdit, finish, finishEdit, id });
         	this.closeEdit();
@@ -231,8 +226,6 @@ class Schedules extends Component {
 			    format={'h a'}
 			    use12Hours
 			    inputReadOnly
-			    style={this.state.emptySH ? this.state.emptyFieldStyle : {}}
-			    placeholder={this.state.emptySH ? "Please pick the time" : ""}
 			  />
 			  
 			  Minutes:
@@ -244,8 +237,6 @@ class Schedules extends Component {
 			    format={'mm'}
 			    minuteStep={15}
 			    inputReadOnly
-			    style={this.state.emptySM ? this.state.emptyFieldStyle : {}}
-			    placeholder={this.state.emptySM ? "Please pick the time" : ""}
 			  />
 			  <br />
 			  <br />
@@ -268,8 +259,6 @@ class Schedules extends Component {
 			    }
 			    format={'hh a'}
 			    use12Hours
-			    style={this.state.emptyFH ? this.state.emptyFieldStyle : {}}
-			    placeholder={this.state.emptyFH ? "Please pick the time" : ""}
 			  />
 			  
 			  Minutes:
@@ -280,15 +269,13 @@ class Schedules extends Component {
 			    onChange={(finish) => this.setState({finishMinuteEdit: moment(finish).format('mm'), emptyFM: false})}
 			    format={'mm'}
 			    minuteStep={15}
-			    style={this.state.emptyFM ? this.state.emptyFieldStyle : {}}
-			    placeholder={this.state.emptyFM ? "Please pick the time" : ""}
 			  />
 			  <br />
 			  {this.state.startGreaterFinish ? <p style={{color: 'red'}}>Finish can't be earlier than start</p> : ""}
       </Modal.Description>
       </Modal.Content>
       <Modal.Actions>
-        <Button color='black' onClick={this.closeEdit}>
+        <Button color='black' onClick={()=>this.closeEdit()}>
           Cancel
         </Button>
         <Button 
@@ -304,13 +291,12 @@ class Schedules extends Component {
         	const month = moment(new Date(copy.split(' ').join('-'))).format("MMM")
         	const year = moment(new Date(copy.split(' ').join('-'))).format("YYYY")
 	        if (moment(startEdit).isBefore(finishEdit)) {
-
-	        this.props.postSchedule({first_name, start: startEdit, finish: finishEdit, month, year });
-        	this.closeAdd()
-        	this.setState({startGreaterFinish: false, confirmAdd: true, emptySH: false, emptySM: false, emptyFH: false, emptyFM: false})
-        } else {
-        	this.setState({startGreaterFinish: true})
-        }
+		        this.props.postSchedule({first_name, start: startEdit, finish: finishEdit, month, year });
+	        	this.closeAdd()
+	        	this.setState({startGreaterFinish: false, confirmAdd: true, emptySH: false, emptySM: false, emptyFH: false, emptyFM: false})
+	        } else {
+	        	this.setState({startGreaterFinish: true})
+	        }
         }
         }} />
       </Modal.Actions>
@@ -349,8 +335,19 @@ class Schedules extends Component {
 			fixedWeeks
 			firstDayOfWeek={1}
       onDayChange={day => {
-      	var weekNum = this.getWeekNumber(day)
-      	var week = this.getDateOfWeek(weekNum[1], weekNum[0], day)
+      	var date = moment(day).format("YYYY MMM").toString() + '';
+      	var month = moment(day).format("MMM").toString() + '';
+      	var year = moment(day).format("YYYY").toString() + '';
+      	var weekNum = this.getWeekNumber(day);
+      	var week = this.getDateOfWeek(weekNum[1], weekNum[0], day);
+      	if (this.state.fetchedMonths.indexOf(date) === -1) {
+      		this.props.getSchedules(year, month, 1)
+      	var fetchedMonths1 = this.state.fetchedMonths.slice()
+      	fetchedMonths1.push(date)
+      		this.setState({ week, fetchedMonths: fetchedMonths1 }, () => console.log(this.state.fetchedMonths))
+      	} else {
+      		this.setState({ week })
+      	}
       }}
     />
     {/*****************************************************************
@@ -370,99 +367,25 @@ class Schedules extends Component {
 				{this.props.employees.map((empl, indOfEmpl) => (
 					<Table.Row style={{height: '100px'}}>
         		
-								<Table.Cell>{empl}</Table.Cell>
+								<Table.Cell>{empl.first_name}</Table.Cell>
 							
 							{this.state.week.map((day, indOfDate) => 
-							(
-								<Table.Cell>
+							(<Table.Cell>
 									<div><OneEmpl 
 										showEdit={this.showEdit}
 										showAdd={this.showAdd}
 										day={day}
-										first_name={empl}
+										first_name={empl.first_name}
 										schedules={this.props.schedules} 
 										/></div>
-								</Table.Cell>
-							)
+								</Table.Cell>)
 							
 							)}
 					</Table.Row>		
 					))}
 		</Table.Body>
-				<Table.Footer fullWidth>
-      		<Table.Row>
-				<Table.HeaderCell>
-					<Button animated='fade' fluid onClick={this.open}>
-			      <Button.Content hidden>+Add Employee</Button.Content>
-			      <Button.Content visible>
-			            <Icon name='add user' />     
-			      </Button.Content>
-			    </Button>
-					</Table.HeaderCell>
-					<Table.HeaderCell colSpan='7' />
-				</Table.Row>
-				</Table.Footer>
 		</Table>
-		{/*****************************************************************
-						Table VIEW >> DAY (not finished and probably won't)
-		*******************************************************************/}
-{/*
-<Table celled selectable fixed textAlign={'center'} verticalAlign={'middle'}>
-    <Table.Header>
-      <Table.Row fullWidth>
-					<Table.HeaderCell colSpan='2'>Employees</Table.HeaderCell>
-					<Table.HeaderCell colSpan='24'>{`${this.state.clickedDay}`}</Table.HeaderCell>
-				</Table.Row>
-    </Table.Header>
-		<Table.Body>
-      
-					<Table.Row style={{height: '70px', margin: '0px'}} colSpan='26'>
-        		
-						<Table.Cell colSpan='2'></Table.Cell>
-					
-							{
-								['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm']
-								.map((time, num) => (
-						<Table.Cell colSpan='1' style={{padding: '0px', fontSize: '9'}}>
-							{time}
-						</Table.Cell>
-								))
-							}
-							
-							
-					</Table.Row>		
-				{this.props.employees.map((empl, indOfEmpl) => (
-					<Table.Row style={{height: '70px', padding: '0px'}} colSpan='26'>
-        		
-								<Table.Cell colSpan='2' >{empl}</Table.Cell>
-							
-								<Table.Cell colSpan='24' style={{ padding: '0px'}}>
-									Here is should be element
-					<ResizableBox className="box" draggableOpts={{grid: [25, 25]}} width={150} height={20} axis="x">
-            <span className="text">Only resizable by "x" axis.</span>
-          </ResizableBox>
-								</Table.Cell>
-							
-							
-					</Table.Row>		
-					))}
-		</Table.Body>
-				<Table.Footer fullWidth>
-      		<Table.Row>
-				<Table.HeaderCell colSpan='2'>
-					<Button animated='fade' fluid>
-			      <Button.Content hidden>+Add Employee</Button.Content>
-			      <Button.Content visible>
-			            <Icon name='add user' />     
-			      </Button.Content>
-			    </Button>
-					</Table.HeaderCell>
-					<Table.HeaderCell colSpan='24' />
-				</Table.Row>
-				</Table.Footer>
-		</Table>
-		
-*/}
+
 
 		</div>
 	)
@@ -474,13 +397,12 @@ const mapStateToProps = store => ({
 		schedules: store.scheduleReducer.schedules,
 		postSchedule: store.postSchedule,
 		editSchedule: store.editSchedule,
-		deleteSchedule: store.deleteSchedule,
+		deleteSchedule: store.deleteSchedule
 })
 
+function matchDispatchToProps(dispatch) {
+	return bindActionCreators(Actions, dispatch)
+}
 
-export default withRouter(connect(mapStateToProps, { 
-	getSchedule, 
-	postSchedule, 
-	editSchedule,
-	deleteSchedule, })(Schedules));
+export default withRouter(connect(mapStateToProps, matchDispatchToProps)(Schedules));
 

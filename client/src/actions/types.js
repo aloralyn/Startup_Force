@@ -15,6 +15,7 @@ export const ADD_DEPARTMENT = 'ADD_DEPARTMENT';
 // @ SCHEDULES ACTION TYPES
 // @ @ @ @ @ @ @ @ @ @ @ @
 export const GET_SCHEDULES = 'GET_SCHEDULES';
+export const GET_SCHEDULE = 'GET_SCHEDULE';
 export const POST_SCHEDULE = 'POST_SCHEDULE';
 export const EDIT_SCHEDULE = 'EDIT_SCHEDULE';
 export const DELETE_SCHEDULE = 'DELETE_SCHEDULE';
