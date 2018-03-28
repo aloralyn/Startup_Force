@@ -13,7 +13,7 @@ const initialState = {
   pw: ''
 };
 
-function newCompanyReducer(state = initialState, action) {
+function newCompanyReducer(state = initialState, action){
   switch(action.type) {
     case HANDLE_SIGNUPCHANGE:
       return {
@@ -25,4 +25,4 @@ function newCompanyReducer(state = initialState, action) {
   }
 }
 
-const newCompanyReducer()
+export default newCompanyReducer;

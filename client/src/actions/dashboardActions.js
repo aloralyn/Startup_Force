@@ -45,7 +45,8 @@ export function logout() {
   localStorage.removeItem('authToken');
   window.location.reload();
   // dispatch action to reset state?
-}
+};
+
 export const fetchManagers = (companyId) => {
   return (dispatch) => {
     axios.get('/api/all_managers', companyId)
