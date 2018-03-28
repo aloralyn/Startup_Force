@@ -24,13 +24,10 @@ export default class Contracts extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.toggleView = this.toggleView.bind(this);
     this.getExistingContract = this.getExistingContract.bind(this);
+    this.getAllContracts = this.getAllContracts.bind(this);
   }
 
   componentDidMount() {
-    // pull data from database about contracts
-    // pass data down to existing contract component
-    // pull all contracts from database related to this company
-    // since the manager has manager credentials
     this.getAllContracts();
   }
 
