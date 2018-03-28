@@ -1,7 +1,13 @@
 // @ @ @ @ @ @ @ @ @ @ @ @ @
-// @ NEW COMPANY ACTION TYPE
+// @ SIGNUP ACTION TYPE
 // @ @ @ @ @ @ @ @ @ @ @ @ @
 export const HANDLE_SIGNUPCHANGE = 'HANDLE_SIGNUPCHANGE';
+
+// @ @ @ @ @ @ @ @ @ @ @ @ @
+// @ DASHBOARD ACTION TYPE
+// @ @ @ @ @ @ @ @ @ @ @ @ @
+export const FETCH_MANAGERS = 'FETCH_MANAGERS';
+
 // @ @ @ @ @ @ @ @ @ @ @ @
 // @ USER ACTION TYPES
 // @ @ @ @ @ @ @ @ @ @ @ @

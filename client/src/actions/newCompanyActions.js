@@ -16,7 +16,6 @@ export const createCompany = (company, employee) => {
     axios.post('/api/create_company', company)
       .then((response) => {
         employee.company_id = parseInt(response.data);
-        console.log(employee)
         axios.post('/api/create_first_employee', employee)
           .then((response) => {
           console.log('Company and admin successfully saved')

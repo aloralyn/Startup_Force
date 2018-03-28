@@ -46,3 +46,15 @@ export function logout() {
   window.location.reload();
   // dispatch action to reset state?
 }
+export const fetchManagers = (companyId) => {
+  return (dispatch) => {
+    axios.get('/api/all_managers', companyId)
+      .then((response) => {
+        dispatch({
+          type: 'FETCH_MANAGERS',
+          payload: response.data
+        });
+      })
+  };
+}
+
