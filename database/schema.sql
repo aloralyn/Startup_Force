@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS "companies" CASCADE;
 
 CREATE TABLE companies (
   id SERIAL NOT NULL PRIMARY KEY,
-  name VARCHAR(30) NOT NULL,
+  company_name VARCHAR(30) NOT NULL,
   street_1 VARCHAR(25),
   street_2 VARCHAR(25),
   city VARCHAR(25),
@@ -48,13 +48,14 @@ CREATE TABLE employees (
   start_date VARCHAR(25),
   department VARCHAR(25),
   division VARCHAR(25),
-  reports_to VARCHAR(50),
+  reports_to INTEGER,
   wage MONEY,
   pay_per VARCHAR(20),
   pay_type VARCHAR(10),
   is_manager boolean,
   pw VARCHAR(50) NOT NULL,
-  FOREIGN KEY (company_id) REFERENCES companies(id)
+  FOREIGN KEY (company_id) REFERENCES companies(id),
+  FOREIGN KEY (reports_to) REFERENCES employees(id)
 );
 
 DROP TABLE IF EXISTS "contracts" CASCADE;
@@ -72,7 +73,21 @@ CREATE TABLE contracts (
   FOREIGN KEY (company_id) REFERENCES companies(id)
 );
 
-INSERT INTO companies (name, street_1, street_2, city, zip_code, state, website) VALUES ('Hack Reactor', '369 Lexington Ave', 'Floor 11', 'New York', '10017', 'NY', 'www.hackreactor.com');
+DROP TABLE IF EXISTS "schedules" CASCADE;
+
+CREATE TABLE schedules (
+  id SERIAL NOT NULL PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  start VARCHAR(100),
+  finish VARCHAR(100),
+  month VARCHAR(10),
+  year INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES employees(id)
+);
+
+
+
+INSERT INTO companies (company_name, street_1, street_2, city, zip_code, state, website) VALUES ('Hack Reactor', '369 Lexington Ave', 'Floor 11', 'New York', '10017', 'NY', 'www.hackreactor.com');
 
 INSERT INTO departments (company_id, name, division) VALUES (1, 'Marketing', 'West Coast');
 INSERT INTO departments (company_id, name, division) VALUES (1, 'Sales', 'West Coast');
@@ -81,35 +96,51 @@ INSERT INTO departments (company_id, name, division) VALUES (1, 'Sales', 'East C
 
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
-  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw)
   VALUES (1, 'Christopher', 'Rigoli', 'Chris', '11/4/85', '111-11-1111', 'male', '2268 31st Street', '', 'Astoria', '11105', 'NY', 'chris@hr.com', '123-123-1234', 'www.linkedin.com', 'CEO', 'Employed',
-  'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
-
+  'today', 'Sales', 'East Coast', 1, '$100,000', 'Week', 'Salary', true, 'password');
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
-  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw)
   VALUES (1, 'Artem', 'Ipatev', 'Arty', '01/12/93', '111-11-1111', 'male', '217 W 18th Street', '', 'New York', '10011', 'NY', 'artem@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
-  'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
-
+  'today', 'Sales', 'East Coast', 1, '$100,000', 'Week', 'Salary', true, 'password');
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
-  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw)
   VALUES (1, 'Janelle', 'De la Cruz', 'Jay', '11/4/91', '111-11-1111', 'female', '406 6th Ave', 'Apt 23', 'New York', '10011', 'NY', 'janelle@hr.com', '123-123-1234', 'www.linkedin.com', 'Office Manager', 'Employed',
-  'today', 'Sales', 'East Coast', 'No One', '$60,000', 'Every other week', 'Salary', 'password');
-
+  'today', 'Sales', 'East Coast', 2, '$60,000', 'Every other week', 'Salary', true, 'password');
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
-  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw)
   VALUES (1, 'Brent', 'Hagen', 'Brenty', '06/15/84', '111-11-1111', 'male', '875 Tree St', '', 'Astoria', '11105', 'NY', 'Brent@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
-  'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
-
+  'today', 'Sales', 'East Coast', 2, '$100,000', 'Week', 'Salary', true, 'password');
   INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
-  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, pw)
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw)
   VALUES (1, 'Aloralyn', 'Ayran', 'Lyn', '11/16/88', '111-11-1111', 'female', '123 Troutman Street', '', 'Brooklyn',  '11221', 'NY','Aloralyn@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
-  'today', 'Sales', 'East Coast', 'No One', '$100,000', 'Week', 'Salary', 'password');
+  'today', 'Sales', 'East Coast', 3, '$100,000', 'Week', 'Salary', true, 'password');
 
 INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (1, 1, 'Chris', 'JS Immersive', '$17,000', '01-15-2018', '04-13-2018');
 INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (2, 1, 'Artem', 'JS Immersive', '$15,000', '01-19-2018', '04-27-2018');
 INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (3, 1, 'Brent', 'JS Immersive', '$19,000', '01-15-2018', '04-13-2018');
 INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (4, 1, 'Aloralyn', 'JS Immersive', '$21,000', '01-19-2018', '04-27-2018');
+
+insert into schedules (user_id, start, finish, month, year) values (1, '2018-03-19T09:00:00-04:00', '2018-03-19T17:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (1, '2018-03-21T09:00:00-04:00', '2018-03-21T17:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (2, '2018-03-22T11:00:00-04:00', '2018-03-22T19:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (3, '2018-03-23T09:00:00-04:00', '2018-03-23T14:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (1, '2018-03-23T09:00:00-04:00', '2018-03-23T17:00:00-04:00', 'Mar', 2018);
+
+insert into schedules (user_id, start, finish, month, year) values (2, '2018-03-09T09:00:00-04:00', '2018-03-09T17:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (2, '2018-03-11T09:00:00-04:00', '2018-03-11T17:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (2, '2018-03-12T11:00:00-04:00', '2018-03-12T19:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (3, '2018-03-13T09:00:00-04:00', '2018-03-13T14:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (1, '2018-03-13T09:00:00-04:00', '2018-03-13T17:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (1, '2018-02-13T09:00:00-04:00', '2018-02-13T17:00:00-04:00', 'Feb', 2018);
+
+insert into schedules (user_id, start, finish, month, year) values (2, '2017-11-09T09:00:00-04:00', '2018-03-09T17:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (2, '2017-11-11T09:00:00-04:00', '2018-03-11T17:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (5, '2017-11-12T11:00:00-04:00', '2018-03-12T19:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (5, '2017-12-13T09:00:00-04:00', '2018-03-13T14:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (5, '2017-12-14T09:00:00-04:00', '2018-03-13T17:00:00-04:00', 'Mar', 2018);
+insert into schedules (user_id, start, finish, month, year) values (1, '2017-12-13T09:00:00-04:00', '2018-02-13T17:00:00-04:00', 'Feb', 2018);

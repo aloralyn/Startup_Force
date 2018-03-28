@@ -1,27 +1,38 @@
-import { GET_SCHEDULES, POST_SCHEDULE, EDIT_SCHEDULE, DELETE_SCHEDULE } from './types.js'
+import { GET_SCHEDULES, GET_SCHEDULE, POST_SCHEDULE, EDIT_SCHEDULE, DELETE_SCHEDULE } from './types.js'
 import axios from 'axios';
 
 
-const getSchedule = ( year, month, managerId ) => dispatch => {
-	axios.get(`/schedule/${year}/${month}/${managerId}`)
+export const getSchedule = ( year, month, id ) => dispatch => {
+	axios.get(`/schedule/${year}/${month}/${id}`)
 	.then(schedule => {
-		var array = [];
-		console.log("SCHEDULE!!!!: ", schedule)
-		schedule.data.rows.map(empl => {
-			if (!array.includes(empl.first_name)) {
-				array.push(empl.first_name)
-			}
-		});
+		console.log(schedule)
 			dispatch({
-			type: GET_SCHEDULES,
-			payload: schedule.data.rows,
-			employees: array
+			type: GET_SCHEDULE,
+			payload: schedule.data.rows
 		})
 	}
 		)
 }
 
-const editSchedule = ({ start, startEdit, finish, finishEdit, first_name, id }) => dispatch => {
+export const getSchedules = (year, month, id) => dispatch => {
+	axios.get(`/employees/${id}`)
+	.then(employees => {
+		console.log(employees)
+		axios.get(`/schedules/${year}/${month}/${id}`)
+		.then(schedules => {
+			console.log(schedules)
+			dispatch({
+				type: GET_SCHEDULES,
+				payload: {
+					employees: employees.data.rows,
+					schedules: schedules.data.rows
+				}
+			})
+		})
+	})
+}
+
+export const editSchedule = ({ start, startEdit, finish, finishEdit, first_name, id }) => dispatch => {
 
 	Promise.resolve(dispatch({
 		type: EDIT_SCHEDULE,
@@ -29,7 +40,7 @@ const editSchedule = ({ start, startEdit, finish, finishEdit, first_name, id }) 
 	})).then(() => axios.post('/editSchedule', { start, startEdit, finish, finishEdit, first_name }))
 }
 
-const postSchedule = ({ start, finish, month, first_name, year }) => dispatch => {
+export const postSchedule = ({ start, finish, month, first_name, year }) => dispatch => {
 
 	axios.post('/postSchedule', { first_name, start, finish, month, year } ).then(data => {
 		console.log("--------",data)
@@ -40,7 +51,7 @@ const postSchedule = ({ start, finish, month, first_name, year }) => dispatch =>
 	})
 }
 
-const deleteSchedule = ({ start, finish, id }) => dispatch => {
+export const deleteSchedule = ({ start, finish, id }) => dispatch => {
 
 	Promise.resolve(dispatch({
 		type: DELETE_SCHEDULE,
@@ -49,10 +60,3 @@ const deleteSchedule = ({ start, finish, id }) => dispatch => {
 }
 
 
-module.exports = {
-  getSchedule,
-  postSchedule,
-  deleteSchedule,
-  editSchedule,
-
-};
