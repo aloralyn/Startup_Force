@@ -1,3 +1,7 @@
+// @ @ @ @ @ @ @ @ @ @ @ @ @
+// @ NEW COMPANY ACTION TYPE
+// @ @ @ @ @ @ @ @ @ @ @ @ @
+export const HANDLE_SIGNUPCHANGE = 'HANDLE_SIGNUPCHANGE';
 // @ @ @ @ @ @ @ @ @ @ @ @
 // @ USER ACTION TYPES
 // @ @ @ @ @ @ @ @ @ @ @ @

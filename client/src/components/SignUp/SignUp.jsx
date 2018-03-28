@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addEmployee } from '../../actions/onboardingActions.js';
+import { handleChange, createCompany } from '../../actions/newCompanyActions.js';
 
 import {
   Button,
@@ -10,9 +10,7 @@ import {
   Form,
   Grid,
   Header,
-  Input,
-  Select,
-  Segment
+  Input
 } from 'semantic-ui-react';
 
 const style = {
@@ -34,64 +32,28 @@ const style = {
  class SignUpForm extends Component {
    constructor(props) {
      super(props);
-
-     this.state = {
-      company_id: 1,
-      first_name: '',
-      last_name: '',
-      preferred_name: '',
-      dob: '',
-      ssn: '',
-      gender: '',
-      street_1: '',
-      street_2: '',
-      city: '',
-      zip_code: '',
-      state: '',
-      email: '',
-      phone_number: '',
-      linkedin_url: '',
-      position: '',
-      employee_status: '',
-      start_date: '',
-      department: '',
-      division: '',
-      reports_to: '',
-      wage: '',
-      pay_per: '',
-      pay_type: '',
-      is_manager: '',
-      pw: ''
-     }
      
-     this.handleChange = this.handleChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
-     this.handleFrequency = this.handleFrequency.bind(this); 
    }
 
-   handleChange(e, name) {
-     if (e.target !== undefined) {
-      this.setState({
-      [e.target.name]: e.target.value
-      });
-     } else {
-       this.setState({
-         [name]: e
-       });
-     }
-   }
-   
    handleSubmit(e) {
-     e.preventDefault();
-    // console.log(this.state)
-     this.props.addEmployee(this.state)
+    let company = {
+      company_name: this.props.company_name,
+      website: this.props.website,
+      street_1: this.props.street_1,
+      street_2: this.props.street_2,
+      zip_code: this.props.zip_code,
+      state: this.props.state
+    }
+    let admin = {
+      first_name: this.props.first_name,
+      last_name: this.props.last_name,
+      email: this.props.email,
+      pw: this.props.pw
+    }
+    e.preventDefault();;
+    this.props.createCompany(company, admin)
    }
-
-   handleFrequency(value) {
-    this.setState({
-      frequency: value
-    });
-  }
 
   render() {
     return (
@@ -102,42 +64,57 @@ const style = {
           textAlign='center'
           style={style.h3}
         />
-        <Grid columns={2} stackable>
+        <Grid columns={2} width={30}>
+
         <Form>
-          <Form.Group widths='equal' maxLength="2">
-            <Form.Field control={Input} label='Department' name='name' onChange={this.handleChange} />
-            <Form.Field control={Input} label='Division' name='division' onChange={this.handleChange} />
+          <Form.Group widths='equal'>
+            <Form.Field control={Input} label='Company Name' name='company_name' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
+            <Form.Field control={Input} label='Website URL' name='website' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
           </Form.Group>
-          <Form.Field control={Button} type='submit' onClick={this.handleSubmit}>Add</Form.Field>
         </Form>
-          <Grid.Column>
-            <Segment>Content</Segment>
-          </Grid.Column>
-          <Grid.Row columns={3}>
-            <Grid.Column>
-              <Segment>Content</Segment>
-            </Grid.Column>
-            <Grid.Column>
-              <Segment>Content</Segment>
-            </Grid.Column>
-            <Grid.Column>
-              <Segment>Content</Segment>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Column width={10}>
-            <Segment>Content</Segment>
-          </Grid.Column>
-          <Grid.Column width={6}>
-            <Segment>Content</Segment>
-          </Grid.Column>
+  
+        <Form>
+          <Form.Group widths='equal'>
+            <Form.Field control={Input} label='Street 1' name='street_1' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
+            <Form.Field control={Input} label='Street 2' name='street_2' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
+            <Form.Field control={Input} label='Zip Code' name='zip_code' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
+            <Form.Field control={Input} label='State' name='state' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
+          </Form.Group>
+        </Form>
+
+        <Form>
+          <Form.Group widths='equal'>
+            <Form.Field control={Input} label='First Name' name='first_name' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
+            <Form.Field control={Input} label='Last Name' name='last_name' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
+            <Form.Field control={Input} label='Email' name='email' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
+            <Form.Field control={Input} label='Password' name='pw' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
+          </Form.Group>
+          <Form.Field control={Button} type='submit' onClick={this.handleSubmit}>Submit</Form.Field>
+        </Form>
         </Grid>
+
       </Container> 
     )
   }
 }
 
+
+const mapStateToProps = state => ({
+  company_name: state.newCompanyReducer.company_name,
+  website: state.newCompanyReducer.website,
+  street_1: state.newCompanyReducer.street_1,
+  street_2: state.newCompanyReducer.street_2,
+  zip_code: state.newCompanyReducer.zip_code,
+  state: state.newCompanyReducer.state,
+  first_name: state.newCompanyReducer.first_name,
+  last_name: state.newCompanyReducer.last_name,
+  email: state.newCompanyReducer.email,
+  pw: state.newCompanyReducer.pw
+})
+
 SignUpForm.propTypes = {
-  addEmployee: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired,
+  createCompany: PropTypes.func.isRequired,
 }
 
-export default withRouter(connect(null, { addEmployee })(SignUpForm));
+export default withRouter(connect(mapStateToProps, { createCompany, handleChange })(SignUpForm));

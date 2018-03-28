@@ -7,22 +7,22 @@ const { Pool, Client } = require('pg');
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 // @ DO NOT DELETE, CHRIS IS USING THIS CONFIG FOR LOCAL TESTING
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
-// const config = {
-//   user: 'christopherrigoli',
-//   host: 'localhost',
-//   password: '',
-//   database: 'bmttools',
-//   port: 5432,
-// };
+const config = {
+  user: 'aloralynayran',
+  host: 'localhost',
+  password: '',
+  database: 'bmttools',
+  port: 5432,
+};
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 
-const config = {
-  user: cf.pgUser,
-  host: cf.pgHost,
-  password: cf.pgPassword,
-  database: cf.pgDatabase,
-  port: cf.pgPort
-}
+// const config = {
+//   user: cf.pgUser,
+//   host: cf.pgHost,
+//   password: cf.pgPassword,
+//   database: cf.pgDatabase,
+//   port: cf.pgPort
+// }
 
 const client = new Client(config)
 
