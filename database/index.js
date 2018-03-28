@@ -1,5 +1,5 @@
 const pg = require('pg');
-const cf = require('../server/config.js');
+//const cf = require('../server/config.js');
 
 const { Pool, Client } = require('pg');
 //Guys, be sure to create your database in your postgres cli first before running your schema.sql file
@@ -7,13 +7,14 @@ const { Pool, Client } = require('pg');
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 // @ DO NOT DELETE, CHRIS IS USING THIS CONFIG FOR LOCAL TESTING
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
-const config = {
-  user: 'aloralynayran',
-  host: 'localhost',
-  password: '',
-  database: 'bmttools',
-  port: 5432,
-};
+// const config = {
+//   user: 'aloralynayran',
+//   user: 'artemipatev',
+//   host: 'localhost',
+//   password: '',
+//   database: 'bmttools',
+//   port: 5432,
+// };
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 
 // const config = {

@@ -1,8 +1,9 @@
-import { GET_SCHEDULES, POST_SCHEDULE, EDIT_SCHEDULE, DELETE_SCHEDULE } from '../actions/types'
+import { GET_SCHEDULES, GET_SCHEDULE, POST_SCHEDULE, EDIT_SCHEDULE, DELETE_SCHEDULE } from '../actions/types'
 
 const initialState = {
 	schedules: [],
-	employees: []
+	employees: [],
+	schedule: []
 }
 
 function scheduleReducer(state = initialState, action) {
@@ -10,8 +11,14 @@ function scheduleReducer(state = initialState, action) {
 		case GET_SCHEDULES: {
 			return {
 				...state,
-				schedules: action.payload,
-				employees: action.employees
+				schedules: action.payload.schedules,
+				employees: action.payload.employees
+			}
+		}
+		case GET_SCHEDULE: {
+			return {
+				...state,
+				schedule: action.payload
 			}
 		}
 		case EDIT_SCHEDULE: {

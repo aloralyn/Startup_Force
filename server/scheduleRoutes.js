@@ -1,8 +1,20 @@
 const scheduleRouter = require('express').Router();
 const db = require('../database/index.js');
 
-scheduleRouter.get('/schedule/:year/:month/:managerId', (req, res) => {
-	db.query(`select e.id, e.first_name, s.start, s.finish from employees e right join schedules s on e.id = s.user_id where e.id = '${req.params.managerId}' and s.month='${req.params.month}' and s.year='${req.params.year}';`, (err, data) => {
+scheduleRouter.get('/schedule/:year/:month/:id', (req, res) => {
+	db.query(`select e.id, e.first_name, s.start, s.finish from employees e right join schedules s on e.id = s.user_id where e.id = '${req.params.id}' and s.month='${req.params.month}' and s.year='${req.params.year}';`, (err, data) => {
+		res.send(data);
+	})
+})
+
+scheduleRouter.get('/schedules/:year/:month/:id', (req, res) => {
+	db.query(`select e.first_name, e.id, s.start, s.finish from employees e right join schedules s on e.id=s.user_id where reports_to=${req.params.id};`, (err, data) => {
+		res.send(data);
+	})
+})
+
+scheduleRouter.get('/employees/:id', (req, res) => {
+	db.query(`select first_name, id from employees where reports_to=${req.params.id};`, (err, data) => {
 		res.send(data)
 	})
 })
@@ -16,7 +28,6 @@ scheduleRouter.post('/postSchedule', (req, res) => {
 			res.send({id: here.rows[0].id})
 		})
 	})
-
 })
 
 scheduleRouter.post('/editSchedule', (req, res) => {
