@@ -75,6 +75,15 @@ bmtRouter.post('/api/get/contract', (req, res) => {
   });
 });
 
+bmtRouter.post('/api/get/contract/all', (req, res) => {
+  console.log('within app');
+  const { companyID } = req.body;
+  contractsController.getAllContracts(companyID, (data) => {
+    console.log('this is the data.rows: ', data.rows);
+    res.status(200).send(data.rows);
+  });
+});
+
 
 bmtRouter.post('/api/employee/:id', async (req, res) => {
   let id = req.params.id;

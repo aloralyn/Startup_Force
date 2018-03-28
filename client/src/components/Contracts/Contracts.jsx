@@ -18,22 +18,40 @@ export default class Contracts extends React.Component {
     this.state = {
       viewState: true,
       existingContract: 'HiR',
+      existingContractOptions: [],
+      companyID: 1,
     };
     this.handleChange = this.handleChange.bind(this);
     this.toggleView = this.toggleView.bind(this);
     this.getExistingContract = this.getExistingContract.bind(this);
   }
 
+  componentDidMount() {
+    // pull data from database about contracts
+    // pass data down to existing contract component
+    // pull all contracts from database related to this company
+    // since the manager has manager credentials
+    this.getAllContracts();
+  }
+
   getExistingContract() {
     axios.post('/api/get/contract', {
       contractName: this.state.existingContract,
     })
+      .then(res => console.log('this is the result: ', res))
+      .catch(err => console.error('ERROR in getExistingContract within Contracts.jsx, error: ', err));
+  }
+
+  getAllContracts() {
+    axios.post('/api/get/contract/all', {
+      companyID: this.state.companyID,
+    })
       .then((res) => {
-        console.log('this is the result: ', res);
+        this.setState({
+          existingContractOptions: res.data,
+        });
       })
-      .catch((err) => {
-        console.log('ERROR in getExistingContract within Contracts.jsx, error: ', err);
-      });
+      .catch(err => console.error('ERROR in getAllContracts within Contracts.jsx, error: ', err));
   }
 
   toggleView() {
@@ -54,7 +72,12 @@ export default class Contracts extends React.Component {
         <Segment style={{ padding: '8em 0em' }} vertical>
           <Grid container stackable>
             <Grid.Row>
-              {this.state.viewState ? <NewContractForm /> : <ExistingContract />}
+              {
+                this.state.viewState ? <NewContractForm /> :
+                <ExistingContract
+                  existingContractOptions={this.state.existingContractOptions}
+                />
+              }
             </Grid.Row>
           </Grid>
         </Segment>
