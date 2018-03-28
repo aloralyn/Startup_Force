@@ -1,16 +1,5 @@
 import axios from 'axios';
 
-export const handleChange = (eName, val) => dispatch => {
-  dispatch({
-    type: 'HANDLE_SIGNUPCHANGE',
-    payload: {
-      eName: eName,
-      val: val
-    }
-  });
-};
-
-
 export const createCompany = (company, employee) => {
   return (dispatch) => {
     axios.post('/api/create_company', company)

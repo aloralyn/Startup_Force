@@ -1,7 +1,12 @@
 // @ @ @ @ @ @ @ @ @ @ @ @ @
-// @ SIGNUP ACTION TYPE
+// @ FORM ACTION TYPE
 // @ @ @ @ @ @ @ @ @ @ @ @ @
-export const HANDLE_SIGNUPCHANGE = 'HANDLE_SIGNUPCHANGE';
+export const HANDLE_FORMCHANGE = 'HANDLE_FORMCHANGE';
+
+// @ @ @ @ @ @ @ @ @ @ @ @ @
+// @ONBOARDING ACTION TYPE
+// @ @ @ @ @ @ @ @ @ @ @ @ @
+export const CREATE_EMPLOYEE = 'CREATE_EMPLOYEE';
 
 // @ @ @ @ @ @ @ @ @ @ @ @ @
 // @ DASHBOARD ACTION TYPE
