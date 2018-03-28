@@ -85,8 +85,6 @@ CREATE TABLE schedules (
   FOREIGN KEY (user_id) REFERENCES employees(id)
 );
 
-
-
 INSERT INTO companies (company_name, street_1, street_2, city, zip_code, state, website) VALUES ('Hack Reactor', '369 Lexington Ave', 'Floor 11', 'New York', '10017', 'NY', 'www.hackreactor.com');
 
 INSERT INTO departments (company_id, name, division) VALUES (1, 'Marketing', 'West Coast');
@@ -114,16 +112,16 @@ INSERT INTO employees
   linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw)
   VALUES (1, 'Brent', 'Hagen', 'Brenty', '06/15/84', '111-11-1111', 'male', '875 Tree St', '', 'Astoria', '11105', 'NY', 'Brent@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
   'today', 'Sales', 'East Coast', 2, '$100,000', 'Week', 'Salary', true, 'password');
-  INSERT INTO employees
+INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
   linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw)
   VALUES (1, 'Aloralyn', 'Ayran', 'Lyn', '11/16/88', '111-11-1111', 'female', '123 Troutman Street', '', 'Brooklyn',  '11221', 'NY','Aloralyn@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
   'today', 'Sales', 'East Coast', 3, '$100,000', 'Week', 'Salary', true, 'password');
 
-INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (1, 1, 'Chris', 'JS Immersive', '$17,000', '01-15-2018', '04-13-2018');
-INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (2, 1, 'Artem', 'JS Immersive', '$15,000', '01-19-2018', '04-27-2018');
-INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (3, 1, 'Brent', 'JS Immersive', '$19,000', '01-15-2018', '04-13-2018');
-INSERT INTO contracts (awaredTo_ID, company_id, clientName, contractName, contractAmount, contractStartDate, contractEndDate) VALUES (4, 1, 'Aloralyn', 'JS Immersive', '$21,000', '01-19-2018', '04-27-2018');
+INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (1, 1, 'Jerry', 'JS Immersive_Jerry', '$17,000', '01-15-2018', '04-13-2018');
+INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (2, 1, 'Eric', 'JS Immersive_Eric', '$15,000', '01-19-2018', '04-27-2018');
+INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (3, 1, 'Xixi', 'JS Immersive_Xixi', '$19,000', '01-15-2018', '04-13-2018');
+INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (4, 1, 'Adam', 'JS Immersive_Adam', '$21,000', '01-19-2018', '04-27-2018');
 
 insert into schedules (user_id, start, finish, month, year) values (1, '2018-03-19T09:00:00-04:00', '2018-03-19T17:00:00-04:00', 'Mar', 2018);
 insert into schedules (user_id, start, finish, month, year) values (1, '2018-03-21T09:00:00-04:00', '2018-03-21T17:00:00-04:00', 'Mar', 2018);

@@ -15,6 +15,7 @@ export default class ExistingContract extends React.Component {
   }
 
   componentWillMount() {
+    console.log('this is props: ', this.props);
     const tempDropdownOptions = [];
     this.props.existingContractOptions.forEach((contract) => {
       tempDropdownOptions.push({
