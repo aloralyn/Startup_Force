@@ -62,14 +62,14 @@ DROP TABLE IF EXISTS "contracts" CASCADE;
 
 CREATE TABLE contracts (
   id SERIAL NOT NULL PRIMARY KEY,
-  awaredTo_ID INTEGER NOT NULL,
+  awarded_to INTEGER NOT NULL,
   company_id INTEGER NOT NULL,
-  clientName VARCHAR(255) NOT NULL,
-  contractName VARCHAR(255) NOT NULL,
-  contractAmount MONEY NOT NULL,
-  contractStartDate VARCHAR(30) NOT NULL,
-  contractEndDate VARCHAR(30) NOT NULL,
-  FOREIGN KEY (awaredTo_ID) REFERENCES employees(id),
+  client_name VARCHAR(255) NOT NULL,
+  contract_name VARCHAR(255) NOT NULL,
+  contract_amount MONEY NOT NULL,
+  contract_start_date VARCHAR(30) NOT NULL,
+  contract_end_date VARCHAR(30) NOT NULL,
+  FOREIGN KEY (awarded_to) REFERENCES employees(id),
   FOREIGN KEY (company_id) REFERENCES companies(id)
 );
 
@@ -144,4 +144,3 @@ insert into schedules (user_id, start, finish, month, year) values (5, '2017-11-
 insert into schedules (user_id, start, finish, month, year) values (5, '2017-12-13T09:00:00-04:00', '2018-03-13T14:00:00-04:00', 'Mar', 2018);
 insert into schedules (user_id, start, finish, month, year) values (5, '2017-12-14T09:00:00-04:00', '2018-03-13T17:00:00-04:00', 'Mar', 2018);
 insert into schedules (user_id, start, finish, month, year) values (1, '2017-12-13T09:00:00-04:00', '2018-02-13T17:00:00-04:00', 'Feb', 2018);
-

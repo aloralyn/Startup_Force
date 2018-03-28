@@ -9,7 +9,8 @@ const { Pool, Client } = require('pg');
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 const config = {
   user: 'aloralynayran',
- // user: 'artemipatev',
+  // user: 'artemipatev',
+  // user: 'christopherrigoli',
   host: 'localhost',
   password: '',
   database: 'bmttools',
