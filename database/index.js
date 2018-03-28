@@ -6,22 +6,22 @@ const { Pool, Client } = require('pg');
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 // @ DO NOT DELETE, CHRIS IS USING THIS CONFIG FOR LOCAL TESTING
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
-// const config = {
-//   user: 'christopherrigoli',
-//   host: 'localhost',
-//   password: '',
-//   database: 'bmttools',
-//   port: 5432,
-// };
+const config = {
+  user: 'christopherrigoli',
+  host: 'localhost',
+  password: '',
+  database: 'bmttools',
+  port: 5432,
+};
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 
-const config = {
-  user: "greyjoy",
-  host: "bmttools.co5tjr5irgfy.us-east-2.rds.amazonaws.com",
-  password: "chrisbrentartemlyn369",
-  database: "bmt",
-  port: 5432
-}
+// const config = {
+//   user: "greyjoy",
+//   host: "bmttools.co5tjr5irgfy.us-east-2.rds.amazonaws.com",
+//   password: "chrisbrentartemlyn369",
+//   database: "bmt",
+//   port: 5432
+// };
 
 const client = new Client(config)
 

@@ -2,6 +2,7 @@ const bmtRouter = require('express').Router();
 const companyController = require('../database/models/companies.js');
 const departmentController = require('../database/models/departments.js');
 const employeeController = require('../database/models/employees.js');
+const contractsController = require('../database/models/contracts.js');
 
 const async = require('asyncawait/async');
 const await = require('asyncawait/await');
@@ -58,6 +59,21 @@ bmtRouter.get('/api/all_employees/:id', async (req, res) => {
   }
 });
 
+bmtRouter.post('/api/add/contract', (req, res) => {
+  const { clientName, contractName, contractAmount, awardedTo, contractStartDate, contractEndDate } = req.body;
+  contractsController.addContract(awardedTo, 1, clientName, contractName, contractAmount, contractStartDate, contractEndDate, (data) => {
+    console.log('successful addition of contract to DB');
+    res.status(201).send();
+  });
+});
+
+bmtRouter.post('/api/get/contract', (req, res) => {
+  const { contractName } = req.body;
+  contractsController.getContract(contractName, (data) => {
+    console.log('this is the data.rows: ', data.rows);
+    res.status(200).send(data.rows);
+  });
+});
 
 
 bmtRouter.post('/api/employee/:id', async (req, res) => {
@@ -84,7 +100,7 @@ bmtRouter.post('/api/create_employee_profile', async (req, res) => {
 
 bmtRouter.post('/api/upload_photo/:id', async (req, res) => {
   let id = req.params.id;
-  
+
   try {
     await employeeController.uploadProfilePic(id, req.body)
     res.status(200).end();
@@ -95,4 +111,3 @@ bmtRouter.post('/api/upload_photo/:id', async (req, res) => {
 
 
 module.exports = bmtRouter;
-

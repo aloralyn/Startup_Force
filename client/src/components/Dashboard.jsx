@@ -12,6 +12,7 @@ import Schedules from './Schedules/Schedules.jsx';
 import Onboarding from './Onboarding/Onboarding.jsx'
 import Reports from './Reports/Reports.jsx';
 import Messages from './Messages/Messages.jsx';
+import Contracts from './Contracts/Contracts.jsx';
 
 import {
   Container,
@@ -68,6 +69,7 @@ class DesktopContainer extends Component {
                   <Menu.Item><Link to="/onboarding">Onboarding</Link></Menu.Item>
                   <Menu.Item><Link to="/reports">Reports</Link></Menu.Item>
                   <Menu.Item><Link to="/messages">Messages</Link></Menu.Item>
+                  <Menu.Item><Link to="/contracts">Contracts</Link></Menu.Item>
                   <Menu.Menu position='right'>
                     <Menu.Item>
                       <Input icon='search' placeholder='Search...' />
@@ -86,6 +88,7 @@ class DesktopContainer extends Component {
               <Route path="/onboarding" component={Onboarding} />
               <Route path="/reports" component={Reports} />
               <Route path="/messages" component={Messages} />
+              <Route path="/contracts" component={Contracts} />
             </Switch>
 
           </Visibility>
