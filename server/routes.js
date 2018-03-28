@@ -103,6 +103,4 @@ bmtRouter.post('/api/upload_photo/:id', async (req, res) => {
   }
 });
 
-
 module.exports = bmtRouter;
-

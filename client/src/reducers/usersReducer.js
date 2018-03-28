@@ -4,7 +4,7 @@ const initialState = {
   user: {},
   users: []
 };
-
+ // modify to select based on authenticated email
 export default function(state = initialState, action) {
   switch(action.type) {
     case FETCH_USER:
