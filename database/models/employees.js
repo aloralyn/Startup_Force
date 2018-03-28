@@ -35,3 +35,12 @@ exports.createEmployeeProfile = function(input) {
       console.log('There was an error creating an employee', err);
   });
 };
+
+exports.retrieveManagers = async (input) => {
+  let queryStr = `SELECT * FROM employees WHERE company_id = ${input.id} AND is_manager = true;`;
+
+  return db.query(queryStr)
+           .then(res =>
+            res.rows
+           ).catch(err => console.log(err.stack))
+};

@@ -25,4 +25,4 @@ function newCompanyReducer(state = initialState, action) {
   }
 }
 
-export default newCompanyReducer;
+const newCompanyReducer()
