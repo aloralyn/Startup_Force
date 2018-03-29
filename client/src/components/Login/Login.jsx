@@ -21,22 +21,22 @@ import {
   Form
 } from 'semantic-ui-react';
 
-const style = {
-  h1: {
-    fontFamily: 'Titillium Web',
-    marginTop: '3em',
-  },
-  h2: {
-    margin: '4em 0em 2em',
-  },
-  h3: {
-    marginTop: '2em',
-    padding: '2em 0em',
-  },
-  last: {
-    marginBottom: '300px',
-  }
-};
+// const style = {
+//   h1: {
+//     fontFamily: 'Titillium Web',
+//     marginTop: '3em',
+//   },
+//   h2: {
+//     margin: '4em 0em 2em',
+//   },
+//   h3: {
+//     marginTop: '2em',
+//     padding: '2em 0em',
+//   },
+//   last: {
+//     marginBottom: '300px',
+//   }
+// };
 
 class Login extends Component {
   constructor(props) {
@@ -84,44 +84,65 @@ class Login extends Component {
   }
 
   render() {
-    return(<Container style={{ padding: '8em 0em' }}>
-      <Header
-        as='h1'
-        content='StartupForce'
-        textAlign='center'
-        style={style.h1}
-      />
-      <Header
-        as='h3'
-        content='Login to your account!'
-        textAlign='center'
-        style={style.h3}
-      />
-      <Grid columns={2} stackable textAlign='center' verticalAlign='middle'>
-      <Form>
-        <Form.Group widths='equal' maxLength="2">
-          <Form.Field 
-            control={Input} 
-            label='Email' 
-            name='email' 
-            placeholder='Email'
-            onChange={this.changeEmail} />
-          <Form.Field 
-            control={Input} 
-            type='password'
-            label='Password' 
-            name='pw'
-            placeholder='Password' 
-            onChange={this.changePw} />
-        </Form.Group>
-        <Form.Field 
-          control={Button} 
-          type='submit' 
-          onClick={this.handleSubmit}>Login</Form.Field>
-      </Form>
+    return(
+      <div className='login-form'>
+      <style>{`
+      body > div,
+      body > div > div,
+      body > div > div > div.login-form {
+        height: 100%;
+      }
+    `}</style>
+
+      <Grid
+      textAlign='center'
+      style={{ height: '100%' }}
+      verticalAlign='middle'
+     >
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header
+          as='h1'
+          content='StartupForce'
+          textAlign='center'
+        
+        />
+        <Header
+          as='h3'
+          content='Login to your account!'
+          textAlign='center'
+         
+        />
+        {/* <Grid columns={2} stackable textAlign='center' verticalAlign='middle'> */}
+        <Form size="large">
+          {/* <Form.Group widths='equal' maxLength="2"> */}
+          <Segment stacked>
+            <Form.Input
+              fluid
+              icon='user'
+              label='Email' 
+              name='email' 
+              placeholder='Email'
+              onChange={this.changeEmail} />
+            <Form.Input 
+              fluid
+              icon='lock'
+              type='password'
+              label='Password' 
+              name='pw'
+              placeholder='Password' 
+              onChange={this.changePw} />
+          {/* </Form.Group> */}
+          <Button
+            type='submit' 
+            onClick={this.handleSubmit}>Login</Button>
+            </Segment>
+        </Form>
+        {/* </Grid> */}
+          {/*<button onClick={this.secret}>Secret</button>*/}
+      </Grid.Column>
       </Grid>
-        {/*<button onClick={this.secret}>Secret</button>*/}
-    </Container>);
+      </div>
+      );
   }
 }
 

@@ -22,3 +22,12 @@ exports.updateDepartment = function(id, input) {
       console.log('There was an error updating this department', err);
   });
 }
+
+exports.retrieveDepartments = (id) => {
+  let queryStr = `SELECT * FROM departments WHERE company_id = ${id};`;
+
+  return db.query(queryStr)
+           .then(res =>
+            res.rows
+           ).catch(err => console.log(err.stack))
+};
