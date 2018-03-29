@@ -8,6 +8,7 @@ import store from '../store.js';
 import Dashboard from './Dashboard.jsx';
 import Login from './Login/Login.jsx';
 import { load } from '../actions/dashboardActions.js';
+import Test from './Login/Test.jsx';
 
 const history = syncHistoryWithStore(createBrowserHistory(), store);
 
@@ -20,11 +21,25 @@ class App extends Component {
   }
 
   render() {
+    // if (!localStorage.authToken ) {
+    //   return (
+    //     <Router history={history}>
+    //       <Test/>
+    //     </Router>
+    //   )
+    // } else {
+    //     return (
+    //       <Router history={history}>
+    //         <Dashboard/>
+    //       </Router>
+    //     )
+    //   }
+    // }
     return (
       <Router history={history}>
       {  !localStorage.authToken ?
-        <Login /> :
-        <Dashboard />
+        <Test/> :
+        <Dashboard/>
       }    
       </Router>
     );
