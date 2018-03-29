@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { Button, Container, Header, Grid, Table, Dropdown } from 'semantic-ui-react';
+import { Button, Container, Header, Grid, Table, Dropdown, Form } from 'semantic-ui-react';
 
 export default class ExistingContract extends React.Component {
   constructor(props) {
@@ -15,7 +15,6 @@ export default class ExistingContract extends React.Component {
   }
 
   componentWillMount() {
-    console.log('this is props: ', this.props);
     const tempDropdownOptions = [];
     this.props.existingContractOptions.forEach((contract) => {
       tempDropdownOptions.push({
@@ -76,14 +75,20 @@ export default class ExistingContract extends React.Component {
           </Table.Body>
         </Table>
 
-        <Dropdown
-          placeholder="Existing Contracts"
-          search
-          selection
-          options={this.state.existingDropdownOptions}
-          defaultValue={this.state.existingDropdownOptions[0].value}
-          onChange={this.handleExContractChange}
-        />
+        <Form>
+          <Form.Field>
+            <label>Select from existing contracts</label>
+            <Dropdown
+              placeholder="Existing Contracts"
+              label="Existing Contracts List"
+              search
+              selection
+              options={this.state.existingDropdownOptions}
+              defaultValue={this.state.existingDropdownOptions[0].value}
+              onChange={this.handleExContractChange}
+            />
+          </Form.Field>
+        </Form>
       </Grid.Column>
     );
   }
