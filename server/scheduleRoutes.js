@@ -1,5 +1,32 @@
 const scheduleRouter = require('express').Router();
 const db = require('../database/index.js');
+const axios = require('axios');
+
+scheduleRouter.post('/schedule/mail', (req, res) => {
+	console.log('---------', req.body)
+	db.query(`select email from employees where id=${req.body.id};`, (err, id) => {  // id.rows[0].email
+
+		let rootUrl = 'https://api.elasticemail.com/v2/email/send?apikey=11247b43-8015-4e70-b075-4327381d0e0f'
+		let subject = '&subject=Your manager'
+		let sender = '&from=kindlywebmasters@gmail.com'
+		let senderName = '&fromName=your manager'
+		let receiver = `&to=${id.rows[0].email}`
+		let message = `&bodyText=Hey,${req.body.first_name}! Your schedule has been changed, I think you should take a look.\n\n\n` 
+		let isTransactional = '&isTransactional=true'
+
+		let URL = rootUrl + subject + sender + senderName + receiver + message + isTransactional;
+		// console.log(URL)
+		  // axios.post(URL)
+		  // .then((response) => {
+		    console.log(id.rows[0].email, '   <<-- email sent'/*, response */)
+		    res.send(/*response.data*/)
+		  // })
+		  // .catch((err) => {
+		  //   throw(err)
+		  // })
+
+	})
+})
 
 scheduleRouter.get('/schedule/:year/:month/:id', (req, res) => {
 	db.query(`select e.id, e.first_name, s.start, s.finish from employees e right join schedules s on e.id = s.user_id where e.id = '${req.params.id}' and s.month='${req.params.month}' and s.year='${req.params.year}';`, (err, data) => {

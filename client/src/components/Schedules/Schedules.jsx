@@ -4,7 +4,7 @@ import './App.css'
 import 'rc-time-picker/assets/index.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import Mailer from './mailer.jsx'
 import { withRouter } from 'react-router';
 import * as Actions from '../../actions/scheduleActions'
 import OneEmpl from './OneEmpl.jsx'
@@ -19,14 +19,13 @@ import {
 	Button, 
 	Popup, 
 	Modal, 
+	Accordion,
 	TransitionablePortal 
 } from 'semantic-ui-react'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import TimePicker from 'rc-time-picker';
 
-import 'babel-polyfill';
-import { Resizable, ResizableBox } from 'react-resizable';
 
 
 class Schedules extends Component {
@@ -329,7 +328,7 @@ class Schedules extends Component {
             </Segment>
           </TransitionablePortal>
       {/*****************************************************************
-																		Calendar
+												Calendar
 		*******************************************************************/}
 		<DayPickerInput
 			fixedWeeks
@@ -351,7 +350,7 @@ class Schedules extends Component {
       }}
     />
     {/*****************************************************************
-																	Table VIEW >> WEEK
+							Table VIEW >> WEEK
 		*******************************************************************/}
 <Table celled selectable textAlign={'center'} verticalAlign={'middle'}>
     <Table.Header>
@@ -385,7 +384,11 @@ class Schedules extends Component {
 					))}
 		</Table.Body>
 		</Table>
-
+		
+		<br />
+		<br />
+		<div>Send email to your employees if you changed or added their schedule :)</div>
+<Mailer empl={this.props.employees}/>
 
 		</div>
 	)
