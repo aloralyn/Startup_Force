@@ -2,12 +2,13 @@ import axios from 'axios';
 import { Router } from 'react-router';
 //import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
+// modified to dispatch FETCH_USERS - based on user already logged in
 export function fetchUsers(email) {
   return (dispatch) => {
     axios.get('/api/all_employees/1')
       .then((response) => {
         dispatch({
-          type: 'FETCH_USER',
+          type: 'FETCH_USERS',
           payload: response.data,
         });
       })
@@ -20,19 +21,21 @@ export function fetchUsers(email) {
   };
 }
 
+// dispatches FETCH_USER once user logged in
 export function login(state) {
   return (dispatch) => {
     axios.post('/login', state)
       .then((response) => {
         console.log('logged in', response)
         localStorage.setItem('authToken', response.data.token);
-        window.location.reload();
-        //Router.refresh();
-        //fetchUsers(email);
-        // dispatch({
-        //   type: FETCH_USER,
-        //   payload: state.email
-        // });
+        dispatch({
+          type: 'FETCH_USER',
+          payload: response.data.user
+        });
+        dispatch({
+          type: 'VERIFIED_USER',
+          payload: ''
+        });
       })
       .catch((err) => {
         console.log('There was an error', err)
@@ -40,11 +43,13 @@ export function login(state) {
   };
 };
 
-export function logout() {
-  console.log('logout');
+export const logout = () => dispatch => {
+  console.log('logout')
   localStorage.removeItem('authToken');
-  window.location.reload();
-  // dispatch action to reset state?
+  dispatch({
+    type: 'VERIFIED_USER',
+    payload: ''
+  });
 };
 
 export const fetchManagers = (companyId) => {
