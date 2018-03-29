@@ -7,6 +7,7 @@ import axios from 'axios';
 import store from '../store.js';
 import Dashboard from './Dashboard.jsx';
 import Login from './Login/Login.jsx';
+import { load } from '../actions/dashboardActions.js';
 
 const history = syncHistoryWithStore(createBrowserHistory(), store);
 
@@ -15,7 +16,7 @@ axios.defaults.headers.common['Authorization'] = 'JWT ' + localStorage.getItem('
 class App extends Component {
   componentWillMount() {
     // starting actions can be invoked here
-    // this.props.dispatch(fetchUsers());
+    if (localStorage.authToken) { this.props.load(); }
   }
 
   render() {
@@ -34,4 +35,4 @@ const mapStateToProps = state => ({
   verified: state.users.verified
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { load })(App);

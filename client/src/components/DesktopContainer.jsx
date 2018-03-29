@@ -46,11 +46,6 @@ class DesktopContainer extends Component {
 
   // showFixedMenu = () => this.setState({ fixed: true })
 
-  componentDidMount() {
-    console.log('desktop container', this.props)
-    console.log('logout func', logout)
-  }
-
   render() {
 
     const { fixed } = this.state
@@ -118,7 +113,7 @@ DesktopContainer.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  show: 'hello'
+
 });
 
 
