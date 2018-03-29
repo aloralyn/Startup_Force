@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { createCompany } from '../../actions/newCompanyActions.js';
 import { handleChange } from '../../actions/formChangeActions.js';
 

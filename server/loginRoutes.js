@@ -15,9 +15,8 @@ var jwtOptions = {
 };
 
 var strategy = new JwtStrategy(jwtOptions, (jwt_payload, next) => {
-  console.log('payload received', jwt_payload); 
-  db.query(`SELECT * FROM employees WHERE id = ${jwt_payload.id};`, (err, data) => {
-    console.log(data)
+  db.query(`SELECT * FROM employees WHERE id = ${jwt_payload.uid};`, (err, data) => {
+    // console.log(data)
     if (data.rows.length) {
       next(null, data.rows[0].id);
     } else {
@@ -31,7 +30,6 @@ passport.use(strategy);
 const comparePassword = (rawPw, hashedPw) => {
   // add bcrypt later
   // bcrypt.compare(rawPw, encryptPw, (err, exists) => !!exists);
-  console.log('passwords', rawPw, hashedPw);
   return (rawPw === hashedPw);
 };
 
@@ -54,9 +52,6 @@ loginRouter.post('/login', (req, res) => {
       res.status(401).json({message: 'no such user'});
     }
     else if (comparePassword(pw, data.rows[0].pw)) {
-      // set company_id value
-      // get users with matching company id
-      // send back users
       var iat = Math.floor(new Date().getTime() / 1000);
       var payload = {
         uid: data.rows[0].id,
@@ -68,15 +63,47 @@ loginRouter.post('/login', (req, res) => {
         exp: iat + 3600
       };
       var token = jwt.sign(payload, jwtOptions.secretOrKey);
-      res.json({message: 'ok', token: token, user: data.rows[0]});
+      db.query(`SELECT * FROM employees WHERE company_id = ${data.rows[0].company_id};`, (err, data2) => {
+        if (err) { console.log(err); }
+        else {
+          var managers = [];
+          data2.rows.forEach(emp => { if (emp.is_manager) { managers.push(emp); }});
+          res.json({ 
+            message: 'ok', 
+            token: token, 
+            user: data.rows[0], 
+            users: data2.rows, 
+            managers: managers 
+          });
+        }
+      });
     } else {
       res.status(401).json({message: 'passwords did not match'});
     }
   });
 });
 
-// loginRouter.get('/secret', passport.authenticate('jwt', { session: false }), (req, res) => {
-//   res.json('yer token works');
-// });
+
+loginRouter.get('/load', passport.authenticate('jwt', { session: false }), (req, res) => {
+  var decoded = jwt.verify(req.headers.authorization.slice(4), jwtOptions.secretOrKey);
+  db.query(`SELECT * FROM employees WHERE id = ${decoded.uid};`, (err, data) => {
+    if (data.rows.length) {
+      db.query(`SELECT * FROM employees WHERE company_id = ${data.rows[0].company_id};`, (err, data2) => {
+        if (err) { console.log(err); }
+        else {
+          var managers = [];
+          data2.rows.forEach(emp => { if (emp.is_manager) { managers.push(emp); }});
+          res.json({ message: 'ok', user: data.rows[0], users: data2.rows, managers: managers });
+        }
+      });
+    } else {
+      console.log('something happened')
+    }
+  });
+});
+
+loginRouter.get('/secret', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json('yer token works');
+});
 
 module.exports = loginRouter;

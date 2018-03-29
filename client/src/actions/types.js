@@ -16,7 +16,7 @@ export const FETCH_MANAGERS = 'FETCH_MANAGERS';
 // @ @ @ @ @ @ @ @ @ @ @ @
 // @ USER ACTION TYPES
 // @ @ @ @ @ @ @ @ @ @ @ @
-export const FETCH_USER = 'FETCH_USER';
+export const LOGIN = 'LOGIN';
 export const FETCH_USERS = 'FETCH_USERS';
 export const GET_MESSAGES = 'GET_MESSAGES';
 export const MESSAGE_USER = 'MESSAGE_USER';

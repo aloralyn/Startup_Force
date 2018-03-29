@@ -26,7 +26,7 @@ class HomepageLayout extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchUsers();
+    // this.props.fetchUsers();
     var date = new Date()
     var weekNum = this.getWeekNumber(date)
     var week = this.getDateOfWeek(weekNum[1], weekNum[0], date);

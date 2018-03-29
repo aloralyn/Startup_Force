@@ -1,4 +1,4 @@
-import { FETCH_USER, FETCH_USERS, FETCH_MANAGERS, VERIFIED_USER } from '../actions/types';
+import { LOGIN, FETCH_USERS, FETCH_MANAGERS, VERIFIED_USER } from '../actions/types';
 
 const initialState = {
   user: {},
@@ -7,15 +7,14 @@ const initialState = {
   verified: false
 };
 
- // add a login reducer to set verified state
- // modify to select based on authenticated email
 export default function(state = initialState, action) {
   switch(action.type) {
-    case FETCH_USER:
-      console.log(action.payload)
+    case LOGIN:
       return {
         ...state,
-        user:  action.payload
+        user:  action.payload.user,
+        users: action.payload.users,
+        managers: action.payload.managers
       };
     case FETCH_USERS:
       return {

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Router } from 'react-router';
 //import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
-// modified to dispatch FETCH_USERS - based on user already logged in
+
 export function fetchUsers(email) {
   return (dispatch) => {
     axios.get('/api/all_employees/1')
@@ -21,16 +21,33 @@ export function fetchUsers(email) {
   };
 }
 
-// dispatches FETCH_USER once user logged in
+export function load() {
+  return (dispatch) => {
+    axios.get('/load')
+      .then((response) => {
+        dispatch({
+          type: 'LOGIN',
+          payload: response.data
+        });
+        dispatch({
+          type: 'VERIFIED_USER',
+          payload: ''
+        });
+      })
+      .catch((err) => {
+        console.log('There was an error', err)
+      });
+  };
+};
+
 export function login(state) {
   return (dispatch) => {
     axios.post('/login', state)
       .then((response) => {
-        console.log('logged in', response)
         localStorage.setItem('authToken', response.data.token);
         dispatch({
-          type: 'FETCH_USER',
-          payload: response.data.user
+          type: 'LOGIN',
+          payload: response.data
         });
         dispatch({
           type: 'VERIFIED_USER',
@@ -44,13 +61,21 @@ export function login(state) {
 };
 
 export const logout = () => dispatch => {
-  console.log('logout')
   localStorage.removeItem('authToken');
   dispatch({
     type: 'VERIFIED_USER',
     payload: ''
   });
+  dispatch({
+    type: 'LOGIN',
+    payload: { user: {}, users: [], managers: [] }
+  });
+  dispatch({
+    type: 'FETCH_USERS',
+    payload: []
+  });
 };
+
 
 export const fetchManagers = (companyId) => {
   return (dispatch) => {
