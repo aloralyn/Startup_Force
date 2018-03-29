@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
-import ProfilePic from './ProfilePic.jsx'
+import DesktopContainer from './DesktopContainer.jsx';
+import ProfilePic from './ProfilePic.jsx';
 
 import HomepageLayout from './Homepage/HomepageLayout.jsx';
 import MyInfo from './MyInfo/MyInfo.jsx';
@@ -29,83 +31,6 @@ import {
   Segment,
   Visibility,
 } from 'semantic-ui-react'
-
-
-class DesktopContainer extends Component {
-  // constructor(props) {
-
-  // }
-  state = {
-    fixed: undefined
-  }
-
-  hideFixedMenu = () => this.setState({ fixed: false })
-  showFixedMenu = () => this.setState({ fixed: true })
-
-  render() {
-
-    const { fixed } = this.state
-
-    return (
-      <Responsive {...Responsive.onlyComputer}>
-        <div>
-          <Container style={{ padding: '1.5em 0em' }}>
-            <Image src='http://www.hipsterpig.com/wp-content/uploads/2014/05/fc550x550orange17.jpg' style={{height: '100px', width: '100px'}}/>
-          </Container>
-          <Router>
-          <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
-            <Segment inverted textAlign='center'  vertical>
-
-              <Menu
-                fixed={fixed ? 'top' : null}
-                inverted={!fixed}
-                pointing={!fixed}
-                secondary={!fixed}
-                size='small'
-              >
-
-                <Container>
-                  <Menu.Item><Link to="/">Home</Link></Menu.Item>
-                  <Menu.Item><Link to="/my_info">My Info</Link></Menu.Item>
-                  <Menu.Item><Link to="/job_openings">Schedules</Link></Menu.Item>
-                  <Menu.Item><Link to="/onboarding">Onboarding</Link></Menu.Item>
-                  <Menu.Item><Link to="/reports">Reports</Link></Menu.Item>
-                  <Menu.Item><Link to="/messages">Messages</Link></Menu.Item>
-                  <Menu.Item><Link to="/contracts">Contracts</Link></Menu.Item>
-                  <Menu.Item><Link to="/sign-up">Sign Up</Link></Menu.Item>
-                  <Menu.Menu position='right'>
-                    <Menu.Item>
-                      <Menu.Item name='logout' onClick={() => logout()}  />
-                    </Menu.Item>
-                  </Menu.Menu>
-                </Container>
-
-              </Menu>
-
-            </Segment>
-           <Switch>
-              <Route exact path="/" component={HomepageLayout} />
-              <Route path="/my_info" component={MyInfo} />
-              <Route path="/job_openings" component={Schedules} />
-              <Route path="/onboarding" component={Onboarding} />
-              <Route path="/reports" component={Reports} />
-              <Route path="/messages" component={Messages} />
-              <Route path="/contracts" component={Contracts} />
-              <Route path="/sign-up" component={SignUpForm} />
-            </Switch>
-
-          </Visibility>
-
-          </Router>
-          </div>
-      </Responsive>
-    )
-  }
-}
-
-DesktopContainer.propTypes = {
-  children: PropTypes.node,
-}
 
 const Footer = () => (
   <Segment inverted vertical style={{ padding: '5em 0em' }}>

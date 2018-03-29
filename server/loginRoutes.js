@@ -1,5 +1,6 @@
 const loginRouter = require('express').Router();
 const db = require('../database/index.js');
+const employeeController = require('../database/models/employees.js');
 const bcrypt = require('bcrypt');
 const firebase = require('firebase');
 const passport = require('passport');
@@ -27,7 +28,6 @@ var strategy = new JwtStrategy(jwtOptions, (jwt_payload, next) => {
 
 passport.use(strategy);
 
-// compare password
 const comparePassword = (rawPw, hashedPw) => {
   // add bcrypt later
   // bcrypt.compare(rawPw, encryptPw, (err, exists) => !!exists);
@@ -54,6 +54,9 @@ loginRouter.post('/login', (req, res) => {
       res.status(401).json({message: 'no such user'});
     }
     else if (comparePassword(pw, data.rows[0].pw)) {
+      // set company_id value
+      // get users with matching company id
+      // send back users
       var iat = Math.floor(new Date().getTime() / 1000);
       var payload = {
         uid: data.rows[0].id,
@@ -65,21 +68,15 @@ loginRouter.post('/login', (req, res) => {
         exp: iat + 3600
       };
       var token = jwt.sign(payload, jwtOptions.secretOrKey);
-      res.json({message: 'ok', token: token});
+      res.json({message: 'ok', token: token, user: data.rows[0]});
     } else {
       res.status(401).json({message: 'passwords did not match'});
     }
   });
 });
 
-loginRouter.get('/secret', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json('yer token works');
-});
-
-// possible logout route
-// loginRouter.get('/logout', (req, res) => {
-//   req.logout();
-//   res.redirect('/login');
+// loginRouter.get('/secret', passport.authenticate('jwt', { session: false }), (req, res) => {
+//   res.json('yer token works');
 // });
 
 module.exports = loginRouter;

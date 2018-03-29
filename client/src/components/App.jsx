@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { createBrowserHistory } from 'history';
+import axios from 'axios';
 import store from '../store.js';
 import Dashboard from './Dashboard.jsx';
 import Login from './Login/Login.jsx';
 
 const history = syncHistoryWithStore(createBrowserHistory(), store);
+
+axios.defaults.headers.common['Authorization'] = 'JWT ' + localStorage.getItem('authToken');
 
 class App extends Component {
   componentWillMount() {
@@ -16,25 +19,19 @@ class App extends Component {
   }
 
   render() {
-    if (!localStorage.authToken) {
-      return (
-        <Provider store={store}>
-          <Router history={history}>
-            <Login />
-          </Router>
-        </Provider>
-      );
-    }
-    else {
-      return (
-        <Provider store={store}>
-          <Router history={history}>
-            <Dashboard />
-          </Router>
-        </Provider>
-      );
-    }
+    return (
+      <Router history={history}>
+      {  !localStorage.authToken ?
+        <Login /> :
+        <Dashboard />
+      }    
+      </Router>
+    );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  verified: state.users.verified
+});
+
+export default connect(mapStateToProps)(App);

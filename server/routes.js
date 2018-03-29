@@ -50,6 +50,7 @@ bmtRouter.post('/api/update_department/:id', async (req, res) => {
 });
 
 bmtRouter.get('/api/all_employees/:id', async (req, res) => {
+  console.log(req.headers)
   let id = req.params.id;
   try {
     let result = await employeeController.retrieveEmployees(id)
