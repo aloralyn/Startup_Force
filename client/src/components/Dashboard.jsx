@@ -32,13 +32,13 @@ import {
 
 
 class DesktopContainer extends Component {
-  // constructor(props) {
-
-  // }
+  constructor(props) {
+    super(props);
+  }
   state = {
     fixed: undefined
   }
-
+  
   hideFixedMenu = () => this.setState({ fixed: false })
   showFixedMenu = () => this.setState({ fixed: true })
 

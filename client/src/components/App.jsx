@@ -16,24 +16,17 @@ class App extends Component {
   }
 
   render() {
-    if (!localStorage.authToken) {
+    
       return (
         <Provider store={store}>
           <Router history={history}>
-            <Login />
-          </Router>
-        </Provider>
-      );
-    }
-    else {
-      return (
-        <Provider store={store}>
-          <Router history={history}>
+          { !localStorage.authToken ?
+            <Login /> :
             <Dashboard />
+          }    
           </Router>
         </Provider>
       );
-    }
   }
 }
 
