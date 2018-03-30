@@ -14,7 +14,6 @@ import Schedules from './Schedules/Schedules.jsx';
 import Onboarding from './Onboarding/Onboarding.jsx'
 import Reports from './Reports/Reports.jsx';
 import Messages from './Messages/Messages.jsx';
-import SignUpForm from './SignUp/SignUp.jsx';
 import { logout } from '../actions/dashboardActions.js';
 import Contracts from './Contracts/Contracts.jsx';
 

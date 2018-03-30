@@ -13,7 +13,6 @@ import Schedules from './Schedules/Schedules.jsx';
 import Onboarding from './Onboarding/Onboarding.jsx'
 import Reports from './Reports/Reports.jsx';
 import Messages from './Messages/Messages.jsx';
-import SignUpForm from './SignUp/SignUp.jsx';
 import { logout } from '../actions/dashboardActions.js';
 import Contracts from './Contracts/Contracts.jsx';
 
@@ -76,7 +75,6 @@ class DesktopContainer extends Component {
                   <Menu.Item><Link to="/reports">Reports</Link></Menu.Item>
                   <Menu.Item><Link to="/messages">Messages</Link></Menu.Item>
                   <Menu.Item><Link to="/contracts">Contracts</Link></Menu.Item>
-                  <Menu.Item><Link to="/sign-up">Sign Up</Link></Menu.Item>
                   <Menu.Menu position='right'>
                     <Menu.Item>
                       <Menu.Item name='logout' onClick={() => this.props.logout()}  />
@@ -95,7 +93,6 @@ class DesktopContainer extends Component {
               <Route path="/reports" component={Reports} />
               <Route path="/messages" component={Messages} />
               <Route path="/contracts" component={Contracts} />
-              <Route path="/sign-up" component={SignUpForm} />
             </Switch>
 
           </Visibility>
