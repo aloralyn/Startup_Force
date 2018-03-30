@@ -18,3 +18,12 @@ exports.updateCompany = function(id, input) {
       console.log('There was an error creating this company', err);
   });
 }
+
+exports.retrieveCompany = (input) => {
+  let queryStr = `SELECT * FROM companies WHERE id=${input};`;
+  
+  return db.query(queryStr) 
+          .then(res => 
+            res.rows[0]
+          ).catch(err => console.log(err.stack))
+}

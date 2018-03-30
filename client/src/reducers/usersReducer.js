@@ -1,9 +1,12 @@
 import { LOGIN, FETCH_USERS, FETCH_MANAGERS, VERIFIED_USER } from '../actions/types';
 
 const initialState = {
+  company: {},
   user: {},
   users: [],
   managers: [],
+  departments: [],
+  divisions: [],
   verified: false
 };
 
@@ -12,9 +15,12 @@ export default function(state = initialState, action) {
     case LOGIN:
       return {
         ...state,
+        company: action.payload.company,
         user:  action.payload.user,
         users: action.payload.users,
-        managers: action.payload.managers
+        managers: action.payload.managers,
+        departments: action.payload.departments,
+        divisions: action.payload.divisions
       };
     case FETCH_USERS:
       return {

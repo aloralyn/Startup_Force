@@ -25,6 +25,10 @@ import {
      this.handleUploadImage = this.handleUploadImage.bind(this);
    }
 
+  componentDidMount() {
+    console.log(this.props);
+  }
+
   handleUploadImage(e) {
     e.preventDefault();
 
@@ -57,9 +61,9 @@ import {
               </Table.Header>
               <Table.Body>
                 <Table.Row>
-                  <Table.Cell>{this.props.users[0].first_name}</Table.Cell>
-                  <Table.Cell>{this.props.users[0].last_name}</Table.Cell>
-                  <Table.Cell>{this.props.users[0].preferred_name}</Table.Cell>
+                  <Table.Cell>{this.props.user.first_name}</Table.Cell>
+                  <Table.Cell>{this.props.user.last_name}</Table.Cell>
+                  <Table.Cell>{this.props.user.preferred_name}</Table.Cell>
                 </Table.Row>
               </Table.Body>
             </Table>
@@ -74,11 +78,11 @@ import {
               </Table.Header>
               <Table.Body>
                 <Table.Row>
-                  <Table.Cell>369 Lexington Street</Table.Cell>
-                  <Table.Cell>Floor 11</Table.Cell>
-                  <Table.Cell>10017</Table.Cell>
-                  <Table.Cell>New York</Table.Cell>
-                  <Table.Cell>NY</Table.Cell>
+                  <Table.Cell>{this.props.user.street_1}t</Table.Cell>
+                  <Table.Cell>{this.props.user.street_2}</Table.Cell>
+                  <Table.Cell>{this.props.user.zip_code}</Table.Cell>
+                  <Table.Cell>{this.props.user.city}</Table.Cell>
+                  <Table.Cell>{this.props.user.state}</Table.Cell>
                 </Table.Row>
               </Table.Body>
             </Table>
@@ -91,9 +95,9 @@ import {
               </Table.Header>
               <Table.Body>
                 <Table.Row>
-                  <Table.Cell>{this.props.users[0].email}</Table.Cell>
-                  <Table.Cell>{this.props.users[0].phone_number}</Table.Cell>
-                  <Table.Cell>{this.props.users[0].linkedin_url}</Table.Cell>
+                  <Table.Cell>{this.props.user.email}</Table.Cell>
+                  <Table.Cell>{this.props.user.phone_number}</Table.Cell>
+                  <Table.Cell>{this.props.user.linkedin_url}</Table.Cell>
                 </Table.Row>
               </Table.Body>
             </Table>
@@ -107,7 +111,8 @@ import {
 }
 
 const mapStateToProps = state => ({
-  users: state.users.users
+  user: state.users.user,
+  company: state.users.company
 })
 
 export default withRouter(connect(mapStateToProps, {})(MyInfo));

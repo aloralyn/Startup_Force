@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addEmployee } from '../../actions/onboardingActions.js';
 import { handleChange } from '../../actions/formChangeActions.js';
+import { _ } from 'underscore';
 
 import {
   Button,
@@ -25,12 +26,6 @@ const employStatOptions = [
   { text: 'Contractor', value: 'contractor' },
   { text: 'Intern', value: 'intern' },
   { text: 'Terminated', value: 'terminated' }
-];
-
-const divisionOptions = [
-  //Note that this will need to be populted with divisions by department
-  { text: 'West Coast', value: 'west coast' },
-  { text: 'East Coast', value: 'east coast' },
 ];
 
 const payTypeOptions = [
@@ -59,6 +54,10 @@ const managerCred = [
 
      this.handleSubmit = this.handleSubmit.bind(this);
      this.handleFrequency = this.handleFrequency.bind(this); 
+   }
+
+   componentDidMount() {
+     console.log(this.props)
    }
 
    handleSubmit(e) {
@@ -101,6 +100,16 @@ const managerCred = [
   }
 
   render() {
+
+    const departmentOptions = _.uniq(this.props.departments.map(a => a.name)).reduce((a, b) => {
+      a.push({'text': b, 'name': b});
+      return a;
+    }, [])
+    const divisionOptions = _.uniq(this.props.divisions.map(a => a.division)).reduce((a, b) => {
+      a.push({'text': b, 'name': b});
+      return a;
+    }, [])
+
     return (
       <Grid.Column width={8} >
         <Header size='large'>Add an Employee</Header>
@@ -141,8 +150,9 @@ const managerCred = [
             <Form.Field control={Input} label='Reports to' name='reports_to' placeholder='Reports to' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
           </Form.Group>
           <Form.Group widths='equal'>
-            <Form.Field control={Input} label='Department' name='department' placeholder='Department' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
-            <Form.Field control={Select} label='Division' options={ divisionOptions } name='division' placeholder='Placeholder Divs' onChange={(e, {value, name}) => {this.props.handleChange(name, value)}} />
+            {/* <Form.Field control={Input} label='Department' name='department' placeholder='Department' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} /> */}
+            <Form.Field control={Select} label='Department' options={ departmentOptions } name='department' placeholder='Department' onChange={(e, {value, name}) => {this.props.handleChange(name, value)}} />
+            <Form.Field control={Select} label='Division' options={ divisionOptions } name='division' placeholder='Division' onChange={(e, {value, name}) => {this.props.handleChange(name, value)}} />
           </Form.Group>
           <Header size='small'>Compensation</Header>
           <Form.Group widths='equal'>
@@ -189,7 +199,9 @@ const mapStateToProps = state => ({
   pay_per: state.newEmployeeReducer.pay_per,
   pay_type: state.newEmployeeReducer.pay_type,
   is_manager: state.newEmployeeReducer.is_manager,
-  pw: state.newEmployeeReducer.pw
+  pw: state.newEmployeeReducer.pw,
+  departments: state.users.departments,
+  divisions: state.users.divisions
 })
 
 NewEmployeeForm.propTypes = {

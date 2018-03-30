@@ -36,7 +36,7 @@ exports.createEmployeeProfile = (input) => {
 };
 
 exports.retrieveManagers = (input) => {
-  let queryStr = `SELECT * FROM employees WHERE company_id = ${input.id} AND is_manager = true;`;
+  let queryStr = `SELECT * FROM employees WHERE company_id = ${input} AND is_manager = true;`;
 
   return db.query(queryStr)
            .then(res =>
