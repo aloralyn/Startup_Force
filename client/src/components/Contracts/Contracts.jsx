@@ -48,11 +48,7 @@ export default class Contracts extends React.Component {
     axios.post('/api/get/contract/all', {
       companyID: this.state.companyID,
     })
-      .then((res) => {
-        this.setState({
-          existingContractOptions: res.data,
-        });
-      })
+      .then(res => this.setState({ existingContractOptions: res.data }))
       .catch(err => console.error('ERROR in getAllContracts within Contracts.jsx, error: ', err));
   }
 
@@ -77,9 +73,7 @@ export default class Contracts extends React.Component {
   }
 
   toggleView() {
-    this.setState({
-      viewState: !this.state.viewState,
-    }, () => {
+    this.setState({ viewState: !this.state.viewState }, () => {
       this.state.buttonText === 'Show Existing Contracts'
         ? this.setState({ buttonText: 'Back to New Contract Edit View' })
         : this.setState({ buttonText: 'Show Existing Contracts' })
@@ -88,9 +82,7 @@ export default class Contracts extends React.Component {
 
 
   handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {

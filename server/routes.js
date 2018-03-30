@@ -77,6 +77,11 @@ bmtRouter.post('/api/get/contract/all', (req, res) => {
   contractsController.getAllContracts(companyID, (data) => res.status(200).send(data.rows));
 });
 
+bmtRouter.post('/api/get/contract/all/data', (req, res) => {
+  const { companyID } = req.body;
+  contractsController.getAllContractData(companyID, (data) => res.status(200).send(data.rows));
+});
+
 bmtRouter.post('/api/get/employees/all', (req, res) => {
   const { companyID } = req.body;
   contractsController.getAllEmployees(companyID, (data) => res.status(200).send(data.rows));

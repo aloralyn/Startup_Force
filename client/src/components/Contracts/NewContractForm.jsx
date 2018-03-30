@@ -19,13 +19,7 @@ export default class NewContractForm extends React.Component {
   }
 
   handleChange(e, d) {
-    // console.log('this is e: ', e);
-    // console.log('this is d: ', d);
-    this.setState({
-      [d.name]: d.value,
-    }, () => {
-      console.log(`new state of ${d.name}: `, this.state[d.name]);
-    });
+    this.setState({ [d.name]: d.value });
   }
 
   handleSubmit() {
@@ -37,13 +31,8 @@ export default class NewContractForm extends React.Component {
       contractStartDate: this.state.contractStartDate,
       contractEndDate: this.state.contractEndDate,
     })
-      .then((res) => {
-        this.props.getAllContracts();
-        console.log('response from server: ', res);
-      })
-      .catch((err) => {
-        console.log('ERROR in handleSubmit in NewContractForm, error: ', err);
-      });
+      .then(() => this.props.getAllContracts())
+      .catch(err => console.log('ERROR in handleSubmit in NewContractForm, error: ', err));
   }
 
   render() {
@@ -114,11 +103,3 @@ export default class NewContractForm extends React.Component {
     );
   }
 }
-
-// <Form.Field
-//   control={Input}
-//   label="Managing Employee"
-//   name="awardedTo"
-//   placeholder="Managing Employee"
-//   onChange={this.handleChange}
-// />

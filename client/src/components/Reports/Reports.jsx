@@ -1,9 +1,10 @@
 import React from 'react';
 import { Grid, Dropdown, Segment } from 'semantic-ui-react';
-import Chart from './Chart.jsx';
 import axios from 'axios';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+
+import Metrics from './Metrics.jsx';
 
 // import reports action functions
 import { getEmployeeData } from '../../actions/reportsActions.js';
@@ -86,7 +87,7 @@ class Reports extends React.Component {
               />
             </Grid.Column>
             <Grid.Column width={7}>
-              <Chart />
+              <Metrics />
             </Grid.Column>
           </Grid.Row>
         </Grid>

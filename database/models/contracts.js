@@ -35,3 +35,11 @@ exports.getAllEmployees = (companyID, cb) => {
     .then(result => cb(result))
     .catch(err => console.error('ERROR in db function getAllEmployees'));
 };
+
+exports.getAllContractData = (companyID, cb) => {
+  const values = [1] || [companyID];
+  const queryString = 'SELECT * FROM contracts WHERE company_id = $1;';
+  db.query(queryString, values)
+    .then(result => cb(result))
+    .catch(err => console.error('ERROR in db function getAllEmployees'));
+};

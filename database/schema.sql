@@ -118,10 +118,10 @@ INSERT INTO employees
   VALUES (1, 'Aloralyn', 'Ayran', 'Lyn', '11/16/88', '111-11-1111', 'female', '123 Troutman Street', '', 'Brooklyn',  '11221', 'NY','Aloralyn@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
   'today', 'Sales', 'East Coast', 3, '$100,000', 'Week', 'Salary', true, 'password');
 
-INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (1, 1, 'Jerry', 'JS Immersive_Jerry', '$17,000', '01-15-2018', '04-13-2018');
-INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (2, 1, 'Eric', 'JS Immersive_Eric', '$15,000', '01-19-2018', '04-27-2018');
-INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (3, 1, 'Xixi', 'JS Immersive_Xixi', '$19,000', '01-15-2018', '04-13-2018');
-INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (4, 1, 'Adam', 'JS Immersive_Adam', '$21,000', '01-19-2018', '04-27-2018');
+INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (1, 1, 'Jerry', 'JS Immersive_Jerry', '$17,000', '2018-01-15', '2018-04-13');
+INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (2, 1, 'Eric', 'JS Immersive_Eric', '$15,000', '2018-01-19', '2018-04-27');
+INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (3, 1, 'Xixi', 'JS Immersive_Xixi', '$19,000', '2018-01-15', '2018-05-01');
+INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (4, 1, 'Adam', 'JS Immersive_Adam', '$21,000', '2018-01-19', '2018-06-15');
 
 insert into schedules (user_id, start, finish, month, year) values (1, '2018-03-19T09:00:00-04:00', '2018-03-19T17:00:00-04:00', 'Mar', 2018);
 insert into schedules (user_id, start, finish, month, year) values (1, '2018-03-21T09:00:00-04:00', '2018-03-21T17:00:00-04:00', 'Mar', 2018);
