@@ -24,10 +24,20 @@ exports.updateDepartment = function(id, input) {
 }
 
 exports.retrieveDepartments = (id) => {
-  let queryStr = `SELECT * FROM departments WHERE company_id = ${id};`;
+  let queryStr = `SELECT name FROM departments WHERE company_id = ${id};`;
 
   return db.query(queryStr)
            .then(res =>
             res.rows
            ).catch(err => console.log(err.stack))
 };
+
+exports.retrieveDivisions = (id) => {
+  let queryStr = `SELECT division FROM departments WHERE company_id = ${id};`;
+
+  return db.query(queryStr)
+           .then(res =>
+            res.rows
+           ).catch(err => console.log(err.stack))
+};
+

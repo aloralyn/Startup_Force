@@ -1,6 +1,8 @@
 const loginRouter = require('express').Router();
 const db = require('../database/index.js');
 const employeeController = require('../database/models/employees.js');
+const companyController = require('../database/models/companies.js');
+const departmentController = require('../database/models/departments.js');
 const bcrypt = require('bcrypt');
 const firebase = require('firebase');
 const passport = require('passport');
@@ -66,15 +68,32 @@ loginRouter.post('/login', (req, res) => {
       db.query(`SELECT * FROM employees WHERE company_id = ${data.rows[0].company_id};`, (err, data2) => {
         if (err) { console.log(err); }
         else {
-          var managers = [];
-          data2.rows.forEach(emp => { if (emp.is_manager) { managers.push(emp); }});
-          res.json({ 
-            message: 'ok', 
-            token: token, 
-            user: data.rows[0], 
-            users: data2.rows, 
-            managers: managers 
-          });
+        employeeController.retrieveEmployees(data.rows[0].company_id)
+          .then((results) => {
+            employeeController.retrieveManagers(data.rows[0].company_id)
+            .then((results1) => {
+              companyController.retrieveCompany(data.rows[0].company_id)
+                .then((results2) => {
+                  departmentController.retrieveDepartments(data.rows[0].company_id)
+                    .then((results3) => {
+                      departmentController.retrieveDivisions(data.rows[0].company_id)
+                        .then((results4) => {
+                          res.json({ 
+                            message: 'ok', 
+                            token: token, 
+                            user: data.rows[0], 
+                            users: results, 
+                            managers: results1,
+                            company: results2,
+                            departments: results3,
+                            divisions: results4
+                          });
+                        });
+                    });
+                }).catch((err1) => console.log('There was an error retrieving info for this company', err1))
+                .catch((err2) => console.log('There was an error retrieving info for this company', err2))
+            }).catch((err3) => console.log('There was an issue retrieving managers for this company', err3))
+          });   
         }
       });
     } else {
@@ -87,20 +106,43 @@ loginRouter.post('/login', (req, res) => {
 loginRouter.get('/load', passport.authenticate('jwt', { session: false }), (req, res) => {
   var decoded = jwt.verify(req.headers.authorization.slice(4), jwtOptions.secretOrKey);
   db.query(`SELECT * FROM employees WHERE id = ${decoded.uid};`, (err, data) => {
-    if (data.rows.length) {
+    if (data.rows.length) { 
       db.query(`SELECT * FROM employees WHERE company_id = ${data.rows[0].company_id};`, (err, data2) => {
         if (err) { console.log(err); }
         else {
-          var managers = [];
-          data2.rows.forEach(emp => { if (emp.is_manager) { managers.push(emp); }});
-          res.json({ message: 'ok', user: data.rows[0], users: data2.rows, managers: managers });
+        employeeController.retrieveEmployees(data.rows[0].company_id)
+          .then((results) => {
+            employeeController.retrieveManagers(data.rows[0].company_id)
+            .then((results1) => {
+              companyController.retrieveCompany(data.rows[0].company_id)
+                .then((results2) => {
+                  departmentController.retrieveDepartments(data.rows[0].company_id)
+                    .then((results3) => {
+                      departmentController.retrieveDivisions(data.rows[0].company_id)
+                        .then((results4) => {
+                          res.json({ 
+                            message: 'ok', 
+                            user: data.rows[0], 
+                            users: results, 
+                            managers: results1,
+                            company: results2,
+                            departments: results3,
+                            divisions: results4
+                          });
+                        });
+                    });
+                }).catch((err1) => console.log('There was an error retrieving info for this company', err1))
+                .catch((err2) => console.log('There was an error retrieving info for this company', err2))
+            }).catch((err3) => console.log('There was an issue retrieving managers for this company', err3))
+          });   
         }
       });
-    } else {
-      console.log('something happened')
-    }
+  } else {
+    console.log('Something happended...')
+  }
   });
-});
+})
+
 
 loginRouter.get('/secret', passport.authenticate('jwt', { session: false }), (req, res) => {
   res.json('yer token works');

@@ -26,7 +26,6 @@ class HomepageLayout extends Component {
   }
 
   componentWillMount() {
-    // this.props.fetchUsers();
     var date = new Date()
     var weekNum = this.getWeekNumber(date)
     var week = this.getDateOfWeek(weekNum[1], weekNum[0], date);
@@ -69,7 +68,7 @@ class HomepageLayout extends Component {
                 <ProfilePic />
               </Grid.Column>
               <Grid.Column width={10}>
-              <Header size='large' verticalalign='text-top'>Welcome,  {this.props.users[0].first_name} {this.props.users[0].last_name}!</Header>
+              <Header size='large' verticalalign='text-top'>Welcome,  {this.props.user.first_name} {this.props.user.last_name}!</Header>
               
     {/*****************************************************************
                                     Calendar
