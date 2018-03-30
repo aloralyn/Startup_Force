@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
-import { Router } from 'react-router-dom';
+import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { createBrowserHistory } from 'history';
 import axios from 'axios';
 import store from '../store.js';
 import Dashboard from './Dashboard.jsx';
-import Login from './Login/Login.jsx';
+import Login from './Main/Login.jsx';
 import { load } from '../actions/dashboardActions.js';
-import Test from './Login/Test.jsx';
+import Main from './Main/Main.jsx';
 
 const history = syncHistoryWithStore(createBrowserHistory(), store);
 
@@ -21,28 +21,14 @@ class App extends Component {
   }
 
   render() {
-    // if (!localStorage.authToken ) {
-    //   return (
-    //     <Router history={history}>
-    //       <Test/>
-    //     </Router>
-    //   )
-    // } else {
-    //     return (
-    //       <Router history={history}>
-    //         <Dashboard/>
-    //       </Router>
-    //     )
-    //   }
-    // }
     return (
       <Router history={history}>
-      {  !localStorage.authToken ?
-        <Test/> :
-        <Dashboard/>
-      }    
+        {  !localStorage.authToken ?
+        <Main/> :
+        <Dashboard />
+        }       
       </Router>
-    );
+    )
   }
 }
 
