@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Grid, Header, Input, Select } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Input, Select, Dropdown } from 'semantic-ui-react';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 
@@ -18,10 +18,8 @@ export default class NewContractForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+  handleChange(e, d) {
+    this.setState({ [d.name]: d.value });
   }
 
   handleSubmit() {
@@ -33,12 +31,8 @@ export default class NewContractForm extends React.Component {
       contractStartDate: this.state.contractStartDate,
       contractEndDate: this.state.contractEndDate,
     })
-      .then((res) => {
-        console.log('response from server: ', res);
-      })
-      .catch((err) => {
-        console.log('ERROR in handleSubmit in NewContractForm, error: ', err);
-      });
+      .then(() => this.props.getAllContracts())
+      .catch(err => console.log('ERROR in handleSubmit in NewContractForm, error: ', err));
   }
 
   render() {
@@ -70,11 +64,14 @@ export default class NewContractForm extends React.Component {
             />
           </Form.Group>
           <Form.Group widths="equal">
-            <Form.Field
-              control={Input}
-              label="Managing Employee"
+            <Form.Dropdown
+              fluid
+              selection
+              search
+              label="Employees"
               name="awardedTo"
-              placeholder="Managing Employee"
+              placeholder="Employees"
+              options={this.props.employeeDropdown}
               onChange={this.handleChange}
             />
             <Form.Field

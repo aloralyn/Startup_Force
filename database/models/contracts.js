@@ -1,8 +1,8 @@
 const db = require('../index.js');
 
-// @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
+// @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 // @ NOTE: awardedTo and companyID are INTEGER ID values.  Need to grab ID from database as well once fully implemented
-// @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
+// @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 
 exports.addContract = (awardedTo, companyID, clientName, contractName, contractAmount, startDate, endDate, cb) => {
   const values = [1, 1, clientName, contractName, contractAmount, startDate, endDate];
@@ -26,4 +26,20 @@ exports.getAllContracts = (companyID, cb) => {
   db.query(queryString, values)
     .then(result => cb(result))
     .catch(err => console.error('ERROR in db function getAllContracts, error: ', err));
+};
+
+exports.getAllEmployees = (companyID, cb) => {
+  const values = [1] || [companyID];
+  const queryString = 'SELECT preferred_name FROM employees WHERE company_id = $1;';
+  db.query(queryString, values)
+    .then(result => cb(result))
+    .catch(err => console.error('ERROR in db function getAllEmployees'));
+};
+
+exports.getAllContractData = (companyID, cb) => {
+  const values = [1] || [companyID];
+  const queryString = 'SELECT * FROM contracts WHERE company_id = $1;';
+  db.query(queryString, values)
+    .then(result => cb(result))
+    .catch(err => console.error('ERROR in db function getAllEmployees'));
 };

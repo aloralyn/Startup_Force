@@ -63,28 +63,29 @@ bmtRouter.get('/api/all_employees/:id', async (req, res) => {
 bmtRouter.post('/api/add/contract', (req, res) => {
   const { clientName, contractName, contractAmount, awardedTo, contractStartDate, contractEndDate } = req.body;
   contractsController.addContract(awardedTo, 1, clientName, contractName, contractAmount, contractStartDate, contractEndDate, (data) => {
-    console.log('successful addition of contract to DB');
     res.status(201).send();
   });
 });
 
 bmtRouter.post('/api/get/contract', (req, res) => {
   const { contractName } = req.body;
-  contractsController.getContract(contractName, (data) => {
-    console.log('this is the data.rows: ', data.rows);
-    res.status(200).send(data.rows);
-  });
+  contractsController.getContract(contractName, (data) => res.status(200).send(data.rows));
 });
 
 bmtRouter.post('/api/get/contract/all', (req, res) => {
-  console.log('within app');
   const { companyID } = req.body;
-  contractsController.getAllContracts(companyID, (data) => {
-    console.log('this is the data.rows: ', data.rows);
-    res.status(200).send(data.rows);
-  });
+  contractsController.getAllContracts(companyID, (data) => res.status(200).send(data.rows));
 });
 
+bmtRouter.post('/api/get/contract/all/data', (req, res) => {
+  const { companyID } = req.body;
+  contractsController.getAllContractData(companyID, (data) => res.status(200).send(data.rows));
+});
+
+bmtRouter.post('/api/get/employees/all', (req, res) => {
+  const { companyID } = req.body;
+  contractsController.getAllEmployees(companyID, (data) => res.status(200).send(data.rows));
+})
 
 bmtRouter.post('/api/employee/:id', async (req, res) => {
   let id = req.params.id;

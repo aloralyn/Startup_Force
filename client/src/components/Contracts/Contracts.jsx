@@ -20,15 +20,20 @@ export default class Contracts extends React.Component {
       existingContract: 'HiR',
       existingContractOptions: [],
       companyID: 1,
+      buttonText: 'Show Existing Contracts',
+      employees: [],
+      employeeDropdown: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.toggleView = this.toggleView.bind(this);
     this.getExistingContract = this.getExistingContract.bind(this);
     this.getAllContracts = this.getAllContracts.bind(this);
+    this.getEmployees = this.getEmployees.bind(this);
   }
 
   componentDidMount() {
     this.getAllContracts();
+    this.getEmployees();
   }
 
   getExistingContract() {
@@ -43,24 +48,41 @@ export default class Contracts extends React.Component {
     axios.post('/api/get/contract/all', {
       companyID: this.state.companyID,
     })
-      .then((res) => {
-        this.setState({
-          existingContractOptions: res.data,
-        });
-      })
+      .then(res => this.setState({ existingContractOptions: res.data }))
       .catch(err => console.error('ERROR in getAllContracts within Contracts.jsx, error: ', err));
   }
 
+  getEmployees() {
+    axios.post('/api/get/employees/all', {
+      companyID: this.state.companyID,
+    })
+      .then((res) => {
+        const temp = [];
+        res.data.forEach((employee) => {
+          temp.push({
+            text: employee.preferred_name,
+            value: employee.preferred_name,
+          });
+        });
+        this.setState({
+          employees: res.data,
+          employeeDropdown: temp,
+        });
+      })
+      .catch(err => console.error('ERROR in getEmployees in Contracts, error: ', err));
+  }
+
   toggleView() {
-    this.setState({
-      viewState: !this.state.viewState,
+    this.setState({ viewState: !this.state.viewState }, () => {
+      this.state.buttonText === 'Show Existing Contracts'
+        ? this.setState({ buttonText: 'Back to New Contract Edit View' })
+        : this.setState({ buttonText: 'Show Existing Contracts' })
     });
   }
 
+
   handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -70,16 +92,24 @@ export default class Contracts extends React.Component {
           <Grid container stackable>
             <Grid.Row>
               {
-                this.state.viewState ? <NewContractForm /> :
-                <ExistingContract
-                  existingContractOptions={this.state.existingContractOptions}
-                />
+                this.state.viewState
+                  ? <NewContractForm
+                    getAllContracts={this.getAllContracts}
+                    employees={this.state.employees}
+                    employeeDropdown={this.state.employeeDropdown}
+                  />
+                  : <ExistingContract
+                    existingContractOptions={this.state.existingContractOptions}
+                    employees={this.state.employees}
+                    employeeDropdown={this.state.employeeDropdown}
+                  />
               }
+            </Grid.Row>
+            <Grid.Row>
+              <Button onClick={this.toggleView}>{this.state.buttonText}</Button>
             </Grid.Row>
           </Grid>
         </Segment>
-        <Button onClick={this.toggleView}>Click</Button>
-        <Button onClick={this.getExistingContract}>GetContract</Button>
       </div>
     );
   }
