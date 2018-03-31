@@ -2,55 +2,44 @@ import React, { Component } from 'react';
 import moment from 'moment-timezone';
 import { Icon, Button } from 'semantic-ui-react'
 
-
 class OneEmpl extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-		}
-	}
-
 	render() {
-	const { day, first_name, schedules, showEdit, showAdd } = this.props;
-	var needed;
+	const { day, empl, showModal, schedules } = this.props;
+	var match;
 	var ind;
-	console.log("ONE EMPL: ", schedules)
+{/*find a match with employee's id and the day*/}
 	schedules.forEach((one, i) => {
-		if (one.first_name === first_name && moment(day).format("YYYY MMM DD") === moment(one.start).format("YYYY MMM DD")) {
-			needed = one;
+		if (one.id === empl.id && moment(day).isSame(moment(one.start).format("YYYY MMM DD")) ) {
+			match = one;
 			ind = i;
 		}
 	})
-	
+	console.log("from oneEmpl: ", match)
 		return (
 			<div>
 			{
-				needed && moment(moment(new Date())).isBefore(day) &&
+				match && moment(moment(new Date())).isBefore(day) &&
 					<Button animated='fade' fluid 
-					onClick={()=>this.props.showEdit(needed.start, needed.finish, ind, first_name, day, needed.id)}>
+					onClick={()=>this.props.showModal('edit', match, day)}>
 			      <Button.Content hidden>
 			      Edit
 			      </Button.Content>
 			      <Button.Content visible>
-				      <div>{`${moment(needed.start).format("h:mm a")}`}</div>
-							<div>{`${moment(needed.finish).format("h:mm a")}`}</div>
+				      <div>{`${moment(match.start).format("h:mm a")}`}</div>
+							<div>{`${moment(match.finish).format("h:mm a")}`}</div>
 			      </Button.Content>
 			    </Button>
 			    ||
-			   needed && !moment(moment(new Date())).isBefore(day) &&
+			   match && !moment(moment(new Date())).isBefore(day) &&
 			   	<Button>
 			      <Button.Content>
-				      <div>{`${moment(needed.start).format("h:mm a")}`}</div>
-							<div>{`${moment(needed.finish).format("h:mm a")}`}</div>
+				      <div>{`${moment(match.start).format("h:mm a")}`}</div>
+							<div>{`${moment(match.finish).format("h:mm a")}`}</div>
 			      </Button.Content>
 			    </Button>
 			    ||
-			    
 			   	moment(moment(new Date())).isBefore(day) &&
-			    <Button size='mini' onClick={()=>this.props.showAdd(first_name, day)}><Icon name='plus'/></Button>
-			    
-				
-
+			    <Button size='mini' onClick={()=>this.props.showModal('post', empl, day)}><Icon name='plus'/></Button>
 			}
 			</div>
 		)

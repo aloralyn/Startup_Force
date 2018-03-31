@@ -23,15 +23,15 @@ function scheduleReducer(state = initialState, action) {
 		}
 		case EDIT_SCHEDULE: {
 			const { start, startEdit, finish, finishEdit, first_name, id } = action.payload;
-			var index = null;
+			let index = null;
 			state.schedules.forEach((schedule, i) => {
-				if ( schedule.first_name === first_name 
+				if (schedule.id === id
 					&& schedule.start === start 
 					&& schedule.finish === finish ) {
 					index = i;
 				}
 			})
-			var COPY = state.schedules.slice();
+			let COPY = state.schedules.slice();
 			COPY[index] = { first_name, id, start: startEdit, finish: finishEdit}
 			return {
 				...state,
@@ -39,8 +39,7 @@ function scheduleReducer(state = initialState, action) {
 			}
 		}
 		case POST_SCHEDULE: {
-			const { start, finish, month, id, first_name } = action.payload;
-			var schedules = [...state.schedules, action.payload]
+			let schedules = [...state.schedules, action.payload]
 			return {
 				...state,
 				schedules,
@@ -48,13 +47,13 @@ function scheduleReducer(state = initialState, action) {
 		}
 		case DELETE_SCHEDULE: {
 			const { start, finish, id } = action.payload;
-			var index = null;
+			let index = null;
 			state.schedules.forEach((schedule, i) => {
 				if (schedule.id === id && schedule.start === start && schedule.finish === finish ) {
 					index = i;
 				}
 			})
-			var COPY = state.schedules.slice();
+			let COPY = state.schedules.slice();
 			COPY.splice(index, 1);
 
 			return {

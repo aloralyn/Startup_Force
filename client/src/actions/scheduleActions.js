@@ -33,22 +33,17 @@ export const getSchedules = (year, month, id) => dispatch => {
 }
 
 export const editSchedule = ({ start, startEdit, finish, finishEdit, first_name, id }) => dispatch => {
-
 	Promise.resolve(dispatch({
 		type: EDIT_SCHEDULE,
 		payload: { start, startEdit, finish, finishEdit, first_name, id }
-	})).then(() => axios.post('/editSchedule', { start, startEdit, finish, finishEdit, first_name }))
+	})).then(() => axios.post('/editSchedule', { id, start, startEdit, finish, finishEdit }))
 }
 
-export const postSchedule = ({ start, finish, month, first_name, year }) => dispatch => {
-
-	axios.post('/postSchedule', { first_name, start, finish, month, year } ).then(data => {
-		console.log("--------",data)
-		dispatch({
-			type: POST_SCHEDULE,
-			payload: {start, finish, first_name, month, id: data.data.id}
-		})
-	})
+export const postSchedule = ({ id, first_name, start, finish, year, month }) => dispatch => {
+	Promise.resolve(dispatch({
+		type: POST_SCHEDULE,
+		payload: { start, finish, first_name, month, id }
+	})).then(() => axios.post('/postSchedule', { id, start, finish, month, year }))
 }
 
 export const deleteSchedule = ({ start, finish, id }) => dispatch => {
