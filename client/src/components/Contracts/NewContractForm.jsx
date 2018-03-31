@@ -11,7 +11,7 @@ export default class NewContractForm extends React.Component {
       clientName: '',
       contractName: '',
       contractAmount: '',
-      awardedTo: '',
+      awardedToId: '',
       contractStartDate: null,
       contractEndDate: null,
       dateFormat: 'MM/DD/YYYY',
@@ -23,8 +23,6 @@ export default class NewContractForm extends React.Component {
   }
 
   handleChange(e, d) {
-    console.log('this is e: ', e);
-    console.log('this is d: ', d);
     this.setState({ [d.name]: d.value });
   }
 
@@ -41,7 +39,7 @@ export default class NewContractForm extends React.Component {
       clientName: this.state.clientName,
       contractName: this.state.contractName,
       contractAmount: this.state.contractAmount,
-      awardedTo: this.state.awardedTo,
+      awardedToId: this.state.awardedToId,
       contractStartDate: this.state.contractStartDate.format(this.state.dateFormat),
       contractEndDate: this.state.contractEndDate.format(this.state.dateFormat),
     })
@@ -83,7 +81,7 @@ export default class NewContractForm extends React.Component {
               selection
               search
               label="Employees"
-              name="awardedTo"
+              name="awardedToId"
               placeholder="Employees"
               options={this.props.employeeDropdown}
               onChange={this.handleChange}
