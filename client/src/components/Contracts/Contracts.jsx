@@ -58,10 +58,10 @@ export default class Contracts extends React.Component {
     })
       .then((res) => {
         const temp = [];
-        res.data.forEach((employee) => {
+        res.data.forEach((employee, i) => {
           temp.push({
             text: employee.preferred_name,
-            value: employee.preferred_name,
+            value: i+1,
           });
         });
         this.setState({
