@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Router } from 'react-router';
+import { getNotifications } from './messageActions.js';
 
 export function fetchUsers(email) {
   return (dispatch) => {
@@ -23,6 +24,7 @@ export function load() {
   return (dispatch) => {
     axios.get('/load')
       .then((response) => {
+        // getNotifications(response.data.user.id, response.data.user.company_id)
         dispatch({
           type: 'LOGIN',
           payload: response.data
@@ -31,12 +33,41 @@ export function load() {
           type: 'VERIFIED_USER',
           payload: ''
         });
+        // dispatch({
+        //   type: 'GET_NOTIFICATIONS',
+        //   payload: response.data.user.id
+        // })
       })
       .catch((err) => {
         console.log('There was an error', err)
       });
   };
 };
+
+// export function load() {
+//   // return (dispatch) => {
+//     console.log('load')
+//     axios.get('/load')
+//       .then((response) => {
+//         // console.log(response.data)
+//         getNotifications(response.data.user.id, response.data.user.company_id)
+//         return (dispatch) => {
+//           dispatch({
+//             type: 'LOGIN',
+//             payload: response.data
+//           });
+//           dispatch({
+//             type: 'VERIFIED_USER',
+//             payload: ''
+//           });
+//         }
+//         // getNotifications(response.data.user.id, response.data.user.company_id)
+//       })
+//       .catch((err) => {
+//         console.log('There was an error', err)
+//       });
+//   // };
+// };
 
 export function login(state) {
   return (dispatch) => {
@@ -51,6 +82,7 @@ export function login(state) {
           type: 'VERIFIED_USER',
           payload: ''
         });
+        getNotifications(response.data.user.id, response.data.user.company_id)
       })
       .catch((err) => {
         console.log('There was an error', err)

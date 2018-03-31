@@ -44,6 +44,7 @@ const comparePassword = (rawPw, hashedPw) => {
 // });
 
 loginRouter.post('/login', (req, res) => {
+  console.log('login', req.body);
   if (req.body.email && req.body.pw) {
     var email = req.body.email;
     var pw = req.body.pw;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { messageUser, getMessages } from '../../actions/messageActions.js';
+import { messageUser, getMessages, getNotifications, clearNotification, eraseNotification } from '../../actions/messageActions.js';
 import MessageForm from './MessageForm.jsx';
 import {
   Button,
@@ -48,15 +48,20 @@ class Messages extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.messageUserId !== this.props.messageUserId) {
-      this.props.getMessages(this.props.userId, nextProps.messageUserId);
+      this.props.getMessages(this.props.userId, nextProps.messageUserId, this.props.company_id);
     }
+    // check if notifications props different? 
+    // if (nextProps.userId !== this.props.userId) {
+    //   this.props.getNotifications(this.props.userId, this.props.company_id);
+    // }
   }
 
   componentWillMount() {
   	//this.props.getMessages(this.props.userId, this.props.messageUserId);
+    //this.props.getNotifications(this.props.userId, this.props.company_id);
   }
 
-render() {
+  render() {
     if (this.props.messageUserId) {
       return (<Container style={{ padding: '8em 0em' }}>
         <Grid container stackable divided>
@@ -65,11 +70,16 @@ render() {
               <Header as='h2'>Employees</Header>
               <List as='ul'>
                 {this.props.users.map((user) => {
+                  var notifications = this.props.notifications[user.id] ? ' MESSAGES!!' : '';
                   if (user.id !== this.props.userId) {
                     return (<List.Item as='li' key={user.id}><Button
                       value={user.id.toString()}
-                      onClick={(e) => {this.props.messageUser(parseInt(e.target.value, 10))}}
-                      >{user.first_name + ' ' + user.last_name}</Button></List.Item>)
+                      onClick={(e) => {
+                        let userToMessage = parseInt(e.target.value, 10);
+                        this.props.eraseNotification(this.props.userId, userToMessage, this.props.company_id);
+                        this.props.messageUser(userToMessage);
+                      }}
+                      >{user.first_name + ' ' + user.last_name + notifications}</Button></List.Item>)
                 }
                 })}
               </List>
@@ -92,7 +102,7 @@ render() {
           </Grid.Row>
         </Grid>
       </Container>)
-  } else {
+    } else {
       return (<Container style={{ padding: '8em 0em' }}>
         <Grid container stackable>
           <Grid.Row>
@@ -100,11 +110,16 @@ render() {
               <Header as='h2'>Employees</Header>
               <List as='ul'>
                 {this.props.users.map((user) => {
+                  var notifications = this.props.notifications[user.id] ? ' MESSAGES!!' : '';
                   if (user.id !== this.props.userId) {
                     return (<List.Item as='li' key={user.id}><Button 
                       value={user.id.toString()}
-                      onClick={(e) => {this.props.messageUser(parseInt(e.target.value, 10))}}
-                      >{user.first_name + ' ' + user.last_name}</Button></List.Item>)
+                      onClick={(e) => {
+                        let userToMessage = parseInt(e.target.value, 10)
+                        this.props.eraseNotification(this.props.userId, userToMessage, this.props.company_id);
+                        this.props.messageUser(userToMessage);
+                      }}
+                      >{user.first_name + ' ' + user.last_name + notifications}</Button></List.Item>)
                 }
                 })}
               </List>
@@ -112,7 +127,7 @@ render() {
           </Grid.Row>
         </Grid>
       </Container>) 
-  }
+    }
   }
 }
 
@@ -122,7 +137,9 @@ const mapStateToProps = state => ({
   username: state.users.user.username,
   userId: state.users.user.id,
   messages: state.messages.messages,
-  messageUserId: state.messages.messageUserId
+  messageUserId: state.messages.messageUserId,
+  company_id: state.users.user.company_id,
+  notifications: state.messages.notifications
 });
 
-export default withRouter(connect(mapStateToProps, { messageUser, getMessages })(Messages));
+export default withRouter(connect(mapStateToProps, { messageUser, getMessages, getNotifications, clearNotification, eraseNotification })(Messages));

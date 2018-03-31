@@ -20,7 +20,7 @@ class MessageForm extends React.Component {
   handleSubmit(event) {
     const time = new Date().toString();
     event.preventDefault()
-    this.props.sendMessage(this.state.input, time, nameFromId(this.props.userId, this.props.users), this.props.userId, this.props.messageUserId);
+    this.props.sendMessage(this.state.input, time, nameFromId(this.props.userId, this.props.users), this.props.userId, this.props.messageUserId, this.props.company_id);
     this.setState({ input: '' });
   }
 
@@ -43,7 +43,8 @@ const mapStateToProps = (state) => ({
   users: state.users.users,
   username: state.users.user.username,
   userId: state.users.user.id,
-  messageUserId: state.messages.messageUserId
+  messageUserId: state.messages.messageUserId,
+  company_id: state.users.user.company_id
 });
 
 export default connect(mapStateToProps, { sendMessage })(MessageForm);

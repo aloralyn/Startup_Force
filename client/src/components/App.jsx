@@ -8,6 +8,7 @@ import store from '../store.js';
 import Dashboard from './Dashboard.jsx';
 import Login from './Main/Login.jsx';
 import { load } from '../actions/dashboardActions.js';
+import { getNotifications } from '../actions/messageActions.js';
 import Main from './Main/Main.jsx';
 
 const history = syncHistoryWithStore(createBrowserHistory(), store);
@@ -34,7 +35,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  verified: state.users.verified
+  verified: state.users.verified,
+  user: state.users.user
 });
 
-export default connect(mapStateToProps, { load })(App);
+export default connect(mapStateToProps, { load, getNotifications })(App);
