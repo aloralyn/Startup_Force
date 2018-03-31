@@ -5,7 +5,7 @@ import axios from 'axios';
 export const getSchedule = ( year, month, id ) => dispatch => {
 	axios.get(`/schedule/${year}/${month}/${id}`)
 	.then(schedule => {
-		console.log(schedule)
+		// console.log(schedule)
 			dispatch({
 			type: GET_SCHEDULE,
 			payload: schedule.data.rows
@@ -58,5 +58,3 @@ export const deleteSchedule = ({ start, finish, id }) => dispatch => {
 		payload: { id, start, finish }
 	})).then(() => axios.post('/deleteSchedule', { start, finish, id }))
 }
-
-

@@ -46,7 +46,7 @@ class HomepageLayout extends Component {
     var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
     return [d.getUTCFullYear(), weekNo];
   }
-      
+
   getDateOfWeek = (w, y, clickedDay) => {
     var week = [];
     let month = moment(clickedDay).format("MMM");
@@ -56,11 +56,11 @@ class HomepageLayout extends Component {
       week.push(moment(`${y}-${day.getMonth() + 1}-${day.getDate()}`).format("YYYY MMM DD"))
     }
     return week
-  } 
+  }
 
   render() {
     return (
-      this.props.users[0] ? 
+      this.props.users[0] ?
       <div>
         <Segment style={{ padding: '8em 0em' }} vertical>
           <Grid container stackable verticalAlign='middle'>
@@ -70,7 +70,7 @@ class HomepageLayout extends Component {
               </Grid.Column>
               <Grid.Column width={10}>
               <Header size='large' verticalalign='text-top'>Welcome,  {this.props.users[0].first_name} {this.props.users[0].last_name}!</Header>
-              
+
     {/*****************************************************************
                                     Calendar
     *******************************************************************/}
@@ -103,28 +103,31 @@ class HomepageLayout extends Component {
       <Table.Row>
           <Table.HeaderCell width={2}>Employees</Table.HeaderCell>
             {this.state.week.map((d, i) => (
-                <Table.HeaderCell width={2}>{`${d.slice(5)}`}</Table.HeaderCell>
+                <Table.HeaderCell
+                  width={2}
+                  key={i}
+                  >{`${d.slice(5)}`}</Table.HeaderCell>
             ))}
         </Table.Row>
     </Table.Header>
     <Table.Body>
-      
+
         {
           <Table.Row style={{height: '100px'}}>
-            
+
                 <Table.Cell>{this.props.users[0].first_name}</Table.Cell>
-              
-              {this.state.week.map((day, indOfDate) => 
-              (<Table.Cell>
-                  <div><Empl 
+
+              {this.state.week.map((day, indOfDate) =>
+              (<Table.Cell key={indOfDate}>
+                  <div><Empl
                     day={day}
                     first_name={this.props.users[0].first_name}
-                    schedule={this.props.schedule} 
+                    schedule={this.props.schedule}
                     /></div>
                 </Table.Cell>)
-              
+
               )}
-          </Table.Row>    
+          </Table.Row>
           }
     </Table.Body>
     </Table>
@@ -135,7 +138,7 @@ class HomepageLayout extends Component {
               </Grid.Column>
               <Grid.Column width={8}>
               </Grid.Column>
-              
+
             </Grid.Row>
           </Grid>
         </Segment>
@@ -168,7 +171,7 @@ const Empl = ({ day, first_name, schedule}) => {
       }
       </div>
     )
-  
+
 }
 
 HomepageLayout.propTypes = {

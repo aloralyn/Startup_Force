@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 
 import Metrics from './Metrics.jsx';
 
-// import reports action functions
 import { getEmployeeData } from '../../actions/reportsActions.js';
 
 class Reports extends React.Component {
@@ -16,6 +15,7 @@ class Reports extends React.Component {
       currentChart: '',
       employeeData: null,
       chartData: null,
+      currentChartDisplayed: '',
       reportOptions: [
         {
           key: 'Sales Figures',
@@ -37,20 +37,12 @@ class Reports extends React.Component {
     this.handleDropdownClick.bind(this);
   }
 
-  componentWillMount() {
-    console.log('this are props within componentWillMount: ', this.props);
-  }
-
   handleDropdownClick = (e, data) => {
     const { value } = data;
-    axios.post('/get/employee/data', {
-      data: 'data',
-    })
+    axios.post('/get/employee/data', { data: 'data' })
       .then((res) => {
         console.log('successful post with res: ', res.data.rows);
-        this.setState({
-          chartData: res.data.rows,
-        });
+        this.setState({ chartData: res.data.rows });
       })
       .catch((err) => {
         console.log('ERROR in handleDropdownClick axios post, error: ', err);
@@ -63,7 +55,6 @@ class Reports extends React.Component {
           this.setState({
             currentChart: option.value,
           });
-          // add action for updating currentChart
         }
       });
     } else {
