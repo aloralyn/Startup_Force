@@ -12,7 +12,8 @@ function messageReducer(state = initialState, action) {
     case MESSAGE_USER:
       return Object.assign({}, state, {
         messageUserId: action.payload,
-        notifications: Object.assign({}, state.notifications, state.notifications[action.payload] = undefined)
+        // notifications: Object.assign({}, state.notifications, state.notifications[action.payload] = undefined)
+        notifications: [] // then pull the notifications again from Firebase?
       });
     case GET_MESSAGES:
       if (action.payload) {

@@ -60,16 +60,39 @@ export const getNotifications = (user, company_id) => dispatch => {
 export const eraseNotification = (user, userFrom, company_id) => {
   console.log('erase notification')
   let path = path = 'companies/' + company_id + '/notifications/' + user + '/' + userFrom;
-  firebase.database().ref(path).remove();
+  firebase.database().ref(path).remove()
+    .then(function() {
+      console.log("Remove succeeded.")
+    })
+    .catch(function(error) {
+      console.log("Remove failed: " + error.message)
+    });
 }
 
-export const messageUser = (user) => dispatch => {
-  return (
-    dispatch({
-      type: MESSAGE_USER,
-  	  payload: user
-  	})
-  );
+// export const messageUser = (user) => dispatch => {
+//   return (
+//     dispatch({
+//       type: MESSAGE_USER,
+//   	  payload: user
+//   	})
+//   );
+// };
+
+// use thunk to dispatch multiple actions
+
+export const messageUser = (user, userToMessage, notifications, company_id) => {
+  if (notifications) {
+    console.log('notifications');
+    eraseNotification(user, userToMessage, company_id);
+  }
+  return dispatch => {
+    return (
+      dispatch({
+        type: MESSAGE_USER,
+       payload: userToMessage
+     })
+    );
+  }
 };
 
 export const clearNotification = (user) => dispatch => {

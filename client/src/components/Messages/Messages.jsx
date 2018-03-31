@@ -70,14 +70,17 @@ class Messages extends Component {
               <Header as='h2'>Employees</Header>
               <List as='ul'>
                 {this.props.users.map((user) => {
-                  var notifications = this.props.notifications[user.id] ? ' MESSAGES!!' : '';
+                  var notifications;
+                  if (this.props.notifications) {
+                    notifications = this.props.notifications[user.id] ? ' MESSAGES!!' : '';
+                  } else { notifications = ''; }
                   if (user.id !== this.props.userId) {
                     return (<List.Item as='li' key={user.id}><Button
                       value={user.id.toString()}
                       onClick={(e) => {
                         let userToMessage = parseInt(e.target.value, 10);
-                        this.props.eraseNotification(this.props.userId, userToMessage, this.props.company_id);
-                        this.props.messageUser(userToMessage);
+                        //this.props.eraseNotification(this.props.userId, userToMessage, this.props.company_id);
+                        this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
                       }}
                       >{user.first_name + ' ' + user.last_name + notifications}</Button></List.Item>)
                 }
@@ -110,14 +113,17 @@ class Messages extends Component {
               <Header as='h2'>Employees</Header>
               <List as='ul'>
                 {this.props.users.map((user) => {
-                  var notifications = this.props.notifications[user.id] ? ' MESSAGES!!' : '';
+                  var notifications;
+                  if (this.props.notifications) {
+                    notifications = this.props.notifications[user.id] ? ' MESSAGES!!' : '';
+                  } else { notifications = ''; }
                   if (user.id !== this.props.userId) {
                     return (<List.Item as='li' key={user.id}><Button 
                       value={user.id.toString()}
                       onClick={(e) => {
                         let userToMessage = parseInt(e.target.value, 10)
-                        this.props.eraseNotification(this.props.userId, userToMessage, this.props.company_id);
-                        this.props.messageUser(userToMessage);
+                        //this.props.eraseNotification(this.props.userId, userToMessage, this.props.company_id);
+                        this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
                       }}
                       >{user.first_name + ' ' + user.last_name + notifications}</Button></List.Item>)
                 }
