@@ -54,10 +54,12 @@ const managerCred = [
 
      this.handleSubmit = this.handleSubmit.bind(this);
      this.handleFrequency = this.handleFrequency.bind(this); 
+     this.testClick = this.testClick.bind(this);
    }
 
    componentDidMount() {
-     console.log(this.props)
+    console.log(this.props.managers)
+     console.log(this.props.managers)
    }
 
    handleSubmit(e) {
@@ -99,16 +101,26 @@ const managerCred = [
     });
   }
 
+  testClick(e, b) {
+    console.log(e, b)
+  }
+
   render() {
 
     const departmentOptions = _.uniq(this.props.departments.map(a => a.name)).reduce((a, b) => {
-      a.push({'text': b, 'name': b});
+      a.push({'text': b, 'value': b});
       return a;
-    }, [])
+    }, []);
+
     const divisionOptions = _.uniq(this.props.divisions.map(a => a.division)).reduce((a, b) => {
-      a.push({'text': b, 'name': b});
+      a.push({'text': b, 'value': b});
       return a;
-    }, [])
+    }, [{'text': 'none', 'value': ''}]);
+
+    const managerOptions = this.props.managers.reduce((a, b) => {
+      a.push({'text': b.first_name + ' ' + b.last_name, 'value': parseInt(b.id) });
+      return a;
+    }, []);
 
     return (
       <Grid.Column width={8} >
@@ -147,7 +159,7 @@ const managerCred = [
           </Form.Group>
           <Form.Group widths='equal'>
             <Form.Field control={Input} label='Start Date' name='start_date' placeholder='Start Date' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}}  />
-            <Form.Field control={Input} label='Reports to' name='reports_to' placeholder='Reports to' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
+            <Form.Field control={Select} label='Gender' options={managerOptions} name='reports_to' placeholder='Reports' onChange={(e, {value, name}) => {this.props.handleChange(name, value)}}/>
           </Form.Group>
           <Form.Group widths='equal'>
             {/* <Form.Field control={Input} label='Department' name='department' placeholder='Department' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} /> */}
@@ -201,7 +213,8 @@ const mapStateToProps = state => ({
   is_manager: state.newEmployeeReducer.is_manager,
   pw: state.newEmployeeReducer.pw,
   departments: state.users.departments,
-  divisions: state.users.divisions
+  divisions: state.users.divisions,
+  managers: state.users.managers
 })
 
 NewEmployeeForm.propTypes = {

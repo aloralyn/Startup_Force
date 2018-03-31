@@ -21,6 +21,8 @@ class ProfilePic extends React.Component {
             </span>
           </Card.Meta>
           <Card.Description>
+            With {this.props.company.company_name} since {this.props.user.start_date}
+            <br></br>
             Title: {this.props.user.position}
           </Card.Description>
         </Card.Content>
