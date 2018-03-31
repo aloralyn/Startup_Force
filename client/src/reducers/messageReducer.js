@@ -1,19 +1,17 @@
-import { MESSAGE_USER, GET_MESSAGES, GET_NOTIFICATIONS, CLEAR_NOTIFICATION } from '../actions/types.js';
+import { MESSAGE_USER, GET_MESSAGES, GET_NOTIFICATIONS, CLEAR_NOTIFICATIONS } from '../actions/types.js';
 import firebase from '../firebase.js';
 
 const initialState = {
   messages: [`Send some messages!`],
   messageUserId: null,
-  notifications: []
+  notifications: {}
 };
 
 function messageReducer(state = initialState, action) {
   switch(action.type) {
     case MESSAGE_USER:
       return Object.assign({}, state, {
-        messageUserId: action.payload,
-        // notifications: Object.assign({}, state.notifications, state.notifications[action.payload] = undefined)
-        notifications: [] // then pull the notifications again from Firebase?
+        messageUserId: action.payload
       });
     case GET_MESSAGES:
       if (action.payload) {
@@ -29,9 +27,9 @@ function messageReducer(state = initialState, action) {
       return Object.assign({}, state, {
         notifications: action.payload
       });
-    case CLEAR_NOTIFICATION:
+    case CLEAR_NOTIFICATIONS:
       return Object.assign({}, state, {
-        notifications: []
+        notifications: {}
       });
   default:
     return state;

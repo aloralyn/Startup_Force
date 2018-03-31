@@ -15,6 +15,7 @@ import Reports from './Reports/Reports.jsx';
 import Messages from './Messages/Messages.jsx';
 import { logout } from '../actions/dashboardActions.js';
 import Contracts from './Contracts/Contracts.jsx';
+import { getNotifications } from '../actions/messageActions.js';
 
 import {
   Container,
@@ -45,8 +46,10 @@ class DesktopContainer extends Component {
 
   // showFixedMenu = () => this.setState({ fixed: true })
 
-  componentDidMount() {
-    console.log(this.props)
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user !== this.props.user) {
+      this.props.getNotifications(nextProps.user.id, nextProps.user.company_id);
+    }
   }
 
   render() {
@@ -82,7 +85,7 @@ class DesktopContainer extends Component {
                   <Menu.Item><Link to="/contracts">Contracts</Link></Menu.Item>
                   <Menu.Menu position='right'>
                     <Menu.Item>
-                      <Menu.Item name='logout' onClick={() => this.props.logout()}  />
+                      <Menu.Item name='logout' onClick={() => this.props.logout(this.props.user.id, this.props.user.company_id)}  />
                     </Menu.Item>
                   </Menu.Menu>
                 </Container> 
@@ -135,4 +138,4 @@ const mapStateToProps = state => ({
 
 
 
-export default withRouter(connect(mapStateToProps, { logout })(DesktopContainer));
+export default withRouter(connect(mapStateToProps, { getNotifications, logout })(DesktopContainer));

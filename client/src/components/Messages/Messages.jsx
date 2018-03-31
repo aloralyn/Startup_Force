@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { messageUser, getMessages, getNotifications, clearNotification, eraseNotification } from '../../actions/messageActions.js';
+import { messageUser, getMessages, clearNotification, eraseNotification } from '../../actions/messageActions.js';
 import MessageForm from './MessageForm.jsx';
 import {
   Button,
@@ -25,7 +25,6 @@ export const nameFromId = (id, users) => {
 }
 
 const timeFromDate = date => {
-  //const now = new Date();
   let hours = parseInt(date.slice(16, 18));
   let period = 'am'
   if (hours >= 12) {
@@ -50,15 +49,6 @@ class Messages extends Component {
     if (nextProps.messageUserId !== this.props.messageUserId) {
       this.props.getMessages(this.props.userId, nextProps.messageUserId, this.props.company_id);
     }
-    // check if notifications props different? 
-    // if (nextProps.userId !== this.props.userId) {
-    //   this.props.getNotifications(this.props.userId, this.props.company_id);
-    // }
-  }
-
-  componentWillMount() {
-  	//this.props.getMessages(this.props.userId, this.props.messageUserId);
-    //this.props.getNotifications(this.props.userId, this.props.company_id);
   }
 
   render() {
@@ -148,4 +138,4 @@ const mapStateToProps = state => ({
   notifications: state.messages.notifications
 });
 
-export default withRouter(connect(mapStateToProps, { messageUser, getMessages, getNotifications, clearNotification, eraseNotification })(Messages));
+export default withRouter(connect(mapStateToProps, { messageUser, getMessages, clearNotification, eraseNotification })(Messages));

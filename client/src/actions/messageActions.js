@@ -1,4 +1,4 @@
-import { MESSAGE_USER, GET_MESSAGES, GET_NOTIFICATIONS, CLEAR_NOTIFICATION } from './types.js';
+import { MESSAGE_USER, GET_MESSAGES, GET_NOTIFICATIONS } from './types.js';
 import firebase from '../firebase.js';
 
 const setMessageUser = (userFrom, userTo, company_id) => {
@@ -41,21 +41,18 @@ const setNotificationPath = (user, company_id) => {
 };
 
 export const getNotifications = (user, company_id) => dispatch => {
-  // console.log('notifications', user, company_id)
   setNotificationPath(user, company_id).on('value', snap => {
     dispatch({
       type: GET_NOTIFICATIONS,
       payload: snap.val()
     });
   });
-  //setNotificationPath(user, company_id).off();
 };
 
-// setting path to erase notifications for the user clicked
-// const eraseNotificationPath = (user, userFrom, company_id) => {
-//   let path = path = 'companies/' + company_id + '/notifications/' + user + '/' + userFrom;
-//   return firebase.database().ref(path);
-// };
+// call when logout to end notification connection
+export const endNotifications = (user, company_id) => dispatch => {
+  setNotificationPath(user, company_id).off();
+};
 
 export const eraseNotification = (user, userFrom, company_id) => {
   console.log('erase notification')
@@ -68,17 +65,6 @@ export const eraseNotification = (user, userFrom, company_id) => {
       console.log("Remove failed: " + error.message)
     });
 }
-
-// export const messageUser = (user) => dispatch => {
-//   return (
-//     dispatch({
-//       type: MESSAGE_USER,
-//   	  payload: user
-//   	})
-//   );
-// };
-
-// use thunk to dispatch multiple actions
 
 export const messageUser = (user, userToMessage, notifications, company_id) => {
   if (notifications) {
@@ -94,12 +80,3 @@ export const messageUser = (user, userToMessage, notifications, company_id) => {
     );
   }
 };
-
-export const clearNotification = (user) => dispatch => {
-  return (
-    dispatch({
-      type: CLEAR_NOTIFICATION,
-      payload: user
-    })
-  );
-}

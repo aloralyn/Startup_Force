@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Router } from 'react-router';
-import { getNotifications } from './messageActions.js';
+import { getNotifications, endNotifications } from './messageActions.js';
 
 export function fetchUsers(email) {
   return (dispatch) => {
@@ -24,7 +24,7 @@ export function load() {
   return (dispatch) => {
     axios.get('/load')
       .then((response) => {
-        // getNotifications(response.data.user.id, response.data.user.company_id)
+        // getNotifications(response.data.user.id, response.data.user.company_id);
         dispatch({
           type: 'LOGIN',
           payload: response.data
@@ -33,6 +33,7 @@ export function load() {
           type: 'VERIFIED_USER',
           payload: ''
         });
+        // getNotifications(response.data.user.id, response.data.user.company_id);
         // dispatch({
         //   type: 'GET_NOTIFICATIONS',
         //   payload: response.data.user.id
@@ -82,7 +83,7 @@ export function login(state) {
           type: 'VERIFIED_USER',
           payload: ''
         });
-        getNotifications(response.data.user.id, response.data.user.company_id)
+        // getNotifications(response.data.user.id, response.data.user.company_id)
       })
       .catch((err) => {
         console.log('There was an error', err)
@@ -90,8 +91,9 @@ export function login(state) {
   };
 };
 
-export const logout = () => dispatch => {
+export const logout = (user, company_id) => dispatch => {
   localStorage.removeItem('authToken');
+  endNotifications(user, company_id);
   dispatch({
     type: 'VERIFIED_USER',
     payload: ''
@@ -103,6 +105,10 @@ export const logout = () => dispatch => {
   dispatch({
     type: 'FETCH_USERS',
     payload: []
+  });
+  dispatch({
+    type: 'CLEAR_NOTIFICATIONS',
+    payload: ''
   });
 };
 
