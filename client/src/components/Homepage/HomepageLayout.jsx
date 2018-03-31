@@ -14,7 +14,7 @@ import {
   Header,
   Segment,
   Table,
-  Button, 
+  Button,
   Form
 } from 'semantic-ui-react'
 
@@ -82,7 +82,7 @@ class HomepageLayout extends Component {
   render() {
     const { week} = this.state;
     return (
-      this.props.users[0] ? 
+      this.props.users[0] ?
       <div>
         <Segment style={{ padding: '8em 0em' }} vertical>
           <Grid container stackable verticalAlign='middle'>
@@ -92,7 +92,7 @@ class HomepageLayout extends Component {
               </Grid.Column>
               <Grid.Column width={10}>
               <Header size='large' verticalalign='text-top'>Welcome,  {this.props.user.first_name} {this.props.user.last_name}!</Header>
-              
+
     {/*****************************************************************
                                     Calendar
     *******************************************************************/}
@@ -112,29 +112,29 @@ class HomepageLayout extends Component {
 <Table celled selectable textAlign={'center'} verticalAlign={'middle'}>
     <Table.Header>
       <Table.Row>
-          
+
             {week.map((d, i) => (
-                <Table.HeaderCell width={2}>{`${d.slice(5)}`}</Table.HeaderCell>
+                <Table.HeaderCell width={2} key={i}>{`${d.slice(5)}`}</Table.HeaderCell>
             ))}
         </Table.Row>
     </Table.Header>
     <Table.Body>
-      
+
         {
           <Table.Row style={{height: '100px'}}>
-            
-              
-              {week.map((day, indOfDate) => 
-              (<Table.Cell>
-                  <div><Empl 
+
+
+              {week.map((day, indOfDate) =>
+              (<Table.Cell key={indOfDate}>
+                  <div><Empl
                     day={day}
                     first_name={this.props.users[0].first_name}
-                    schedule={this.props.schedule} 
+                    schedule={this.props.schedule}
                     /></div>
                 </Table.Cell>)
-              
+
               )}
-          </Table.Row>    
+          </Table.Row>
           }
     </Table.Body>
     </Table>
@@ -172,7 +172,7 @@ const Empl = ({ day, first_name, schedule}) => {
       }
       </div>
     )
-  
+
 }
 
 HomepageLayout.propTypes = {
