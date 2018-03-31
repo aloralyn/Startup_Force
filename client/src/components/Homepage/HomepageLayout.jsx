@@ -14,7 +14,8 @@ import {
   Header,
   Segment,
   Table,
-  Button
+  Button, 
+  Form
 } from 'semantic-ui-react'
 
 class HomepageLayout extends Component {
@@ -22,42 +23,64 @@ class HomepageLayout extends Component {
     super(props)
     this.state = {
       week: [],
+      fetchedMonths: []
     }
   }
 
   componentWillMount() {
-    var date = new Date()
-    var weekNum = this.getWeekNumber(date)
-    var week = this.getDateOfWeek(weekNum[1], weekNum[0], date);
-    var arr = [];
-    var date = moment(date).format("YYYY MMM").toString();
-    var month = moment(date).format("MMM").toString();
-    var year = moment(date).format("YYYY").toString();
-    this.props.getSchedule(year, month, 1); // hard coded - NEED TO BE CHANGED
-    arr.push(month)
-    this.setState({ week, fetchedMonths: arr})
+    this.renderCalendar()
   }
 
-  getWeekNumber = (d) => {
+  renderCalendar = pickedDay => {
+  {/*Function to change week in the calendar and fetch schedules from DB*/}
+    pickedDay = pickedDay || new Date();
+  console.log("picked day: ",pickedDay)
+    let week = this.getWeekByDay(pickedDay)
+    let date = this.month_year(pickedDay)
+    if (this.state.fetchedMonths.includes(date[0]) ) {
+      this.setState({ week, pickedDay })
+    } else {
+      this.props.getSchedule(date[1], date[0], 1); // hard coded - NEED TO BE CHANGED
+      console.log('this is fetched months: ', this.state.fetchedMonths)
+      let newfetchedMonths = this.state.fetchedMonths.slice()
+      newfetchedMonths.push(date[0])
+      this.setState({ week, fetchedMonths: newfetchedMonths, pickedDay })
+    }
+  }
+
+
+  weekBack = () => {
+    let pickedDay = moment(this.state.pickedDay).subtract(7, 'day')._d;
+    this.renderCalendar(pickedDay)
+  }
+  weekForth = () => {
+    let pickedDay = moment(this.state.pickedDay).add(7, 'day')._d;
+    this.renderCalendar(pickedDay)
+  }
+
+  month_year = day => {
+    let month = moment(day).format("MMM").toString();
+    let year = moment(day).format("YYYY").toString();
+    return [month, year]
+  }
+
+  getWeekByDay = d => {
+  {/*Function to compute whole week by one day*/}
     d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
     d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
     var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-    var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
-    return [d.getUTCFullYear(), weekNo];
-  }
-      
-  getDateOfWeek = (w, y, clickedDay) => {
-    var week = [];
-    let month = moment(clickedDay).format("MMM");
-    let year = moment(clickedDay).format("YYYY")
+    var weekNumber = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+    let week = [];
+    let year = d.getUTCFullYear();
     for (var i = 0; i < 7; i++) {
-      var day = new Date(y, 0, 1+ i +( (w-1)*7 ) )
-      week.push(moment(`${y}-${day.getMonth() + 1}-${day.getDate()}`).format("YYYY MMM DD"))
+      var day = new Date(year, 0, 1+ i +( (weekNumber-1)*7 ) )
+      week.push(moment(`${year}-${day.getMonth() + 1}-${day.getDate()}`).format("YYYY MMM DD"))
     }
     return week
-  } 
+  }
 
   render() {
+    const { week} = this.state;
     return (
       this.props.users[0] ? 
       <div>
@@ -73,35 +96,24 @@ class HomepageLayout extends Component {
     {/*****************************************************************
                                     Calendar
     *******************************************************************/}
-
-
+    <Form>
+    <Button onClick={()=>this.weekBack()} icon="caret left"/>
     <DayPickerInput
+      placeholder="          Calendar"
       fixedWeeks
       firstDayOfWeek={1}
-      onDayChange={day => {
-        var date = moment(day).format("YYYY MMM").toString() + '';
-        var month = moment(day).format("MMM").toString() + '';
-        var year = moment(day).format("YYYY").toString() + '';
-        var weekNum = this.getWeekNumber(day);
-        var week = this.getDateOfWeek(weekNum[1], weekNum[0], day);
-        if (this.state.fetchedMonths.indexOf(date) === -1) {
-          this.props.getSchedule(year, month, 1)
-        var fetchedMonths1 = this.state.fetchedMonths.slice()
-        fetchedMonths1.push(date)
-          this.setState({ week, fetchedMonths: fetchedMonths1 }, () => console.log(this.state.fetchedMonths))
-        } else {
-          this.setState({ week })
-        }
-      }}
+      onDayChange={day => this.renderCalendar(day)}
     />
+    <Button onClick={()=>this.weekForth()} icon="caret right"/>
+    </Form>
     {/*****************************************************************
                                   Table VIEW >> WEEK
     *******************************************************************/}
 <Table celled selectable textAlign={'center'} verticalAlign={'middle'}>
     <Table.Header>
       <Table.Row>
-          <Table.HeaderCell width={2}>Employees</Table.HeaderCell>
-            {this.state.week.map((d, i) => (
+          
+            {week.map((d, i) => (
                 <Table.HeaderCell width={2}>{`${d.slice(5)}`}</Table.HeaderCell>
             ))}
         </Table.Row>
@@ -111,9 +123,8 @@ class HomepageLayout extends Component {
         {
           <Table.Row style={{height: '100px'}}>
             
-                <Table.Cell>{this.props.users[0].first_name}</Table.Cell>
               
-              {this.state.week.map((day, indOfDate) => 
+              {week.map((day, indOfDate) => 
               (<Table.Cell>
                   <div><Empl 
                     day={day}
@@ -129,13 +140,7 @@ class HomepageLayout extends Component {
     </Table>
     </Grid.Column>
             </Grid.Row>
-            <Grid.Row>
-              <Grid.Column width={6}>
-              </Grid.Column>
-              <Grid.Column width={8}>
-              </Grid.Column>
-              
-            </Grid.Row>
+
           </Grid>
         </Segment>
         </div> : null
