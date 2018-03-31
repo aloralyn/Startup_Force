@@ -138,7 +138,7 @@ loginRouter.get('/load', passport.authenticate('jwt', { session: false }), (req,
         }
       });
   } else {
-    console.log('Something happended...')
+    console.log('Something happened...')
   }
   });
 })

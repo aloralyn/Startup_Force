@@ -45,6 +45,10 @@ class DesktopContainer extends Component {
 
   // showFixedMenu = () => this.setState({ fixed: true })
 
+  componentDidMount() {
+    console.log(this.props)
+  }
+
   render() {
 
     const { fixed } = this.state
@@ -52,9 +56,9 @@ class DesktopContainer extends Component {
     return (
       <Responsive {...Responsive.onlyComputer}>
         <div>
-          <Container style={{ padding: '1.5em 0em' }}>
+          {/* <Container style={{ padding: '1.5em 0em' }}>
             <Image src='http://www.hipsterpig.com/wp-content/uploads/2014/05/fc550x550orange17.jpg' style={{height: '100px', width: '100px'}}/>
-          </Container>
+          </Container> */}
           <Router>
           <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
             <Segment inverted textAlign='center'  vertical>
@@ -67,10 +71,11 @@ class DesktopContainer extends Component {
                 size='small'
               >
 
-                <Container>
+              { this.props.user.is_manager ? 
+              <Container>
                   <Menu.Item><Link to="/">Home</Link></Menu.Item>
-                  <Menu.Item><Link to="/my_info">My Info</Link></Menu.Item>
-                  <Menu.Item><Link to="/job_openings">Schedules</Link></Menu.Item>
+                  <Menu.Item><Link to="/my_info">My Info</Link></Menu.Item>      
+                  <Menu.Item><Link to="/schedules">Schedules</Link></Menu.Item>
                   <Menu.Item><Link to="/onboarding">Onboarding</Link></Menu.Item>
                   <Menu.Item><Link to="/reports">Reports</Link></Menu.Item>
                   <Menu.Item><Link to="/messages">Messages</Link></Menu.Item>
@@ -80,7 +85,22 @@ class DesktopContainer extends Component {
                       <Menu.Item name='logout' onClick={() => this.props.logout()}  />
                     </Menu.Item>
                   </Menu.Menu>
+                </Container> 
+                :
+
+                <Container>
+                <Menu.Item><Link to="/">Home</Link></Menu.Item>
+                <Menu.Item><Link to="/my_info">My Info</Link></Menu.Item>      
+                <Menu.Item><Link to="/reports">Reports</Link></Menu.Item>
+                <Menu.Item><Link to="/messages">Messages</Link></Menu.Item>
+                <Menu.Item><Link to="/contracts">Contracts</Link></Menu.Item>
+                <Menu.Menu position='right'>
+                  <Menu.Item>
+                    <Menu.Item name='logout' onClick={() => this.props.logout()}  />
+                  </Menu.Item>
+                </Menu.Menu>
                 </Container>
+              }
 
               </Menu>
 
@@ -88,7 +108,7 @@ class DesktopContainer extends Component {
            <Switch>
               <Route exact path="/" component={HomepageLayout} />
               <Route path="/my_info" component={MyInfo} />
-              <Route path="/job_openings" component={Schedules} />
+              <Route path="/schedules" component={Schedules} />
               <Route path="/onboarding" component={Onboarding} />
               <Route path="/reports" component={Reports} />
               <Route path="/messages" component={Messages} />
@@ -110,7 +130,7 @@ DesktopContainer.propTypes = {
 }
 
 const mapStateToProps = state => ({
-
+  user: state.users.user
 });
 
 
