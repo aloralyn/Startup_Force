@@ -10,6 +10,7 @@ const path = require('path');
 const scheduleRouter = require('./scheduleRoutes.js');
 const reportsRouter = require('./reportsRoutes.js');
 const loginRouter = require('./loginRoutes.js');
+const profileRouter = require('./profileRoutes.js')
 
 const app = express();
 //const session = require('express-session');
@@ -26,6 +27,7 @@ app.use('/', router);
 app.use('/', scheduleRouter);
 app.use('/', reportsRouter);
 app.use('/', loginRouter);
+app.use('/', profileRouter);
 
 app.use('/*', (req, res) => res.redirect('/'));
 //app.use('/*', (req, res) => res.sendFile(path.join(__dirname, '/../client/dist')));

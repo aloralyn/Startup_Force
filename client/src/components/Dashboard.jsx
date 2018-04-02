@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 import DesktopContainer from './DesktopContainer.jsx';
-import ProfilePic from './ProfilePic.jsx';
+import ProfilePic from './ProfilePic/ProfilePic.jsx';
 
 import HomepageLayout from './Homepage/HomepageLayout.jsx';
 import MyInfo from './MyInfo/MyInfo.jsx';

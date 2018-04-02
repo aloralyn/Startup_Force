@@ -23,6 +23,9 @@ export const MESSAGE_USER = 'MESSAGE_USER';
 export const ADD_EMPLOYEE = 'ADD_EMPLOYEE';
 export const ADD_DEPARTMENT = 'ADD_DEPARTMENT';
 export const VERIFIED_USER = 'VERIFIED_USER';
+export const SHOW_PHOTOUPLOAD = 'SHOW_PHOTOUPLOAD'; 
+export const SELECT_PHOTO = 'SELECT_PHOTO';
+export const HIDE_PHOTOUPLOAD = 'HIDE_PHOTOUPLOAD';
 
 // @ @ @ @ @ @ @ @ @ @ @ @
 // @ SCHEDULES ACTION TYPES

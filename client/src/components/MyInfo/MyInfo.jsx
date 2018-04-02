@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-import ProfilePic from '../ProfilePic.jsx';
+import EditableProfilePic from '../ProfilePic/EditableProfilePic.jsx';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addEmployee } from '../../actions/onboardingActions.js';
+import { onDrop, handlePhotoUpload } from '../../actions/photoUploadActions';
+import Dropzone from 'react-dropzone';
+import axios from 'axios';
 
 import {
   Button,
   Container,
   Header,
   Grid,
-  Table
+  Table,
+  Segment
 } from 'semantic-ui-react';
 
 
@@ -18,27 +22,7 @@ import {
    constructor(props) {
      super(props);
 
-     this.state = {
-       profilePicURL: ''
-     }
-
-     this.handleUploadImage = this.handleUploadImage.bind(this);
    }
-
-  componentDidMount() {
-    console.log(this.props);
-  }
-
-  handleUploadImage(e) {
-    e.preventDefault();
-
-    const data = new FormData();
-    data.append('file', this.uploadInput.files[0]);
-   // data.append('filename', this.fileName.value);
-
-    console.log(data)
-    // data.append('file', this.u)
-  }
 
   render() {
     return (
@@ -46,13 +30,23 @@ import {
         <Grid container stackable>
           <Grid.Row>
              <Grid.Column width={6}>
-               <ProfilePic />
-               <input ref={(ref) => { this.uploadInput = ref; }}type="file" />
-               <button onClick={this.handleUploadImage}>Submit</button>
+               <EditableProfilePic />
              </Grid.Column>
+
+             { this.props.showPhotoUpload ? 
+             
+             <Grid.Column width={8}>
+              <Dropzone onDrop={this.props.onDrop}>
+                <p>Drop your image file in here, or click to select your image to upload.</p>
+              </Dropzone>
+              <Segment>Selected: {this.props.fileName}</Segment>
+              <Button onClick={(a, b) => {this.props.handlePhotoUpload(this.props.file, this.props.user.id)}}>Save New Profile Pic</Button>
+             </Grid.Column> 
+             
+             :
+
              <Grid.Column width={8}>
                <Header size='small'>Employee Profile</Header>
-
             <Table attached='bottom' celled>
               <Table.Header>
                 <Table.HeaderCell>First Name</Table.HeaderCell>
@@ -67,7 +61,6 @@ import {
                 </Table.Row>
               </Table.Body>
             </Table>
-
             <Table  celled>
               <Table.Header>
                 <Table.HeaderCell>Street 1</Table.HeaderCell>
@@ -86,7 +79,6 @@ import {
                 </Table.Row>
               </Table.Body>
             </Table>
-
             <Table  celled>
               <Table.Header>
                 <Table.HeaderCell>Email Address</Table.HeaderCell>
@@ -102,7 +94,8 @@ import {
               </Table.Body>
             </Table>
             <Button icon="edit">Edit Info</Button>
-            </Grid.Column>
+             </Grid.Column> }
+
           </Grid.Row>
           </Grid>
       </Container>
@@ -110,9 +103,17 @@ import {
   }
 }
 
+MyInfo.propTypes = {
+  onDrop: PropTypes.func.isRequired,
+  handlePhotoUpload: PropTypes.func.isRequired
+}
+
 const mapStateToProps = state => ({
   user: state.users.user,
-  company: state.users.company
+  company: state.users.company,
+  showPhotoUpload: state.showPhotoUploadReducer.showPhotoUpload,
+  file: state.showPhotoUploadReducer.file,
+  fileName: state.showPhotoUploadReducer.name
 })
 
-export default withRouter(connect(mapStateToProps, {})(MyInfo));
+export default withRouter(connect(mapStateToProps, { onDrop, handlePhotoUpload })(MyInfo));

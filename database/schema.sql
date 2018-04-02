@@ -54,6 +54,7 @@ CREATE TABLE employees (
   pay_type VARCHAR(10),
   is_manager boolean,
   pw VARCHAR(50) NOT NULL,
+  profilePicId VARCHAR(250),
   FOREIGN KEY (company_id) REFERENCES companies(id),
   FOREIGN KEY (reports_to) REFERENCES employees(id)
 );
@@ -94,29 +95,29 @@ INSERT INTO departments (company_id, name, division) VALUES (1, 'Sales', 'East C
 
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
-  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw)
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw, profilePicId)
   VALUES (1, 'Christopher', 'Rigoli', 'Chris', '11/4/85', '111-11-1111', 'male', '2268 31st Street', '', 'Astoria', '11105', 'NY', 'chris@hr.com', '123-123-1234', 'www.linkedin.com', 'CEO', 'Employed',
-  'today', 'Sales', 'East Coast', 1, '$100,000', 'Week', 'Salary', true, 'password');
+  'today', 'Sales', 'East Coast', 1, '$100,000', 'Week', 'Salary', true, 'password', 'mwwz0bjpsdrqiuuldkmy');
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
-  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw)
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw, profilePicId)
   VALUES (1, 'Artem', 'Ipatev', 'Arty', '01/12/93', '111-11-1111', 'male', '217 W 18th Street', '', 'New York', '10011', 'NY', 'artem@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
-  'today', 'Sales', 'East Coast', 1, '$100,000', 'Week', 'Salary', true, 'password');
+  'today', 'Sales', 'East Coast', 1, '$100,000', 'Week', 'Salary', true, 'password', 'mwwz0bjpsdrqiuuldkmy');
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
-  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw)
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw, profilePicId)
   VALUES (1, 'Janelle', 'De la Cruz', 'Jay', '11/4/91', '111-11-1111', 'female', '406 6th Ave', 'Apt 23', 'New York', '10011', 'NY', 'janelle@hr.com', '123-123-1234', 'www.linkedin.com', 'Office Manager', 'Employed',
-  'today', 'Sales', 'East Coast', 2, '$60,000', 'Every other week', 'Salary', false, 'password');
+  'today', 'Sales', 'East Coast', 2, '$60,000', 'Every other week', 'Salary', false, 'password', 'mwwz0bjpsdrqiuuldkmy');
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
-  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw)
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw, profilePicId)
   VALUES (1, 'Brent', 'Hagen', 'Brenty', '06/15/84', '111-11-1111', 'male', '875 Tree St', '', 'Astoria', '11105', 'NY', 'Brent@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
-  'today', 'Sales', 'East Coast', 2, '$100,000', 'Week', 'Salary', false, 'password');
+  'today', 'Sales', 'East Coast', 2, '$100,000', 'Week', 'Salary', false, 'password', 'mwwz0bjpsdrqiuuldkmy');
 INSERT INTO employees
 (company_id, first_name, last_name, preferred_name, dob, ssn, gender, street_1, street_2, city, zip_code, state, email, phone_number,
-  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw)
+  linkedin_url, position, employee_status, start_date, department, division, reports_to, wage, pay_per, pay_type, is_manager, pw, profilePicId)
   VALUES (1, 'Aloralyn', 'Ayran', 'Lyn', '11/16/88', '111-11-1111', 'female', '123 Troutman Street', '', 'Brooklyn',  '11221', 'NY','Aloralyn@hr.com', '123-123-1234', 'www.linkedin.com', 'Developer', 'Employed',
-  'today', 'Sales', 'East Coast', 3, '$100,000', 'Week', 'Salary', false, 'password');
+  'today', 'Sales', 'East Coast', 3, '$100,000', 'Week', 'Salary', false, 'password', 'mwwz0bjpsdrqiuuldkmy');
 
 INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (1, 1, 'Jerry', 'JS Immersive_Jerry', '$17,000', '2018-01-15', '2018-04-13');
 INSERT INTO contracts (awarded_to, company_id, client_name, contract_name, contract_amount, contract_start_date, contract_end_date) VALUES (2, 1, 'Eric', 'JS Immersive_Eric', '$15,000', '2018-01-19', '2018-04-27');
