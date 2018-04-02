@@ -47,7 +47,7 @@ class Messages extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.messageUserId !== this.props.messageUserId) {
-      this.props.getMessages(this.props.userId, nextProps.messageUserId, this.props.company_id);
+      this.props.getMessages(this.props.userId, this.props.messageUserId, nextProps.messageUserId, this.props.company_id);
     }
   }
 
@@ -69,7 +69,6 @@ class Messages extends Component {
                       value={user.id.toString()}
                       onClick={(e) => {
                         let userToMessage = parseInt(e.target.value, 10);
-                        //this.props.eraseNotification(this.props.userId, userToMessage, this.props.company_id);
                         this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
                       }}
                       >{user.first_name + ' ' + user.last_name + notifications}</Button></List.Item>)
@@ -112,7 +111,6 @@ class Messages extends Component {
                       value={user.id.toString()}
                       onClick={(e) => {
                         let userToMessage = parseInt(e.target.value, 10)
-                        //this.props.eraseNotification(this.props.userId, userToMessage, this.props.company_id);
                         this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
                       }}
                       >{user.first_name + ' ' + user.last_name + notifications}</Button></List.Item>)

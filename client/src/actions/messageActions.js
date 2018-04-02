@@ -24,15 +24,23 @@ export const sendMessage =  (message, time, name, userFrom, userTo, company_id) 
   })
 };
 
-export const getMessages = (userFrom, userTo, company_id) => dispatch => {
+// call to end messaging connection, use on logout
+export const endMessagingListener = (userFrom, userTo, company_id) => {
   setMessageUser(userFrom, userTo, company_id).off();
-  setMessageUser(userFrom, userTo, company_id).on('value', snap => {
-    dispatch({
-  	  type: GET_MESSAGES,
-      payload: snap.val()
+}
+
+export const getMessages = (userFrom, oldUserTo, newUserTo, company_id) => {
+  endMessagingListener(userFrom, oldUserTo, company_id);
+  return dispatch => {
+    setMessageUser(userFrom, newUserTo, company_id).on('value', snap => {
+      dispatch({
+       type: GET_MESSAGES,
+        payload: snap.val()
+      });
     });
-  });
-};
+  };
+}
+
 
 // setting path to retrieve notifications
 const setNotificationPath = (user, company_id) => {
@@ -50,7 +58,7 @@ export const getNotifications = (user, company_id) => dispatch => {
 };
 
 // call when logout to end notification connection
-export const endNotifications = (user, company_id) => dispatch => {
+export const endNotifications = (user, company_id) => {
   setNotificationPath(user, company_id).off();
 };
 

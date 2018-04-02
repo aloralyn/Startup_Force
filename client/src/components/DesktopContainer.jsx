@@ -52,6 +52,10 @@ class DesktopContainer extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.getNotifications(this.props.user.id, this.props.user.company_id);
+  }
+
   render() {
 
     const { fixed } = this.state
@@ -85,7 +89,9 @@ class DesktopContainer extends Component {
                   <Menu.Item><Link to="/contracts">Contracts</Link></Menu.Item>
                   <Menu.Menu position='right'>
                     <Menu.Item>
-                      <Menu.Item name='logout' onClick={() => this.props.logout(this.props.user.id, this.props.user.company_id)}  />
+                      <Menu.Item name='logout' onClick={() => {
+                        this.props.logout(this.props.user.id, this.props.messageUserId, this.props.user.company_id)
+                      }}  />
                     </Menu.Item>
                   </Menu.Menu>
                 </Container> 
@@ -133,7 +139,8 @@ DesktopContainer.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  user: state.users.user
+  user: state.users.user,
+  messageUserId: state.messages.messageUserId
 });
 
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Router } from 'react-router';
-import { getNotifications, endNotifications } from './messageActions.js';
+import { endNotifications, endMessagingListener } from './messageActions.js';
 
 export function fetchUsers(email) {
   return (dispatch) => {
@@ -24,7 +24,6 @@ export function load() {
   return (dispatch) => {
     axios.get('/load')
       .then((response) => {
-        // getNotifications(response.data.user.id, response.data.user.company_id);
         dispatch({
           type: 'LOGIN',
           payload: response.data
@@ -33,42 +32,12 @@ export function load() {
           type: 'VERIFIED_USER',
           payload: ''
         });
-        // getNotifications(response.data.user.id, response.data.user.company_id);
-        // dispatch({
-        //   type: 'GET_NOTIFICATIONS',
-        //   payload: response.data.user.id
-        // })
       })
       .catch((err) => {
         console.log('There was an error', err)
       });
   };
 };
-
-// export function load() {
-//   // return (dispatch) => {
-//     console.log('load')
-//     axios.get('/load')
-//       .then((response) => {
-//         // console.log(response.data)
-//         getNotifications(response.data.user.id, response.data.user.company_id)
-//         return (dispatch) => {
-//           dispatch({
-//             type: 'LOGIN',
-//             payload: response.data
-//           });
-//           dispatch({
-//             type: 'VERIFIED_USER',
-//             payload: ''
-//           });
-//         }
-//         // getNotifications(response.data.user.id, response.data.user.company_id)
-//       })
-//       .catch((err) => {
-//         console.log('There was an error', err)
-//       });
-//   // };
-// };
 
 export function login(state) {
   return (dispatch) => {
@@ -83,7 +52,6 @@ export function login(state) {
           type: 'VERIFIED_USER',
           payload: ''
         });
-        // getNotifications(response.data.user.id, response.data.user.company_id)
       })
       .catch((err) => {
         console.log('There was an error', err)
@@ -91,27 +59,33 @@ export function login(state) {
   };
 };
 
-export const logout = (user, company_id) => dispatch => {
+export const logout = (user, messageUserId, company_id) => {
   localStorage.removeItem('authToken');
   endNotifications(user, company_id);
-  dispatch({
-    type: 'VERIFIED_USER',
-    payload: ''
-  });
-  dispatch({
-    type: 'LOGIN',
-    payload: { user: {}, users: [], managers: [] }
-  });
-  dispatch({
-    type: 'FETCH_USERS',
-    payload: []
-  });
-  dispatch({
-    type: 'CLEAR_NOTIFICATIONS',
-    payload: ''
-  });
+  endMessagingListener(user, messageUserId, company_id);
+  return dispatch => {
+    dispatch({
+      type: 'VERIFIED_USER',
+      payload: ''
+    });
+    dispatch({
+      type: 'LOGIN',
+      payload: { user: {}, users: [], managers: [] }
+    });
+    dispatch({
+      type: 'FETCH_USERS',
+      payload: []
+    });
+    dispatch({
+      type: 'CLEAR_NOTIFICATIONS',
+      payload: ''
+    });
+    dispatch({
+      type: 'MESSAGE_USER',
+      payload: null
+    });
+  }
 };
-
 
 export const fetchManagers = (companyId) => {
   return (dispatch) => {
