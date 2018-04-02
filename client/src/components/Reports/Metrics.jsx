@@ -104,7 +104,7 @@ export default class Metrics extends React.Component {
         },
         y: {
           label: {
-            text: 'USD',
+            text: 'USD Contract Amount',
             position: 'outer-middle',
           },
           tick: {

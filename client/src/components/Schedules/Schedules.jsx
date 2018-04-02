@@ -36,7 +36,7 @@ class Schedules extends Component {
 			startHour: '', startMinute: '', finishHour: '', finishMinute: '',
 			fetchedMonths: [],
 			event: '',
-			confirm: false
+			confirm: true
 		}
 	}
 	componentDidMount() {
@@ -76,7 +76,7 @@ class Schedules extends Component {
 	}
 
 	close = () => this.setState({open: false, start: '', finish: '', action: '', empl: '', day: ''})
-	
+
 	showModal = (action, empl, day) => this.setState({ action, empl, day, open: true })
 
 	getWeekByDay = d => {
@@ -126,8 +126,8 @@ class Schedules extends Component {
       	}
       	this.close();
       	this.setState({
-      		startGreaterFinish: false, 
-      		confirm: true, 
+      		startGreaterFinish: false,
+      		confirm: true,
       		emptySH: true, emptySM: true, emptyFH: true, emptyFM: true,
       		start: '', finish: '', newStart: '', newFinish: '',
       		empl: '',
@@ -143,7 +143,7 @@ class Schedules extends Component {
 	render() {
 		console.log('this props: ', this.props)
 		const { email, week, action, empl, event, day, open, start, finish, startGreaterFinish, confirm } = this.state;
-		if (confirm) { setTimeout(() => { this.setState({confirm: false})}, 1000)} 
+		if (confirm) { setTimeout(() => { this.setState({confirm: false})}, 1000)}
 
 	return (
 		<div style={{margin: '10px'}}>
@@ -151,12 +151,12 @@ class Schedules extends Component {
 		{/*****************************************************************
 										Modal-Popup for EDIT/POST schedule
 		*******************************************************************/}
-		<Modal size={'tiny'} open={open} onClose={this.close} 
+		<Modal size={'tiny'} open={open} onClose={this.close}
 		style={{position: 'absolute', top: '40%', left: '40%'}}>
 			<Modal.Content>
 			<Modal.Description>
         {
-	        this.state.action === 'edit' ? 
+	        this.state.action === 'edit' ?
 		        <Header>Edit {empl.first_name}'s shift on {day}</Header>
 		        :
 		        <Header>Add {empl.first_name}'s shift on {day}</Header>
@@ -173,7 +173,7 @@ class Schedules extends Component {
 			    use12Hours
 			    inputReadOnly
 			  />
-			  
+
 			  Minutes:
 			  <TimePicker
 			    showSecond={false}
@@ -197,7 +197,7 @@ class Schedules extends Component {
 			    format={'hh a'}
 			    use12Hours
 			  />
-			  
+
 			  Minutes:
 			  <TimePicker
 			    showSecond={false}
@@ -214,10 +214,10 @@ class Schedules extends Component {
       </Modal.Content>
       <Modal.Actions>
       {
-      	!!empl.start ? 
-        <Button color='red' style={{float: 'left'}} 
+      	!!empl.start ?
+        <Button color='red' style={{float: 'left'}}
 	        onClick={() => {
-	        	this.props.deleteSchedule({id: empl.id, start: empl.start, finish: empl.finish}) 
+	        	this.props.deleteSchedule({id: empl.id, start: empl.start, finish: empl.finish})
 	        	this.close()
 	        	this.setState({confirm: true, event: 'deleted'})
 	      }}>
@@ -227,7 +227,7 @@ class Schedules extends Component {
         null
       }
         <Button content="Cancel" color='black' onClick={this.close} />
-        <Button positive icon='checkmark' labelPosition='right' content="Add new time" 
+        <Button positive icon='checkmark' labelPosition='right' content="Add new time"
         	onClick={() => this.compileTimeToNeededFormat()} />
       </Modal.Actions>
       </Modal>
@@ -288,7 +288,7 @@ class Schedules extends Component {
 				</Table.Row>))}
 	</Table.Body>
 </Table>
-		
+
 		<br />
 		<br />
 
@@ -311,4 +311,3 @@ function matchDispatchToProps(dispatch) {
 }
 
 export default withRouter(connect(mapStateToProps, matchDispatchToProps)(Schedules));
-
