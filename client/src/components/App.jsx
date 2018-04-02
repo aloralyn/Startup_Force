@@ -20,6 +20,10 @@ class App extends Component {
     if (localStorage.authToken) { this.props.load(); }
   }
 
+  componentWillReceiveProps() {
+    this.props.load();
+  }
+
   render() {
     return (
       <Router history={history}>

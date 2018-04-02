@@ -7,6 +7,7 @@ import scheduleReducer from './scheduleReducer.js';
 import reportsReducer from './reportsReducer.js';
 import newCompanyReducer from './newCompanyReducer.js';
 import newEmployeeReducer from './onboardingReducer.js'
+import showPhotoUploadReducer from './photoUploadReducer.js';
 
 export default combineReducers({
   users: users,
@@ -15,5 +16,6 @@ export default combineReducers({
   scheduleReducer,
   reportsReducer,
   newCompanyReducer,
-  newEmployeeReducer
+  newEmployeeReducer,
+  showPhotoUploadReducer
 });

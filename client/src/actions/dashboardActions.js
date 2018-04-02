@@ -1,7 +1,5 @@
 import axios from 'axios';
 import { Router } from 'react-router';
-//import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-
 
 export function fetchUsers(email) {
   return (dispatch) => {
