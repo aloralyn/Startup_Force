@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Grid, Header, Input, Select, Dropdown } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Input, Select, Dropdown, TextArea } from 'semantic-ui-react';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import moment from 'moment';
@@ -15,6 +15,7 @@ export default class NewContractForm extends React.Component {
       contractStartDate: null,
       contractEndDate: null,
       dateFormat: 'MM/DD/YYYY',
+      contractDescription: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,6 +43,7 @@ export default class NewContractForm extends React.Component {
       awardedToId: this.state.awardedToId,
       contractStartDate: this.state.contractStartDate.format(this.state.dateFormat),
       contractEndDate: this.state.contractEndDate.format(this.state.dateFormat),
+      contractDescription: this.state.contractDescription,
     })
       .then(() => this.props.getAllContracts())
       .catch(err => console.log('ERROR in handleSubmit in NewContractForm, error: ', err));
@@ -80,7 +82,7 @@ export default class NewContractForm extends React.Component {
               fluid
               selection
               search
-              label="Employees"
+              label="Employee In Charge"
               name="awardedToId"
               placeholder="Employees"
               options={this.props.employeeDropdown}
@@ -103,9 +105,20 @@ export default class NewContractForm extends React.Component {
               />
             </Form.Field>
           </Form.Group>
-          <Form.Group>
+          <Form.Group widths="equal">
+            <Form.Field
+              id="form-contract-new-description"
+              control={TextArea}
+              label="Contract Description"
+              name="contractDescription"
+              placeholder="Enter Description of Contract"
+              onChange={this.handleChange}
+            />
+          </Form.Group>
+          <Form.Group widths="equal">
             <Form.Field
               control={Button}
+              fluid
               type="submit"
               onClick={this.handleSubmit}
             >

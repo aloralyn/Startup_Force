@@ -61,8 +61,8 @@ bmtRouter.get('/api/all_employees/:id', async (req, res) => {
 });
 
 bmtRouter.post('/api/add/contract', (req, res) => {
-  const { clientName, contractName, contractAmount, awardedToId, contractStartDate, contractEndDate } = req.body;
-  contractsController.addContract(awardedToId, 1, clientName, contractName, contractAmount, contractStartDate, contractEndDate, (data) => {
+  const { clientName, contractName, contractAmount, awardedToId, contractStartDate, contractEndDate, contractDescription } = req.body;
+  contractsController.addContract(awardedToId, 1, clientName, contractName, contractAmount, contractStartDate, contractEndDate, contractDescription, (data) => {
     res.status(201).send();
   });
 });
