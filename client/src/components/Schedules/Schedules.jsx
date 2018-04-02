@@ -36,7 +36,7 @@ class Schedules extends Component {
 			startHour: '', startMinute: '', finishHour: '', finishMinute: '',
 			fetchedMonths: [],
 			event: '',
-			confirm: true
+			confirm: false,
 		}
 	}
 	componentDidMount() {
