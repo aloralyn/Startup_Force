@@ -125,8 +125,8 @@ class HomepageLayout extends Component {
 
 
               {week.map((day, indOfDate) =>
-              (<Table.Cell key={indOfDate}>
-                  <div><Empl
+              (<Table.Cell>
+                  <div key={indOfDate}><Empl
                     day={day}
                     first_name={this.props.users[0].first_name}
                     schedule={this.props.schedule}
