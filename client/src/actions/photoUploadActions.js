@@ -1,12 +1,12 @@
 import { SHOW_PHOTOUPLOAD, SELECT_PHOTO } from './types.js';
-import { cloudName, uploadPreset  } from '../../../config.js';
+// import { cloudName, uploadPreset  } from '../../../config.js';
 import { load } from './dashboardActions.js';
 import axios from 'axios';
 
 export const showPhotoUploader = () => dispatch => {
   dispatch({
     type: 'SHOW_PHOTOUPLOAD',
-    payload: { 
+    payload: {
       showPhotoUpload: true
     }
   });
@@ -35,7 +35,7 @@ export const handlePhotoUpload = (file, userId) => {
     axios.post('/api/update_photo', {
       id: userId,
       profilePicId: imageResponse.public_id
-    }).then((response) => { 
+    }).then((response) => {
       dispatch({
         type: 'HIDE_PHOTOUPLOAD',
         payload: {
