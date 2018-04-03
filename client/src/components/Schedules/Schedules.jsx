@@ -274,15 +274,15 @@ class Schedules extends Component {
   <Table.Header>
     <Table.Row>
 				<Table.HeaderCell width={2}>Employees</Table.HeaderCell>
-				{week.map((d, i) => (<Table.HeaderCell width={1}>{`${d.slice(5)}`}</Table.HeaderCell>))}
+				{week.map((d, i) => (<Table.HeaderCell width={1} key={i}>{`${d.slice(5)}`}</Table.HeaderCell>))}
 		</Table.Row>
   </Table.Header>
 	<Table.Body>
 			{this.props.employees.map((empl, indOfEmpl) => (
-				<Table.Row style={{height: '90px'}}>
+				<Table.Row style={{height: '90px'}} key={indOfEmpl}>
 					<Table.Cell>{empl.first_name}</Table.Cell>
 						{week.map((day, indOfDate) => (
-							<Table.Cell>
+							<Table.Cell key={indOfDate}>
 							<div><OneEmpl schedules={this.props.schedules} showModal={this.showModal} day={day} empl={empl} /></div>
 							</Table.Cell>))}
 				</Table.Row>))}

@@ -33,25 +33,27 @@ import {
                <EditableProfilePic />
              </Grid.Column>
 
-             { this.props.showPhotoUpload ? 
-             
+             { this.props.showPhotoUpload ?
+
              <Grid.Column width={8}>
               <Dropzone onDrop={this.props.onDrop}>
                 <p>Drop your image file in here, or click to select your image to upload.</p>
               </Dropzone>
               <Segment>Selected: {this.props.fileName}</Segment>
               <Button onClick={(a, b) => {this.props.handlePhotoUpload(this.props.file, this.props.user.id)}}>Save New Profile Pic</Button>
-             </Grid.Column> 
-             
+             </Grid.Column>
+
              :
 
              <Grid.Column width={8}>
                <Header size='small'>Employee Profile</Header>
             <Table attached='bottom' celled>
               <Table.Header>
-                <Table.HeaderCell>First Name</Table.HeaderCell>
-                <Table.HeaderCell>Last Name</Table.HeaderCell>
-                <Table.HeaderCell>Prefered Name</Table.HeaderCell>
+                <Table.Row>
+                  <Table.HeaderCell>First Name</Table.HeaderCell>
+                  <Table.HeaderCell>Last Name</Table.HeaderCell>
+                  <Table.HeaderCell>Prefered Name</Table.HeaderCell>
+                </Table.Row>
               </Table.Header>
               <Table.Body>
                 <Table.Row>
@@ -63,11 +65,13 @@ import {
             </Table>
             <Table  celled>
               <Table.Header>
-                <Table.HeaderCell>Street 1</Table.HeaderCell>
-                <Table.HeaderCell>Street 2</Table.HeaderCell>
-                <Table.HeaderCell>City</Table.HeaderCell>
-                <Table.HeaderCell>Zip Code</Table.HeaderCell>
-                <Table.HeaderCell>State</Table.HeaderCell>
+                <Table.Row>
+                  <Table.HeaderCell>Street 1</Table.HeaderCell>
+                  <Table.HeaderCell>Street 2</Table.HeaderCell>
+                  <Table.HeaderCell>City</Table.HeaderCell>
+                  <Table.HeaderCell>Zip Code</Table.HeaderCell>
+                  <Table.HeaderCell>State</Table.HeaderCell>
+                </Table.Row>
               </Table.Header>
               <Table.Body>
                 <Table.Row>
@@ -81,9 +85,11 @@ import {
             </Table>
             <Table  celled>
               <Table.Header>
-                <Table.HeaderCell>Email Address</Table.HeaderCell>
-                <Table.HeaderCell>Phone Number</Table.HeaderCell>
-                <Table.HeaderCell>LinkedIn Profile</Table.HeaderCell>
+                <Table.Row>
+                  <Table.HeaderCell>Email Address</Table.HeaderCell>
+                  <Table.HeaderCell>Phone Number</Table.HeaderCell>
+                  <Table.HeaderCell>LinkedIn Profile</Table.HeaderCell>
+                </Table.Row>
               </Table.Header>
               <Table.Body>
                 <Table.Row>
@@ -93,7 +99,7 @@ import {
                 </Table.Row>
               </Table.Body>
             </Table>
-            <Button icon="edit">Edit Info</Button>
+            <Button>Edit Info</Button>
              </Grid.Column> }
 
           </Grid.Row>
