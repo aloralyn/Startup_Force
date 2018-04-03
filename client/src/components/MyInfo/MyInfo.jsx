@@ -55,9 +55,11 @@ import {
 
             <Table attached='bottom' celled>
               <Table.Header>
-                <Table.HeaderCell>First Name</Table.HeaderCell>
-                <Table.HeaderCell>Last Name</Table.HeaderCell>
-                <Table.HeaderCell>Prefered Name</Table.HeaderCell>
+                <Table.Row>
+                  <Table.HeaderCell>First Name</Table.HeaderCell>
+                  <Table.HeaderCell>Last Name</Table.HeaderCell>
+                  <Table.HeaderCell>Prefered Name</Table.HeaderCell>
+                </Table.Row>
               </Table.Header>
               <Table.Body>
                 <Table.Row>
@@ -70,11 +72,13 @@ import {
 
             <Table  celled>
               <Table.Header>
-                <Table.HeaderCell>Street 1</Table.HeaderCell>
-                <Table.HeaderCell>Street 2</Table.HeaderCell>
-                <Table.HeaderCell>City</Table.HeaderCell>
-                <Table.HeaderCell>Zip Code</Table.HeaderCell>
-                <Table.HeaderCell>State</Table.HeaderCell>
+                <Table.Row>
+                  <Table.HeaderCell>Street 1</Table.HeaderCell>
+                  <Table.HeaderCell>Street 2</Table.HeaderCell>
+                  <Table.HeaderCell>City</Table.HeaderCell>
+                  <Table.HeaderCell>Zip Code</Table.HeaderCell>
+                  <Table.HeaderCell>State</Table.HeaderCell>
+                </Table.Row>
               </Table.Header>
               <Table.Body>
                 <Table.Row>
@@ -89,9 +93,11 @@ import {
 
             <Table  celled>
               <Table.Header>
-                <Table.HeaderCell>Email Address</Table.HeaderCell>
-                <Table.HeaderCell>Phone Number</Table.HeaderCell>
-                <Table.HeaderCell>LinkedIn Profile</Table.HeaderCell>
+                <Table.Row>
+                  <Table.HeaderCell>Email Address</Table.HeaderCell>
+                  <Table.HeaderCell>Phone Number</Table.HeaderCell>
+                  <Table.HeaderCell>LinkedIn Profile</Table.HeaderCell>
+                </Table.Row>
               </Table.Header>
               <Table.Body>
                 <Table.Row>
@@ -101,7 +107,7 @@ import {
                 </Table.Row>
               </Table.Body>
             </Table>
-            <Button icon="edit">Edit Info</Button>
+            <Button>Edit Info</Button>
             </Grid.Column>
           </Grid.Row>
           </Grid>

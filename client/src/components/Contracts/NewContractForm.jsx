@@ -24,10 +24,11 @@ export default class NewContractForm extends React.Component {
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
     this.handleSuccessfulAdd = this.handleSuccessfulAdd.bind(this);
     this.resetState = this.resetState.bind(this);
+    this.checkInputs = this.checkInputs.bind(this);
   }
 
   handleChange(e, d) {
-    this.setState({ [d.name]: d.value }, () => console.log('state: ', this.state));
+    this.setState({ [d.name]: d.value });
   }
 
   handleStartDateChange(e) {
@@ -39,21 +40,33 @@ export default class NewContractForm extends React.Component {
   }
 
   handleSubmit() {
-    axios.post('/api/add/contract', {
-      clientName: this.state.clientName,
-      contractName: this.state.contractName,
-      contractAmount: this.state.contractAmount,
-      awardedToId: this.state.awardedToId,
-      contractStartDate: this.state.contractStartDate.format(this.state.dateFormat),
-      contractEndDate: this.state.contractEndDate.format(this.state.dateFormat),
-      contractDescription: this.state.contractDescription,
-    })
-      .then(() => {
-        this.handleSuccessfulAdd();
-        this.resetState();
-        this.props.getAllContracts();
+    if (this.checkInputs()) {
+      axios.post('/api/add/contract', {
+        clientName: this.state.clientName,
+        contractName: this.state.contractName,
+        contractAmount: this.state.contractAmount,
+        awardedToId: this.state.awardedToId,
+        contractStartDate: this.state.contractStartDate.format(this.state.dateFormat),
+        contractEndDate: this.state.contractEndDate.format(this.state.dateFormat),
+        contractDescription: this.state.contractDescription,
       })
-      .catch(err => console.log('ERROR in handleSubmit in NewContractForm, error: ', err));
+        .then(() => {
+          this.handleSuccessfulAdd();
+          this.resetState();
+          this.props.getAllContracts();
+        })
+        .catch(err => console.log('ERROR in handleSubmit in NewContractForm, error: ', err));
+    }
+  }
+
+  checkInputs() {
+    const entries = Object.entries(this.state);
+    let res = true;
+    entries.forEach((input) => {
+      if (!input[1] && input[0] !== 'confirm' && input[0] !== 'contractDescription') res = false;
+    });
+    if (!res) return false;
+    return true;
   }
 
   resetState() {
@@ -87,6 +100,7 @@ export default class NewContractForm extends React.Component {
           <Form>
             <Form.Group widths="equal">
               <Form.Field
+                required
                 value={this.state.clientName}
                 control={Input}
                 label="Client Name"
@@ -95,6 +109,7 @@ export default class NewContractForm extends React.Component {
                 onChange={this.handleChange}
               />
               <Form.Field
+                required
                 value={this.state.contractName}
                 control={Input}
                 label="Contract Name"
@@ -103,7 +118,11 @@ export default class NewContractForm extends React.Component {
                 onChange={this.handleChange}
               />
               <Form.Field
+                required
                 value={this.state.contractAmount}
+                type="number"
+                min="0.01"
+                step="0.01"
                 control={Input}
                 label="Contract Amount"
                 name="contractAmount"
@@ -116,13 +135,14 @@ export default class NewContractForm extends React.Component {
                 fluid
                 selection
                 search
+                required
                 label="Employee In Charge"
                 name="awardedToId"
                 placeholder="Employees"
                 options={this.props.employeeDropdown}
                 onChange={this.handleChange}
               />
-              <Form.Field>
+              <Form.Field required>
                 <label>Contract Start Date</label>
                 <DatePicker
                   selected={this.state.contractStartDate}
@@ -130,7 +150,7 @@ export default class NewContractForm extends React.Component {
                   placeholderText="Start Date"
                   />
               </Form.Field>
-              <Form.Field>
+              <Form.Field required>
                 <label>Contract End Date</label>
                 <DatePicker
                   selected={this.state.contractEndDate}

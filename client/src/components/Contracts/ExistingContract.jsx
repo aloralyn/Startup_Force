@@ -47,9 +47,11 @@ export default class ExistingContract extends React.Component {
         <Header size="large">"{this.state.selectedContractData.contract_name}" Contract Information</Header>
         <Table attached="bottom" celled>
           <Table.Header>
-            <Table.HeaderCell>Client Name</Table.HeaderCell>
-            <Table.HeaderCell>Contract Name</Table.HeaderCell>
-            <Table.HeaderCell>Contract Amount</Table.HeaderCell>
+            <Table.Row>
+              <Table.HeaderCell>Client Name</Table.HeaderCell>
+              <Table.HeaderCell>Contract Name</Table.HeaderCell>
+              <Table.HeaderCell>Contract Amount</Table.HeaderCell>
+            </Table.Row>
           </Table.Header>
           <Table.Body>
             <Table.Row>
@@ -62,9 +64,11 @@ export default class ExistingContract extends React.Component {
 
         <Table celled>
           <Table.Header>
-            <Table.HeaderCell>Managing Employee</Table.HeaderCell>
-            <Table.HeaderCell>Contract Start Date</Table.HeaderCell>
-            <Table.HeaderCell>Contract End Date</Table.HeaderCell>
+            <Table.Row>
+              <Table.HeaderCell>Managing Employee</Table.HeaderCell>
+              <Table.HeaderCell>Contract Start Date</Table.HeaderCell>
+              <Table.HeaderCell>Contract End Date</Table.HeaderCell>
+            </Table.Row>
           </Table.Header>
           <Table.Body>
             <Table.Row>
