@@ -16,17 +16,16 @@ exports.addContract = (awardedToId, companyID, clientName, contractName, contrac
 exports.getContract = (contractName, cb) => {
   const values = [contractName];
   const queryString = 'SELECT * FROM contracts WHERE contract_name=$1;';
-  db.query(queryString, values)
+  return db.query(queryString, values)
     .then(result => cb(result))
     .catch(err => console.error('ERROR in db function getContract, error: ', err));
 };
 
-exports.getAllContracts = (companyID, cb) => {
+exports.getAllContracts = (companyID) => {
   const values = [1] || [companyID];
   const queryString = 'SELECT employees.preferred_name, contracts.* FROM employees, contracts WHERE employees.id = awarded_to AND contracts.company_id = $1;';
-  db.query(queryString, values)
-    .then(result => cb(result))
-    .catch(err => console.error('ERROR in db function getAllContracts, error: ', err));
+  return db.query(queryString, values)
+    .then(data => data.rows)
 };
 
 exports.getAllEmployees = (companyID, cb) => {

@@ -23,6 +23,7 @@ export default class Contracts extends React.Component {
       buttonText: 'Show Existing Contracts',
       employees: [],
       employeeDropdown: [],
+      loadedPreviously: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.toggleView = this.toggleView.bind(this);
@@ -32,8 +33,11 @@ export default class Contracts extends React.Component {
   }
 
   componentDidMount() {
-    this.getAllContracts();
-    this.getEmployees();
+    if (!this.state.loadedPreviously) {
+      this.getAllContracts();
+      this.getEmployees();
+      this.setState({ loadedPreviously: true });
+    }
   }
 
   getExistingContract() {
@@ -89,24 +93,23 @@ export default class Contracts extends React.Component {
     return (
       <div>
         <Segment style={{ padding: '8em 0em' }} vertical>
-          <Grid container stackable>
+          <Grid container stackable width={8}>
             <Grid.Row>
               {
                 this.state.viewState
                   ? <NewContractForm
                     getAllContracts={this.getAllContracts}
+                    toggleView={this.toggleView}
                     employees={this.state.employees}
                     employeeDropdown={this.state.employeeDropdown}
                   />
                   : <ExistingContract
+                    toggleView={this.toggleView}
                     existingContractOptions={this.state.existingContractOptions}
                     employees={this.state.employees}
                     employeeDropdown={this.state.employeeDropdown}
                   />
               }
-            </Grid.Row>
-            <Grid.Row>
-              <Button onClick={this.toggleView}>{this.state.buttonText}</Button>
             </Grid.Row>
           </Grid>
         </Segment>

@@ -15,8 +15,9 @@ import { Header, Form, Segment, Table, Icon, Button, Modal, Accordion, Transitio
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import TimePicker from 'rc-time-picker';
 import './App.css'
-import 'rc-time-picker/assets/index.css';
+// import 'rc-time-picker/assets/index.css';
 import 'react-day-picker/lib/style.css';
+
 
 import OneEmpl from './OneEmpl.jsx'
 

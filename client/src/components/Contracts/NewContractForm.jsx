@@ -92,7 +92,7 @@ export default class NewContractForm extends React.Component {
         <TransitionablePortal open={this.state.confirm} transition={{ animation: 'fly up', duration: '1000' }}>
           <Segment style={{ left: '40%', position: 'fixed', top: '40%', zIndex: 991000 }}>
             <Icon name="check" size={'huge'} color={'green'}/>
-            <p>Successfully Added Contract</p>
+            <p>Successfully Saved Contract!</p>
           </Segment>
         </TransitionablePortal>
         <Grid.Column width={8}>
@@ -100,7 +100,6 @@ export default class NewContractForm extends React.Component {
           <Form>
             <Form.Group widths="equal">
               <Form.Field
-                required
                 value={this.state.clientName}
                 control={Input}
                 label="Client Name"
@@ -109,7 +108,6 @@ export default class NewContractForm extends React.Component {
                 onChange={this.handleChange}
               />
               <Form.Field
-                required
                 value={this.state.contractName}
                 control={Input}
                 label="Contract Name"
@@ -118,7 +116,6 @@ export default class NewContractForm extends React.Component {
                 onChange={this.handleChange}
               />
               <Form.Field
-                required
                 value={this.state.contractAmount}
                 type="number"
                 min="0.01"
@@ -135,22 +132,21 @@ export default class NewContractForm extends React.Component {
                 fluid
                 selection
                 search
-                required
                 label="Employee In Charge"
                 name="awardedToId"
                 placeholder="Employees"
                 options={this.props.employeeDropdown}
                 onChange={this.handleChange}
               />
-              <Form.Field required>
+              <Form.Field>
                 <label>Contract Start Date</label>
                 <DatePicker
                   selected={this.state.contractStartDate}
                   onChange={this.handleStartDateChange}
                   placeholderText="Start Date"
-                  />
+                />
               </Form.Field>
-              <Form.Field required>
+              <Form.Field>
                 <label>Contract End Date</label>
                 <DatePicker
                   selected={this.state.contractEndDate}
@@ -173,11 +169,22 @@ export default class NewContractForm extends React.Component {
             <Form.Group widths="equal">
               <Form.Field
                 control={Button}
+                positive
                 fluid
                 type="submit"
                 onClick={this.handleSubmit}
               >
                 Save Contract
+              </Form.Field>
+            </Form.Group>
+            <Form.Group widths="equal">
+              <Form.Field
+                control={Button}
+                fluid
+                type="toggleview"
+                onClick={this.props.toggleView}
+              >
+                Search Existing Contracts
               </Form.Field>
             </Form.Group>
           </Form>

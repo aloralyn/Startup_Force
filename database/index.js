@@ -10,8 +10,8 @@ const { Pool, Client } = require('pg');
 const config = {
   //user: 'aloralynayran',
   // user: 'artemipatev',
-  // user: 'christopherrigoli',
-  user: 'brenthagen',
+  user: 'christopherrigoli',
+  // user: 'brenthagen',
   host: 'localhost',
   password: '',
   database: 'bmttools',
