@@ -5,6 +5,7 @@ import ProfilePic from '../ProfilePic/ProfilePic.jsx'
 import { connect } from 'react-redux'; // connects to the redux store
 import { fetchUsers } from '../../actions/dashboardActions.js';
 import { getSchedule } from '../../actions/scheduleActions.js';
+import { getNotifications } from '../../actions/messageActions.js';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import moment from 'moment-timezone';
@@ -77,6 +78,12 @@ class HomepageLayout extends Component {
       week.push(moment(`${year}-${day.getMonth() + 1}-${day.getDate()}`).format("YYYY MMM DD"))
     }
     return week
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user !== this.props.user) {
+      this.props.getNotifications(nextProps.user.id, nextProps.user.company_id);
+    }
   }
 
   render() {
@@ -186,4 +193,4 @@ const mapStateToProps = state => ({
   schedule: state.scheduleReducer.schedule
 });
 
-export default withRouter(connect(mapStateToProps, { fetchUsers, getSchedule })(HomepageLayout));
+export default withRouter(connect(mapStateToProps, { fetchUsers, getSchedule, getNotifications })(HomepageLayout));

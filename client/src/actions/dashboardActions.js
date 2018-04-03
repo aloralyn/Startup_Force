@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Router } from 'react-router';
+import { endNotifications, endMessagingListener } from './messageActions.js';
 
 export function fetchUsers(email) {
   return (dispatch) => {
@@ -58,22 +59,33 @@ export function login(state) {
   };
 };
 
-export const logout = () => dispatch => {
+export const logout = (user, messageUserId, company_id) => {
   localStorage.removeItem('authToken');
-  dispatch({
-    type: 'VERIFIED_USER',
-    payload: ''
-  });
-  dispatch({
-    type: 'LOGIN',
-    payload: { user: {}, users: [], managers: [] }
-  });
-  dispatch({
-    type: 'FETCH_USERS',
-    payload: []
-  });
+  endNotifications(user, company_id);
+  endMessagingListener(user, messageUserId, company_id);
+  return dispatch => {
+    dispatch({
+      type: 'VERIFIED_USER',
+      payload: ''
+    });
+    dispatch({
+      type: 'LOGIN',
+      payload: { user: {}, users: [], managers: [] }
+    });
+    dispatch({
+      type: 'FETCH_USERS',
+      payload: []
+    });
+    dispatch({
+      type: 'CLEAR_NOTIFICATIONS',
+      payload: ''
+    });
+    dispatch({
+      type: 'MESSAGE_USER',
+      payload: null
+    });
+  }
 };
-
 
 export const fetchManagers = (companyId) => {
   return (dispatch) => {

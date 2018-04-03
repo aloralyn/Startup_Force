@@ -34,7 +34,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  verified: state.users.verified
+  verified: state.users.verified,
+  user: state.users.user
 });
 
 export default connect(mapStateToProps, { load })(App);
