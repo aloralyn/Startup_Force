@@ -61,8 +61,8 @@ class Messages extends Component {
               <List as='ul'>
                 {this.props.users.map((user) => {
                   var notifications;
-                  if (this.props.notifications) {
-                    notifications = this.props.notifications[user.id] ? ' MESSAGES!!' : '';
+                  if (this.props.notifications && this.props.notifications[user.id]) {
+                    notifications = countNotifications(this.props.notifications[user.id]);
                   } else { notifications = ''; }
                   if (user.id !== this.props.userId) {
                     return (<List.Item as='li' key={user.id}><Button
@@ -103,9 +103,9 @@ class Messages extends Component {
               <List as='ul'>
                 {this.props.users.map((user) => {
                   var notifications;
-                  if (this.props.notifications) {
-                    notifications = this.props.notifications[user.id] ? ' MESSAGES!!' : '';
-                  } else { notifications = ''; }
+                  if (this.props.notifications && this.props.notifications[user.id]) {
+                    notifications = countNotifications(this.props.notifications[user.id]);
+                  } else { notifications = ''; } 
                   if (user.id !== this.props.userId) {
                     return (<List.Item as='li' key={user.id}><Button 
                       value={user.id.toString()}

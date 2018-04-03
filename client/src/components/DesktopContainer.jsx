@@ -18,6 +18,7 @@ import Contracts from './Contracts/Contracts.jsx';
 import { getNotifications } from '../actions/messageActions.js';
 
 import {
+  Label,
   Container,
   Grid,
   Header,
