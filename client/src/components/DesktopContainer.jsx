@@ -105,7 +105,7 @@ class DesktopContainer extends Component {
                 <Menu.Item><Link to="/contracts">Contracts</Link></Menu.Item>
                 <Menu.Menu position='right'>
                   <Menu.Item>
-                    <Menu.Item name='logout' onClick={() => this.props.logout()}  />
+                    <Menu.Item name='logout' onClick={() => this.props.logout(this.props.user.id, this.props.messageUserId, this.props.user.company_id)}  />
                   </Menu.Item>
                 </Menu.Menu>
                 </Container>
