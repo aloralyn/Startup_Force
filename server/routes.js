@@ -74,7 +74,9 @@ bmtRouter.post('/api/get/contract', (req, res) => {
 
 bmtRouter.post('/api/get/contract/all', (req, res) => {
   const { companyID } = req.body;
-  contractsController.getAllContracts(companyID, (data) => res.status(200).send(data.rows));
+  contractsController.getAllContracts(companyID)
+    .then(data => res.status(200).send(data))
+    .catch(err => res.status(500).send(err));
 });
 
 bmtRouter.post('/api/get/contract/all/data', (req, res) => {

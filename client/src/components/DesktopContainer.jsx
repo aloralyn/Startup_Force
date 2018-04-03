@@ -36,8 +36,10 @@ class DesktopContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fixed: undefined
-    }
+      fixed: undefined,
+      activeItem: 'home',
+    };
+    // this.handleTabClick = this.handleTabClick.bind(this);
   }
 
   // hideFixedMenu() {
@@ -56,10 +58,10 @@ class DesktopContainer extends Component {
     this.props.getNotifications(this.props.user.id, this.props.user.company_id);
   }
 
+  handleTabClick = (e, { name }) => this.setState({ activeItem: name });
+
   render() {
-
-    const { fixed } = this.state
-
+    const { fixed } = this.state;
     return (
       <Responsive {...Responsive.onlyComputer}>
         <div>
@@ -78,15 +80,15 @@ class DesktopContainer extends Component {
                 size='small'
               >
 
-              { this.props.user.is_manager ? 
+              { this.props.user.is_manager ?
               <Container>
-                  <Menu.Item><Link to="/">Home</Link></Menu.Item>
-                  <Menu.Item><Link to="/my_info">My Info</Link></Menu.Item>      
-                  <Menu.Item><Link to="/schedules">Schedules</Link></Menu.Item>
-                  <Menu.Item><Link to="/onboarding">Onboarding</Link></Menu.Item>
-                  <Menu.Item><Link to="/reports">Reports</Link></Menu.Item>
-                  <Menu.Item><Link to="/messages">Messages</Link></Menu.Item>
-                  <Menu.Item><Link to="/contracts">Contracts</Link></Menu.Item>
+                <Menu.Item name="home" active={this.state.activeItem === 'home'} onClick={this.handleTabClick}><Link to="/">Home</Link></Menu.Item>
+                <Menu.Item name="info" active={this.state.activeItem === 'info'} onClick={this.handleTabClick}><Link to="/my_info">My Info</Link></Menu.Item>
+                <Menu.Item name="schedules" active={this.state.activeItem === 'schedules'} onClick={this.handleTabClick}><Link to="/schedules">Schedules</Link></Menu.Item>
+                <Menu.Item name="onboarding" active={this.state.activeItem === 'onboarding'} onClick={this.handleTabClick}><Link to="/onboarding">Onboarding</Link></Menu.Item>
+                <Menu.Item name="reports" active={this.state.activeItem === 'reports'} onClick={this.handleTabClick}><Link to="/reports">Reports</Link></Menu.Item>
+                <Menu.Item name="messages" active={this.state.activeItem === 'messages'} onClick={this.handleTabClick}><Link to="/messages">Messages</Link></Menu.Item>
+                <Menu.Item name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>
                   <Menu.Menu position='right'>
                     <Menu.Item>
                       <Menu.Item name='logout' onClick={() => {
@@ -94,15 +96,17 @@ class DesktopContainer extends Component {
                       }}  />
                     </Menu.Item>
                   </Menu.Menu>
-                </Container> 
+                </Container>
                 :
 
                 <Container>
-                <Menu.Item><Link to="/">Home</Link></Menu.Item>
-                <Menu.Item><Link to="/my_info">My Info</Link></Menu.Item>      
-                <Menu.Item><Link to="/reports">Reports</Link></Menu.Item>
-                <Menu.Item><Link to="/messages">Messages</Link></Menu.Item>
-                <Menu.Item><Link to="/contracts">Contracts</Link></Menu.Item>
+                  <Menu.Item name="home" active={this.state.activeItem === 'home'} onClick={this.handleTabClick}><Link to="/">Home</Link></Menu.Item>
+                  <Menu.Item name="info" active={this.state.activeItem === 'info'} onClick={this.handleTabClick}><Link to="/my_info">My Info</Link></Menu.Item>
+                  <Menu.Item name="schedules" active={this.state.activeItem === 'schedules'} onClick={this.handleTabClick}><Link to="/schedules">Schedules</Link></Menu.Item>
+                  <Menu.Item name="onboarding" active={this.state.activeItem === 'onboarding'} onClick={this.handleTabClick}><Link to="/onboarding">Onboarding</Link></Menu.Item>
+                  <Menu.Item name="reports" active={this.state.activeItem === 'reports'} onClick={this.handleTabClick}><Link to="/reports">Reports</Link></Menu.Item>
+                  <Menu.Item name="messages" active={this.state.activeItem === 'messages'} onClick={this.handleTabClick}><Link to="/messages">Messages</Link></Menu.Item>
+                  <Menu.Item name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>
                 <Menu.Menu position='right'>
                   <Menu.Item>
                     <Menu.Item name='logout' onClick={() => this.props.logout(this.props.user.id, this.props.messageUserId, this.props.user.company_id)}  />

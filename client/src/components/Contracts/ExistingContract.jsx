@@ -92,6 +92,16 @@ export default class ExistingContract extends React.Component {
               onChange={this.handleExContractChange}
             />
           </Form.Field>
+          <Form.Group widths="equal">
+            <Form.Field
+              control={Button}
+              fluid
+              type="toggleview"
+              onClick={this.props.toggleView}
+            >
+              Switch to New Contract Form View
+            </Form.Field>
+          </Form.Group>
         </Form>
       </Grid.Column>
     );
