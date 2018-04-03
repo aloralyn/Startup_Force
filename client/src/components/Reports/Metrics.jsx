@@ -12,6 +12,7 @@ export default class Metrics extends React.Component {
       companyID: 1,
       contractData: [],
       salesGoal: 100000,
+      loaded: false,
     };
     this.getAllContracts = this.getAllContracts.bind(this);
     this.testingFunction = this.testingFunction.bind(this);
@@ -23,6 +24,7 @@ export default class Metrics extends React.Component {
   }
 
   componentWillMount() {
+    console.log('running');
     this.getAllContracts();
   }
 
@@ -64,16 +66,16 @@ export default class Metrics extends React.Component {
     return formattedChartData;
   }
 
-  convertDollarsToNumber(dollars) {
-    return Number(dollars.replace(/[^0-9\.-]+/g,""));
-  }
-
   setGaugeChartData(sum = 0) {
     this.state.contractData.forEach(({ contract_amount }) => {
       const amount = this.convertDollarsToNumber(contract_amount);
       sum += amount;
     });
     return (sum / this.state.salesGoal) * 100;
+  }
+
+  convertDollarsToNumber(dollars) {
+    return Number(dollars.replace(/[^0-9\.-]+/g,""));
   }
 
   testingFunction() {
