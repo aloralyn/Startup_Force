@@ -1,6 +1,4 @@
-import { SHOW_PHOTOUPLOAD, SELECT_PHOTO } from './types.js';
-// import { cloudName, uploadPreset  } from '../../../config.js';
-import { load } from './dashboardActions.js';
+import { SHOW_PHOTOUPLOAD, SELECT_PHOTO, LOGIN } from './types.js';
 import axios from 'axios';
 
 export const showPhotoUploader = () => dispatch => {
@@ -36,11 +34,21 @@ export const handlePhotoUpload = (file, userId) => {
       id: userId,
       profilePicId: imageResponse.public_id
     }).then((response) => {
-      dispatch({
-        type: 'HIDE_PHOTOUPLOAD',
-        payload: {
-          showPhotoUpload: false
-        }
+      axios.get('/load')
+      .then((response) => {
+        dispatch({
+          type: 'LOGIN',
+          payload: response.data
+        });
+        dispatch({
+          type: 'HIDE_PHOTOUPLOAD',
+          payload: {
+            showPhotoUpload: false
+          }
+        });
+      })
+      .catch((err) => {
+        console.log('There was an error', err)
       });
     })
     .catch((err) => console.log('There was an error', err));
