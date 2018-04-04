@@ -1,4 +1,4 @@
-import { LOGIN, FETCH_USERS, FETCH_MANAGERS, VERIFIED_USER } from '../actions/types';
+import { LOGIN, FETCH_USERS, FETCH_MANAGERS, VERIFIED_USER, UPDATE_USERDATA } from '../actions/types';
 
 const initialState = {
   company: {},
@@ -37,7 +37,7 @@ export default function(state = initialState, action) {
         ...state,
         verified: !state.verified
       };
-    case 'UPDATE_USERDATA':
+    case UPDATE_USERDATA:
       return {
         ...state,
         user: action.payload

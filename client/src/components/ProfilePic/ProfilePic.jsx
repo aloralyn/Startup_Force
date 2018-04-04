@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Card, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux'; // connects to the redux store
 import { fetchUsers } from '../../actions/dashboardActions.js';
-import { showPhotoUploader } from '../../actions/photoUploadActions.js';
+import { showPhotoUploader } from '../../actions/updateProfileActions.js';
 import { Image, Transformation } from 'cloudinary-react';
 
 class ProfilePic extends React.Component {
@@ -47,7 +47,7 @@ ProfilePic.propTypes = {
 const mapStateToProps = state => ({
   user: state.users.user,
   company: state.users.company,
-  showPhotoUpload: state.showPhotoUploadReducer.showPhotoUpload
+  showPhotoUpload: state.updateProfileReducer.showPhotoUpload
 
 })
 
