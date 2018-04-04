@@ -8,6 +8,9 @@ export const HANDLE_FORMCHANGE = 'HANDLE_FORMCHANGE';
 // @ @ @ @ @ @ @ @ @ @ @ @ @
 export const CREATE_EMPLOYEE = 'CREATE_EMPLOYEE';
 export const CLEAR_EMPLOYEEFORM  = 'CLEAR_EMPLOYEEFORM'; 
+export const SHOW_EDITPROFILE  = 'SHOW_EDITPROFILE'; 
+export const UPDATE_USERDATA = 'UPDATE_USERDATA';
+
 // @ @ @ @ @ @ @ @ @ @ @ @ @
 // @ DASHBOARD ACTION TYPE
 // @ @ @ @ @ @ @ @ @ @ @ @ @
