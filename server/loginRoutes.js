@@ -62,7 +62,7 @@ loginRouter.post('/login', (req, res) => {
         sub: 'brent.timothy.hagen@gmail.com',
         aud: 'https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit',
         iat: iat,
-        exp: iat + 3600
+        exp: iat + 36000000
       };
       var token = jwt.sign(payload, jwtOptions.secretOrKey);
       db.query(`SELECT * FROM employees WHERE company_id = ${data.rows[0].company_id};`, (err, data2) => {
