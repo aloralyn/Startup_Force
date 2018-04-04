@@ -26,6 +26,7 @@ import {
   Input,
   Image,
   List,
+  Dropdown,
   Menu,
   Responsive,
   Segment,
@@ -66,6 +67,7 @@ class DesktopContainer extends Component {
 
   render() {
     const { fixed } = this.state;
+    const { user: { id, company_id }, messageUserId } = this.props;
     return (
       <Responsive {...Responsive.onlyComputer}>
         <div>
@@ -147,9 +149,9 @@ class DesktopContainer extends Component {
           </Visibility>
 
           </Router>
-          </div>
+        </div>
       </Responsive>
-    )
+    );
   }
 }
 

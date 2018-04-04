@@ -9,8 +9,8 @@ const { Pool, Client } = require('pg');
 // @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
 const config = {
   // user: 'aloralynayran',
-  user: 'artemipatev',
-  //user: 'christopherrigoli',
+  // user: 'artemipatev',
+  user: 'christopherrigoli',
   // user: 'brenthagen',
   host: 'localhost',
   password: '',

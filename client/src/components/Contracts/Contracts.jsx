@@ -8,10 +8,6 @@ import NewContractForm from './NewContractForm.jsx';
 import ExistingContract from './ExistingContract.jsx';
 import axios from 'axios';
 
-const awardedToOptions = [
-  // POPULATE THIS LIST BASED ON LOGGED IN USER'S EMPLOYEES
-];
-
 export default class Contracts extends React.Component {
   constructor(props) {
     super(props);
