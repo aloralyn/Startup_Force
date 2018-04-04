@@ -9,10 +9,6 @@ import { Image, Transformation } from 'cloudinary-react';
 
 class EditableProfilePic extends React.Component {
 
-  componentDidMount() {
-    console.log(this.props);
-  }
-
   render() {
     return (
       <Card>
