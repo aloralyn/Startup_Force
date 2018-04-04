@@ -164,12 +164,8 @@ class DesktopContainer extends Component {
             </Switch>
           </Visibility>
           </Router>
-<<<<<<< HEAD
-        </div>
-=======
           }
           </div>
->>>>>>> profileEdit
       </Responsive>
     );
   }
