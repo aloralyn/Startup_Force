@@ -20,6 +20,7 @@ export const onDrop = (files) => dispatch => {
   })
 };
 
+
 export const handlePhotoUpload = (file, userId) => {
   const formData = new FormData();
   formData.append('file', file);
@@ -34,23 +35,19 @@ export const handlePhotoUpload = (file, userId) => {
       id: userId,
       profilePicId: imageResponse.public_id
     }).then((response) => {
-      axios.get('/load')
-      .then((response) => {
-        dispatch({
-          type: 'LOGIN',
-          payload: response.data
-        });
-        dispatch({
-          type: 'HIDE_PHOTOUPLOAD',
-          payload: {
-            showPhotoUpload: false
-          }
-        });
-      })
-      .catch((err) => {
-        console.log('There was an error', err)
+      dispatch({
+        type: 'UPDATE_USERDATA',
+        payload: response.data
+      });
+      dispatch({
+        type: 'HIDE_PHOTOUPLOAD',
+        payload: {
+          showPhotoUpload: false
+        }
       });
     })
     .catch((err) => console.log('There was an error', err));
   };
 };
+
+

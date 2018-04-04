@@ -37,6 +37,11 @@ export default function(state = initialState, action) {
         ...state,
         verified: !state.verified
       };
+    case 'UPDATE_USERDATA':
+      return {
+        ...state,
+        user: action.payload
+      }
     default: 
       return state;
   }

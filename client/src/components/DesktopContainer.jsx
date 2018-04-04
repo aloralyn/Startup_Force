@@ -102,8 +102,6 @@ class DesktopContainer extends Component {
                 <Container>
                   <Menu.Item name="home" active={this.state.activeItem === 'home'} onClick={this.handleTabClick}><Link to="/">Home</Link></Menu.Item>
                   <Menu.Item name="info" active={this.state.activeItem === 'info'} onClick={this.handleTabClick}><Link to="/my_info">My Info</Link></Menu.Item>
-                  <Menu.Item name="schedules" active={this.state.activeItem === 'schedules'} onClick={this.handleTabClick}><Link to="/schedules">Schedules</Link></Menu.Item>
-                  <Menu.Item name="onboarding" active={this.state.activeItem === 'onboarding'} onClick={this.handleTabClick}><Link to="/onboarding">Onboarding</Link></Menu.Item>
                   <Menu.Item name="reports" active={this.state.activeItem === 'reports'} onClick={this.handleTabClick}><Link to="/reports">Reports</Link></Menu.Item>
                   <Menu.Item name="messages" active={this.state.activeItem === 'messages'} onClick={this.handleTabClick}><Link to="/messages">Messages</Link></Menu.Item>
                   <Menu.Item name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>
