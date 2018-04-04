@@ -1,4 +1,4 @@
-import { MESSAGE_USER, GET_MESSAGES, GET_NOTIFICATIONS } from './types.js';
+import { MESSAGE_USER, GET_MESSAGES, GET_NOTIFICATIONS, NOTIFICATION_COUNT } from './types.js';
 import firebase from '../firebase.js';
 
 const setMessageUser = (userFrom, userTo, company_id) => {
@@ -57,13 +57,41 @@ export const getNotifications = (user, company_id) => dispatch => {
   });
 };
 
+export const countTotalNotifications = (notifications) => {
+  let total = countNotifications(notifications);
+  return dispatch => {
+    return (
+      dispatch({
+        type: NOTIFICATION_COUNT,
+       payload: total
+     })
+    );
+  }
+}
+
+export const countNotifications = (notifications) => {
+  let count = 0;
+  if (!notifications) { return count; }
+  const countProperties = obj => {
+    Object.keys(obj).forEach(key => {
+      // if property contains nested objects, recurse
+      if (typeof obj[key] !== 'boolean') {
+        countProperties(obj[key]);
+      } else {
+        count++;
+      }
+    });
+  }
+  countProperties(notifications);
+  return count;
+}
+
 // call when logout to end notification connection
 export const endNotifications = (user, company_id) => {
   setNotificationPath(user, company_id).off();
 };
 
 export const eraseNotification = (user, userFrom, company_id) => {
-  console.log('erase notification')
   let path = path = 'companies/' + company_id + '/notifications/' + user + '/' + userFrom;
   firebase.database().ref(path).remove()
     .then(function() {
@@ -76,7 +104,6 @@ export const eraseNotification = (user, userFrom, company_id) => {
 
 export const messageUser = (user, userToMessage, notifications, company_id) => {
   if (notifications) {
-    console.log('notifications');
     eraseNotification(user, userToMessage, company_id);
   }
   return dispatch => {
