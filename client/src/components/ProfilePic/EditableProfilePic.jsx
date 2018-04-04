@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Card, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux'; // connects to the redux store
 import { fetchUsers } from '../../actions/dashboardActions.js';
-import { showPhotoUploader } from '../../actions/photoUploadActions.js';
+import { showPhotoUploader } from '../../actions/updateProfileActions.js';
 import { Image, Transformation } from 'cloudinary-react';
 
 class EditableProfilePic extends React.Component {
@@ -17,7 +17,7 @@ class EditableProfilePic extends React.Component {
        </Image>
           <Card.Content extra>
             <a onClick={this.props.showPhotoUploader}>
-              <Icon name='calendar outline'/>
+              <Icon name='picture'/>
               Edit photo
             </a>
           </Card.Content>
@@ -49,7 +49,7 @@ EditableProfilePic.propTypes = {
 const mapStateToProps = state => ({
   user: state.users.user,
   company: state.users.company,
-  showPhotoUpload: state.showPhotoUploadReducer.showPhotoUpload
+  showPhotoUpload: state.updateProfileReducer.showPhotoUpload
 
 })
 

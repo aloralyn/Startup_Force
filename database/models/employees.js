@@ -35,7 +35,7 @@ exports.createEmployeeProfile = (input) => {
 };
 
 exports.uploadPhoto = (input) => {
-  let queryStr = `UPDATE employees SET profilePicId='${input.profilePicId}' WHERE id=${input.id} RETURNING *;`;;
+  let queryStr = `UPDATE employees SET profilePicId='${input.profilePicId}' WHERE id=${input.id} RETURNING *;`;
   return db.query(queryStr)
     .then(res => res.rows[0])
       .catch(err => console.log(err.stack))
@@ -48,3 +48,13 @@ exports.retrieveManagers = (input) => {
             res.rows
            ).catch(err => console.log(err.stack))
 };
+
+exports.updateProfile = (input) => {
+  const v = [input.preferred_name, input.street_1, input.street_2, input.city, input.zip_code, input.state, input.personal_email, input.phone_number, input.linkedin_url, input.pw];
+  let queryStr = `UPDATE employees SET preferred_name='${v[0]}', street_1='${v[1]}', street_2='${v[2]}', city='${v[3]}', zip_code='${v[4]}', state='${v[5]}',  personal_email='${v[6]}', phone_number='${v[7]}', linkedin_url='${v[8]}', pw='${v[9]}'  WHERE id=${input.id} RETURNING *;`;
+
+  return db.query(queryStr)
+           .then(res =>
+            res.rows[0]
+          ).catch( err => console.log(err.stack));
+}
