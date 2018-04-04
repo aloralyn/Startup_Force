@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { messageUser, getMessages, clearNotification, eraseNotification } from '../../actions/messageActions.js';
+import { messageUser, getMessages, clearNotification, eraseNotification, countNotifications } from '../../actions/messageActions.js';
 import MessageForm from './MessageForm.jsx';
 import {
+  Label,
   Button,
   Container,
   Grid,
