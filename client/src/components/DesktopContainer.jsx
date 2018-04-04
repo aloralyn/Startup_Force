@@ -15,7 +15,7 @@ import Reports from './Reports/Reports.jsx';
 import Messages from './Messages/Messages.jsx';
 import { logout } from '../actions/dashboardActions.js';
 import Contracts from './Contracts/Contracts.jsx';
-import { getNotifications } from '../actions/messageActions.js';
+import { getNotifications, countTotalNotifications } from '../actions/messageActions.js';
 
 import {
   Label,
@@ -53,6 +53,9 @@ class DesktopContainer extends Component {
     if (nextProps.user !== this.props.user) {
       this.props.getNotifications(nextProps.user.id, nextProps.user.company_id);
     }
+    if (nextProps.notifications !== this.props.notifications) {
+      this.props.countTotalNotifications(nextProps.notifications);
+    }
   }
 
   componentDidMount() {
@@ -88,7 +91,14 @@ class DesktopContainer extends Component {
                 <Menu.Item name="schedules" active={this.state.activeItem === 'schedules'} onClick={this.handleTabClick}><Link to="/schedules">Schedules</Link></Menu.Item>
                 <Menu.Item name="onboarding" active={this.state.activeItem === 'onboarding'} onClick={this.handleTabClick}><Link to="/onboarding">Onboarding</Link></Menu.Item>
                 <Menu.Item name="reports" active={this.state.activeItem === 'reports'} onClick={this.handleTabClick}><Link to="/reports">Reports</Link></Menu.Item>
-                <Menu.Item name="messages" active={this.state.activeItem === 'messages'} onClick={this.handleTabClick}><Link to="/messages">Messages</Link></Menu.Item>
+                <Menu.Item name="messages" active={this.state.activeItem === 'messages'} onClick={this.handleTabClick}><Link to="/messages">
+                    Messages {
+                      this.props.notificationCount > 0 ?
+                      '(' + this.props.notificationCount + ')'
+                      :
+                      ''
+                    }
+                  </Link></Menu.Item>
                 <Menu.Item name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>
                   <Menu.Menu position='right'>
                     <Menu.Item>
@@ -104,7 +114,14 @@ class DesktopContainer extends Component {
                   <Menu.Item name="home" active={this.state.activeItem === 'home'} onClick={this.handleTabClick}><Link to="/">Home</Link></Menu.Item>
                   <Menu.Item name="info" active={this.state.activeItem === 'info'} onClick={this.handleTabClick}><Link to="/my_info">My Info</Link></Menu.Item>
                   <Menu.Item name="reports" active={this.state.activeItem === 'reports'} onClick={this.handleTabClick}><Link to="/reports">Reports</Link></Menu.Item>
-                  <Menu.Item name="messages" active={this.state.activeItem === 'messages'} onClick={this.handleTabClick}><Link to="/messages">Messages</Link></Menu.Item>
+                  <Menu.Item name="messages" active={this.state.activeItem === 'messages'} onClick={this.handleTabClick}><Link to="/messages">
+                      Messages {
+                        this.props.notificationCount > 0 ?
+                        '(' + this.props.notificationCount + ')'
+                        :
+                        ''
+                      }
+                    </Link></Menu.Item>
                   <Menu.Item name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>
                 <Menu.Menu position='right'>
                   <Menu.Item>
@@ -143,9 +160,11 @@ DesktopContainer.propTypes = {
 
 const mapStateToProps = state => ({
   user: state.users.user,
-  messageUserId: state.messages.messageUserId
+  messageUserId: state.messages.messageUserId,
+  notifications: state.messages.notifications,
+  notificationCount: state.messages.notificationCount
 });
 
 
 
-export default withRouter(connect(mapStateToProps, { getNotifications, logout })(DesktopContainer));
+export default withRouter(connect(mapStateToProps, { getNotifications, logout, countTotalNotifications })(DesktopContainer));

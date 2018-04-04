@@ -65,13 +65,25 @@ class Messages extends Component {
                     notifications = countNotifications(this.props.notifications[user.id]);
                   } else { notifications = ''; }
                   if (user.id !== this.props.userId) {
-                    return (<List.Item as='li' key={user.id}><Button
-                      value={user.id.toString()}
-                      onClick={(e) => {
-                        let userToMessage = parseInt(e.target.value, 10);
-                        this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
-                      }}
-                      >{user.first_name + ' ' + user.last_name + notifications}</Button></List.Item>)
+                    return (
+                      <List.Item as='li' key={user.id}>
+                        <Button 
+                        value={user.id.toString()}
+                        onClick={(e) => {
+                          let userToMessage = parseInt(e.target.value, 10)
+                          this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
+                        }}
+                        >{user.first_name + ' ' + user.last_name}
+                        </Button>
+                        {notifications ? 
+                          <Label
+                            color={user.id === this.props.user.reports_to ? 'red' : 'blue'}>
+                            {notifications}
+                          </Label>
+                          :
+                          <div></div>
+                        }
+                      </List.Item>)
                 }
                 })}
               </List>
@@ -107,13 +119,25 @@ class Messages extends Component {
                     notifications = countNotifications(this.props.notifications[user.id]);
                   } else { notifications = ''; } 
                   if (user.id !== this.props.userId) {
-                    return (<List.Item as='li' key={user.id}><Button 
-                      value={user.id.toString()}
-                      onClick={(e) => {
-                        let userToMessage = parseInt(e.target.value, 10)
-                        this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
-                      }}
-                      >{user.first_name + ' ' + user.last_name + notifications}</Button></List.Item>)
+                    return (
+                      <List.Item as='li' key={user.id}>
+                        <Button 
+                        value={user.id.toString()}
+                        onClick={(e) => {
+                          let userToMessage = parseInt(e.target.value, 10)
+                          this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
+                        }}
+                        >{user.first_name + ' ' + user.last_name}
+                        </Button>
+                        {notifications ? 
+                          <Label
+                            color={user.id === this.props.user.reports_to ? 'red' : 'blue'}>
+                            {notifications}
+                          </Label>
+                          :
+                          <div></div>
+                        }
+                      </List.Item>)
                 }
                 })}
               </List>
@@ -128,6 +152,7 @@ class Messages extends Component {
 
 const mapStateToProps = state => ({
   users: state.users.users,
+  user: state.users.user,
   username: state.users.user.username,
   userId: state.users.user.id,
   messages: state.messages.messages,
