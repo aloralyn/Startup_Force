@@ -10,7 +10,6 @@ exports.createCompany = (input) => {
 }
 
 exports.updateCompany = function(id, input) {
-  console.log(input)
   let queryStr = `UPDATE companies SET name='${input.name}', street_1='${input.street_1}', street_2='${input.street_2}', city='${input.city}', zip_code='${input.zip_code}', state='${input.state}', website='${input.website}' WHERE id=${id};`;
 
   return db.query(queryStr, function(err, results) {

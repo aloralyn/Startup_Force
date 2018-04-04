@@ -7,3 +7,10 @@ export const handleChange = (eName, val) => dispatch => {
     }
   });
 };
+
+export const clearEmployeeForm = () => dispatch => {
+  dispatch({
+    type: 'CLEAR_EMPLOYEEFORM',
+    payload: ''
+  })
+}

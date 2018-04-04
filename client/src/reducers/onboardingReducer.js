@@ -1,8 +1,7 @@
-import { CREATE_EMPLOYEE } from '../actions/types'; 
-import { HANDLE_FORMCHANGE } from '../actions/types'; 
+import { CREATE_EMPLOYEE, HANDLE_FORMCHANGE, CLEAR_EMPLOYEEFORM } from '../actions/types'; 
 
 const initialState = {
-  company_id: 1,
+      company_id: '',
       first_name: '',
       last_name: '',
       preferred_name: '',
@@ -19,7 +18,7 @@ const initialState = {
       linkedin_url: '',
       position: '',
       employee_status: '',
-      start_date: '',
+      start_date: null,
       department: '',
       division: '',
       reports_to: '',
@@ -27,7 +26,8 @@ const initialState = {
       pay_per: '',
       pay_type: '',
       is_manager: '',
-      pw: ''
+      pw: '',
+      personal_email: ''
 };
 
 function newEmployeeReducer(state = initialState, action){
@@ -37,6 +37,37 @@ function newEmployeeReducer(state = initialState, action){
         ...state,
         [action.payload.eName]: action.payload.val
       };
+    case CLEAR_EMPLOYEEFORM:
+      return {
+        ...state,
+        company_id: '',
+        first_name: '',
+        last_name: '',
+        preferred_name: '',
+        dob: '',
+        ssn: '',
+        gender: '',
+        street_1: '',
+        street_2: '',
+        city: '',
+        zip_code: '',
+        state: '',
+        email: '',
+        phone_number: '',
+        linkedin_url: '',
+        position: '',
+        employee_status: '',
+        start_date: null,
+        department: '',
+        division: '',
+        reports_to: '',
+        wage: '',
+        pay_per: '',
+        pay_type: '',
+        is_manager: '',
+        pw: '',
+        personal_email: ''
+      }
     default: 
       return state;
   }
