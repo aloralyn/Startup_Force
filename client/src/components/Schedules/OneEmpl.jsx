@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import moment from 'moment-timezone';
+import moment from 'moment';
 import { Icon, Button } from 'semantic-ui-react'
 
 class OneEmpl extends Component {
@@ -9,16 +9,15 @@ class OneEmpl extends Component {
 	var ind;
 {/*find a match with employee's id and the day*/}
 	schedules.forEach((one, i) => {
-		if (one.id === empl.id && moment(day).isSame(moment(one.start).format("YYYY MMM DD")) ) {
+		if (one.id === empl.id && moment(moment(day, "YYYY MMM DD")).isSame(moment(one.start).format("YYYY MMM DD")) ) {
 			match = one;
 			ind = i;
 		}
 	})
-	console.log("from oneEmpl: ", match)
 		return (
 			<div>
 			{
-				match && moment(moment(new Date())).isBefore(day) &&
+				match && moment().isBefore(moment(day, "YYYY MMM DD")) &&
 					<Button animated='fade' fluid 
 					onClick={()=>this.props.showModal('edit', match, day)}>
 			      <Button.Content hidden>
@@ -30,7 +29,7 @@ class OneEmpl extends Component {
 			      </Button.Content>
 			    </Button>
 			    ||
-			   match && !moment(moment(new Date())).isBefore(day) &&
+			   match && !moment().isBefore(moment(day, "YYYY MMM DD")) &&
 			   	<Button>
 			      <Button.Content>
 				      <div>{`${moment(match.start).format("h:mm a")}`}</div>
@@ -38,7 +37,7 @@ class OneEmpl extends Component {
 			      </Button.Content>
 			    </Button>
 			    ||
-			   	moment(moment(new Date())).isBefore(day) &&
+			   	moment().isBefore(moment(day, "YYYY MMM DD")) &&
 			    <Button size='mini' onClick={()=>this.props.showModal('post', empl, day)}><Icon name='plus'/></Button>
 			}
 			</div>

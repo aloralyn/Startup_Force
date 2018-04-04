@@ -1,3 +1,5 @@
+import 'react-day-picker/lib/style.css';
+import './App.css'
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -8,16 +10,14 @@ import Mailer from './mailer.jsx'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
-import * as Actions from '../../actions/scheduleActions'
+import * as Actions from '../../actions/scheduleActions';
+import { fetchUsers } from '../../actions/dashboardActions.js';
+
 
 import { Header, Form, Segment, Table, Icon, Button, Modal, Accordion, TransitionablePortal } from 'semantic-ui-react'
 
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import TimePicker from 'rc-time-picker';
-import './App.css'
-// import 'rc-time-picker/assets/index.css';
-import 'react-day-picker/lib/style.css';
-
 
 import OneEmpl from './OneEmpl.jsx'
 
@@ -29,7 +29,8 @@ class Schedules extends Component {
 			email: false,
 			week: [],
 			open: false,
-			emptySH: true, emptySM: true, emptyFM: true, emptyFH: true,
+			startEmpty: true,
+			finishEmpty: true,
 			startGreaterFinish: false,
 			action: '',
 			empl: '',
@@ -46,18 +47,14 @@ class Schedules extends Component {
 
 	renderCalendar = pickedDay => {
 	{/*Function to change week in the calendar and fetch schedules from DB*/}
-		pickedDay = pickedDay || new Date();
-	console.log("picked day: ",pickedDay)
+		pickedDay = pickedDay || moment().format();
 		let week = this.getWeekByDay(pickedDay)
 		let date = this.month_year(pickedDay)
-		if (this.state.fetchedMonths.includes(date[0]) ) {
+		if (this.props.fetchMonth.includes(date.join(' ')) ) {
 			this.setState({ week, pickedDay })
 		} else {
-			this.props.getSchedules(date[1], date[0], 1); // hard coded - NEED TO BE CHANGED
-			console.log('this is fetched months: ', this.state.fetchedMonths)
-			let newfetchedMonths = this.state.fetchedMonths.slice()
-			newfetchedMonths.push(date[0])
-			this.setState({ week, fetchedMonths: newfetchedMonths, pickedDay })
+			this.props.getSchedules(date[1], date[0], this.props.user.id);
+			this.setState({ week, pickedDay })
 		}
 	}
 
@@ -70,9 +67,19 @@ class Schedules extends Component {
 		this.renderCalendar(pickedDay)
 	}
 
+	timePicker = (string, time) => { {/*string can be finish or start*/}
+  	let hour = moment(time).format('hh a');
+  	let minute = moment(time).format('mm');
+  	this.setState({
+  		[`${string}Hour`]: this.changeTimeFormatFrom12To24(hour),
+  		[`${string}Minute`]: minute,
+  		[`${string}Empty`]: false
+  	})
+	}
+
 	month_year = day => {
-		let month = moment(day).format("MMM").toString();
-		let year = moment(day).format("YYYY").toString();
+		let month = moment(day).format("MMM");
+		let year = moment(day).format("YYYY");
 		return [month, year]
 	}
 
@@ -82,26 +89,23 @@ class Schedules extends Component {
 
 	getWeekByDay = d => {
 	{/*Function to compute whole week by one day*/}
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
-    var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-    var weekNumber = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
-    let week = [];
-		let year = d.getUTCFullYear();
-		for (var i = 0; i < 7; i++) {
-			var day = new Date(year, 0, 1+ i +( (weekNumber-1)*7 ) )
-			week.push(moment(`${year}-${day.getMonth() + 1}-${day.getDate()}`).format("YYYY MMM DD"))
+	let weekNum = moment(d).isoWeeks();
+	let year = moment(d).get('year');
+  	let week = [];
+		for (let i = 0; i < 7; i++) {
+			let days = (weekNum - 1) * 7 + 1 + i;
+			let date = moment().set({'year': year, 'month': 0, 'date': days})
+			week.push(moment(date).format("YYYY MMM DD"))
 		}
 		return week
 	}
 
 	changeTimeFormatFrom12To24 = t => {
-	{/*Functin to format picked hour in the TimePicker*/}
-		let time = moment(t).format('hh a')
-  	let hour = Number(time.slice(0,2))
-  	if (time.includes('12 am')) {
+	{/*Function to format picked hour in the TimePicker*/}
+  	let hour = Number(t.slice(0,2))
+  	if (t.includes('12 am')) {
   		hour = hour - 12
-  	} else if (time.includes('pm') && !time.includes('12')) {
+  	} else if (t.includes('pm') && !t.includes('12')) {
   		hour = hour + 12
   	}
   	return hour
@@ -109,28 +113,47 @@ class Schedules extends Component {
 
 	compileTimeToNeededFormat = () => {
 	{/*Function which formating date and then make EDIT/POST action*/}
-    const { empl, action, day, start, startHour, startMinute, finish, finishHour, finishMinute, emptySH, emptySM, emptyFH, emptyFM } = this.state;
-    console.log( empl, action, day, start, startHour, startMinute, finish, finishHour, finishMinute, emptySH, emptySM, emptyFH, emptyFM )
-    if (!emptySH && !emptySM && !emptyFH && !emptyFM) {
+    const { 
+    	empl, 
+    	action, 
+    	day, 
+    	start, startHour, startMinute, 
+    	finish, finishHour, finishMinute, 
+    	startEmpty, finishEmpty 
+    } = this.state;
+    if (!startEmpty && !finishEmpty) {
     	let copy = day.slice();
-    	let newStart = moment(moment(copy).set({ h : startHour, m : startMinute })).format()
-    	let newFinish = moment(moment(copy).set({ h : finishHour, m : finishMinute })).format();
+    	let newStart = moment(moment(copy, "YYYY MMM DD").set({ h : startHour, m : startMinute })).format()
+    	let newFinish = moment(moment(copy, "YYYY MMM DD").set({ h : finishHour, m : finishMinute })).format();
     	let date = this.month_year(newStart);
-    	console.log("+++++new finish and start ", newStart, newFinish, empl.start, empl.finish)
     	if (moment(empl.start).isBefore(moment(empl.finish)) || moment(newStart).isBefore(moment(newFinish)) ) {
     		if (action === 'edit') {
-      		console.log("EDIIIIIIIIT")
-      		this.props.editSchedule({first_name: empl.first_name, start: empl.start, startEdit: newStart, finish: empl.finish, finishEdit: newFinish, id: empl.id });
+      		this.props.editSchedule({
+      			id: empl.id,
+      			first_name: empl.first_name,
+      			start: empl.start, 
+      			startEdit: newStart, 
+      			finish: empl.finish, 
+      			finishEdit: newFinish
+      		})
       	} else if (action === 'post') {
-      		console.log("POOOOOOOOOOOST")
-      		this.props.postSchedule({id: empl.id, first_name: empl.first_name, start: newStart, finish: newFinish, month: date[0], year: date[1] });
+      		this.props.postSchedule({
+      			id: empl.id, 
+      			first_name: empl.first_name, 
+      			start: newStart, 
+      			finish: newFinish, 
+      			month: date[0], 
+      			year: date[1] 
+      		});
       	}
       	this.close();
       	this.setState({
-      		startGreaterFinish: false,
-      		confirm: true,
-      		emptySH: true, emptySM: true, emptyFH: true, emptyFM: true,
-      		start: '', finish: '', newStart: '', newFinish: '',
+      		startGreaterFinish: false, 
+      		confirm: true, 
+      		startEmpty: true, 
+      		finishEmpty: true,
+      		start: '', finish: '', 
+      		newStart: '', newFinish: '',
       		empl: '',
       		confirm: true,
       		event: action,
@@ -142,10 +165,9 @@ class Schedules extends Component {
 	}
 
 	render() {
-		console.log('this props: ', this.props)
 		const { email, week, action, empl, event, day, open, start, finish, startGreaterFinish, confirm } = this.state;
-		if (confirm) { setTimeout(() => { this.setState({confirm: false})}, 1000)}
-
+		if (confirm) { setTimeout(() => { this.setState({confirm: false})}, 1000)} 
+console.log("ACTIONS: ", this.props)
 	return (
 		<div style={{margin: '10px'}}>
 
@@ -156,58 +178,34 @@ class Schedules extends Component {
 		style={{position: 'absolute', top: '40%', left: '40%'}}>
 			<Modal.Content>
 			<Modal.Description>
-        {
-	        this.state.action === 'edit' ?
+        {this.state.action === 'edit' ? 
 		        <Header>Edit {empl.first_name}'s shift on {day}</Header>
 		        :
-		        <Header>Add {empl.first_name}'s shift on {day}</Header>
-    		}
-        Start
-        <br />
-        Hours:
-        <TimePicker
+		        <Header>Add {empl.first_name}'s shift on {day}</Header>}
+        Start:
+	      <TimePicker
 			    showSecond={false}
-			    showMinute={false}
 			    className="xxx"
-			    onChange={(start) => this.setState({startHour: this.changeTimeFormatFrom12To24(start), emptySH: false})}
-			    format={'h a'}
+			    onChange={(time) => this.timePicker('start', time)}
+			    format={'hh:mm a'}
+			    minuteStep={15}
+			    use12Hours
+			    inputReadOnly
+		  	/>
+
+			  <br />
+			  <br />
+			  Finish: 
+			  <TimePicker
+			    showSecond={false}
+			    className="xxx"
+			    onChange={(time) => this.timePicker('finish', time)}
+			    format={'hh:mm a'}
+			    minuteStep={15}
 			    use12Hours
 			    inputReadOnly
 			  />
 
-			  Minutes:
-			  <TimePicker
-			    showSecond={false}
-			    showHour={false}
-			    className="xxx"
-			    onChange={(start) => this.setState({startMinute: moment(start).format('mm'), emptySM: false})}
-			    format={'mm'}
-			    minuteStep={15}
-			    inputReadOnly
-			  />
-			  <br />
-			  <br />
-			  Finish
-			  <br />
-			  Hours:
-			  <TimePicker
-			    showSecond={false}
-			    showMinute={false}
-			    className="xxx"
-			    onChange={(finish) => this.setState({finishHour: this.changeTimeFormatFrom12To24(finish), emptyFH: false})}
-			    format={'hh a'}
-			    use12Hours
-			  />
-
-			  Minutes:
-			  <TimePicker
-			    showSecond={false}
-			    showHour={false}
-			    className="xxx"
-			    onChange={(finish) => this.setState({finishMinute: moment(finish).format('mm'), emptyFM: false})}
-			    format={'mm'}
-			    minuteStep={15}
-			  />
 			  <br />
 			  <br />
 			  {startGreaterFinish ? <p style={{color: 'red'}}>Finish can't be earlier than start</p> : ""}
@@ -275,16 +273,26 @@ class Schedules extends Component {
   <Table.Header>
     <Table.Row>
 				<Table.HeaderCell width={2}>Employees</Table.HeaderCell>
-				{week.map((d, i) => (<Table.HeaderCell width={1} key={i}>{`${d.slice(5)}`}</Table.HeaderCell>))}
+				{week.map((d, i) => { let color = moment().format("YYYY MMM DD") === moment(d).format("YYYY MMM DD") ? '#EF9A9A' : null;
+					return <Table.HeaderCell 
+					style={{'backgroundColor': color}} 
+					width={1} key={i}>{moment(d).format('YYYY MMM DD ddd')}</Table.HeaderCell>})}
 		</Table.Row>
   </Table.Header>
 	<Table.Body>
 			{this.props.employees.map((empl, indOfEmpl) => (
-				<Table.Row style={{height: '90px'}} key={indOfEmpl}>
+				<Table.Row key={indOfEmpl} style={{height: '90px'}}>
 					<Table.Cell>{empl.first_name}</Table.Cell>
 						{week.map((day, indOfDate) => (
 							<Table.Cell key={indOfDate}>
-							<div><OneEmpl schedules={this.props.schedules} showModal={this.showModal} day={day} empl={empl} /></div>
+							<div>
+								<OneEmpl 
+								key={indOfEmpl*indOfDate} 
+								schedules={this.props.schedules} 
+								showModal={this.showModal} 
+								day={day} 
+								empl={empl} />
+							</div>
 							</Table.Cell>))}
 				</Table.Row>))}
 	</Table.Body>
@@ -302,13 +310,15 @@ class Schedules extends Component {
 const mapStateToProps = store => ({
 		employees: store.scheduleReducer.employees,
 		schedules: store.scheduleReducer.schedules,
+		fetchMonth: store.scheduleReducer.fetchedMonthsForMaker,
 		postSchedule: store.postSchedule,
 		editSchedule: store.editSchedule,
-		deleteSchedule: store.deleteSchedule
+		deleteSchedule: store.deleteSchedule,
+		user: store.users.user,
 })
 
 function matchDispatchToProps(dispatch) {
-	return bindActionCreators(Actions, dispatch)
+	return bindActionCreators({...Actions, fetchUsers}, dispatch)
 }
 
 export default withRouter(connect(mapStateToProps, matchDispatchToProps)(Schedules));

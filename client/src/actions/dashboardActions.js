@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { Router } from 'react-router';
 import { endNotifications, endMessagingListener } from './messageActions.js';
+import moment from 'moment'
+//import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 export function fetchUsers(email) {
   return (dispatch) => {
@@ -22,6 +24,8 @@ export function fetchUsers(email) {
 
 export function load() {
   return (dispatch) => {
+    let year = moment().format('YYYY')
+    let month = moment().format('MMM')
     axios.get('/load')
       .then((response) => {
         dispatch({
@@ -32,6 +36,15 @@ export function load() {
           type: 'VERIFIED_USER',
           payload: ''
         });
+        axios.get(`/schedule/${year}/${month}/${response.data.user.id}`)
+          .then(schedule => {
+            dispatch({
+              type: 'GET_SCHEDULE',
+              payload: schedule.data.rows,
+              month: month,
+              year: year
+            })
+          })
       })
       .catch((err) => {
         console.log('There was an error', err)
@@ -41,6 +54,8 @@ export function load() {
 
 export function login(state) {
   return (dispatch) => {
+    let year = moment().format('YYYY')
+    let month = moment().format('MMM')
     axios.post('/login', state)
       .then((response) => {
         localStorage.setItem('authToken', response.data.token);
@@ -52,6 +67,15 @@ export function login(state) {
           type: 'VERIFIED_USER',
           payload: ''
         });
+        axios.get(`/schedule/${year}/${month}/${response.data.user.id}`)
+          .then(schedule => {
+            dispatch({
+              type: 'GET_SCHEDULE',
+              payload: schedule.data.rows,
+              month: month,
+              year: year
+            })
+          })
       })
       .catch((err) => {
         console.log('There was an error', err)
