@@ -7,7 +7,7 @@ export const HANDLE_FORMCHANGE = 'HANDLE_FORMCHANGE';
 // @ONBOARDING ACTION TYPE
 // @ @ @ @ @ @ @ @ @ @ @ @ @
 export const CREATE_EMPLOYEE = 'CREATE_EMPLOYEE';
-
+export const CLEAR_EMPLOYEEFORM  = 'CLEAR_EMPLOYEEFORM'; 
 // @ @ @ @ @ @ @ @ @ @ @ @ @
 // @ DASHBOARD ACTION TYPE
 // @ @ @ @ @ @ @ @ @ @ @ @ @

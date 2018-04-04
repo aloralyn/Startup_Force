@@ -1,3 +1,4 @@
+import { CLEAR_EMPLOYEEFORM } from './types.js';
 import axios from 'axios';
 
 export const addEmployee = (state) => {

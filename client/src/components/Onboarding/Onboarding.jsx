@@ -8,9 +8,16 @@ import {
   Grid,
   Header,
   Icon,
+  Modal,
   Segment
 } from 'semantic-ui-react'
 
+
+const SuccessMessage = () => (
+  <Modal closeIcon>
+    <Modal.Description>New  employeed profile successfully created!</Modal.Description>
+  </Modal>
+)
 
  class Onboarding extends Component {
   constructor(props) {
