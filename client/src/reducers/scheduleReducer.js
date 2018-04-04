@@ -3,22 +3,33 @@ import { GET_SCHEDULES, GET_SCHEDULE, POST_SCHEDULE, EDIT_SCHEDULE, DELETE_SCHED
 const initialState = {
 	schedules: [],
 	employees: [],
-	schedule: []
+	schedule: [],
+	fetchedMonthsForHome: [],
+	fetchedMonthsForMaker: []
 }
 
 function scheduleReducer(state = initialState, action) {
 	switch (action.type) {
 		case GET_SCHEDULES: {
+			let schedules = [...state.schedules, ...action.payload.schedules]
+			let newMonth = [action.month, action.year].join(' ')
+			let fetchedMonthsForMaker = [...state.fetchedMonthsForMaker, newMonth]
 			return {
 				...state,
-				schedules: action.payload.schedules,
-				employees: action.payload.employees
+				schedules,
+				employees: action.payload.employees,
+				fetchedMonthsForMaker
 			}
 		}
 		case GET_SCHEDULE: {
+			let newMonth = [action.month, action.year].join(' ');
+			let payload = action.payload || []
+			let schedule = [...state.schedule, ...payload];
+			let fetchedMonthsForHome = [...state.fetchedMonthsForHome, newMonth]
 			return {
 				...state,
-				schedule: action.payload
+				schedule,
+				fetchedMonthsForHome
 			}
 		}
 		case EDIT_SCHEDULE: {

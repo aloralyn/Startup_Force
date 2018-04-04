@@ -35,7 +35,7 @@ scheduleRouter.get('/schedule/:year/:month/:id', (req, res) => {
 })
 
 scheduleRouter.get('/schedules/:year/:month/:id', (req, res) => {
-	db.query(`select e.first_name, e.id, s.start, s.finish from employees e right join schedules s on e.id=s.user_id where reports_to=${req.params.id};`, (err, data) => {
+	db.query(`select e.first_name, e.id, s.start, s.finish from employees e right join schedules s on e.id=s.user_id where reports_to=${req.params.id} and s.month='${req.params.month}' and s.year='${req.params.year}';`, (err, data) => {
 		res.send(data);
 	})
 })

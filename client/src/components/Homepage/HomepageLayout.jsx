@@ -22,67 +22,67 @@ class HomepageLayout extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      week: [],
-      fetchedMonths: []
+      week: []
     }
   }
-
-  componentWillMount() {
+  componentDidMount() {
     this.renderCalendar()
   }
 
   renderCalendar = pickedDay => {
   {/*Function to change week in the calendar and fetch schedules from DB*/}
-    pickedDay = pickedDay || new Date();
-  console.log("picked day: ",pickedDay)
+    pickedDay = pickedDay || moment().format();
     let week = this.getWeekByDay(pickedDay)
     let date = this.month_year(pickedDay)
-    if (this.state.fetchedMonths.includes(date[0]) ) {
+    if (this.props.fetchMonth.includes(date.join(' ')) ) {
+      console.log("FIRST RENDER includes: ", this.props, week)
       this.setState({ week, pickedDay })
     } else {
-      this.props.getSchedule(date[1], date[0], 1); // hard coded - NEED TO BE CHANGED
-      console.log('this is fetched months: ', this.state.fetchedMonths)
-      let newfetchedMonths = this.state.fetchedMonths.slice()
-      newfetchedMonths.push(date[0])
-      this.setState({ week, fetchedMonths: newfetchedMonths, pickedDay })
+      console.log("first RENDER NOT include: ", this.props)
+      this.props.getSchedule(date[1], date[0], this.props.user.id);
+      this.setState({ week, pickedDay })
     }
   }
 
-
   weekBack = () => {
-    let pickedDay = moment(this.state.pickedDay).subtract(7, 'day')._d;
+    let pickedDay = moment(this.state.pickedDay).subtract(7, 'day').format();
     this.renderCalendar(pickedDay)
   }
   weekForth = () => {
-    let pickedDay = moment(this.state.pickedDay).add(7, 'day')._d;
+    let pickedDay = moment(this.state.pickedDay).add(7, 'day').format();
     this.renderCalendar(pickedDay)
   }
+  
 
   month_year = day => {
-    let month = moment(day).format("MMM").toString();
-    let year = moment(day).format("YYYY").toString();
+    let month = moment(day).format("MMM");
+    let year = moment(day).format("YYYY");
     return [month, year]
   }
 
   getWeekByDay = d => {
   {/*Function to compute whole week by one day*/}
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
-    var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-    var weekNumber = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
-    let week = [];
-    let year = d.getUTCFullYear();
-    for (var i = 0; i < 7; i++) {
-      var day = new Date(year, 0, 1+ i +( (weekNumber-1)*7 ) )
-      week.push(moment(`${year}-${day.getMonth() + 1}-${day.getDate()}`).format("YYYY MMM DD"))
+  let weekNum = moment(d).isoWeeks();
+  let year = moment(d).get('year');
+  console.log("GET WEEK: ", weekNum)
+  let week = [];
+    for (let i = 0; i < 7; i++) {
+      let days = (weekNum - 1) * 7 + 1 + i;
+      let date = moment().set({'year': year, 'month': 0, 'date': days})
+      week.push(moment(date).format("YYYY MMM DD"))
     }
     return week
   }
 
   render() {
+    console.log("RENDER PROPS: ",this.props)
     const { week} = this.state;
+  {/*if (this.props.user.id && !this.state.rendered) {
+      this.renderCalendar();
+      this.setState({ rendered: true })
+    }*/}
     return (
-      this.props.users[0] ?
+      this.props.fetchMonth.length > 0 ?
       <div>
         <Segment style={{ padding: '8em 0em' }} vertical>
           <Grid container stackable verticalAlign='middle'>
@@ -109,40 +109,35 @@ class HomepageLayout extends Component {
     {/*****************************************************************
                                   Table VIEW >> WEEK
     *******************************************************************/}
-<Table celled selectable textAlign={'center'} verticalAlign={'middle'}>
-    <Table.Header>
-      <Table.Row>
-
-            {week.map((d, i) => (
-                <Table.HeaderCell width={2} key={i}>{`${d.slice(5)}`}</Table.HeaderCell>
-            ))}
+  <Table celled selectable textAlign={'center'} verticalAlign={'middle'}>
+      <Table.Header>
+        <Table.Row>
+          {week.map((d, i) => { let color = moment().format("YYYY MMM DD") === moment(d).format("YYYY MMM DD") ? '#EF9A9A' : null;
+              return <Table.HeaderCell style={{backgroundColor: color}} width={2} key={i}>{`${moment(d, "YYYY MMM DD").format("MMM DD dddd")}`}</Table.HeaderCell>
+          })}
         </Table.Row>
-    </Table.Header>
-    <Table.Body>
-
-        {
-          <Table.Row style={{height: '100px'}}>
-
-
-              {week.map((day, indOfDate) =>
-              (<Table.Cell>
-                  <div key={indOfDate}><Empl
-                    day={day}
-                    first_name={this.props.users[0].first_name}
-                    schedule={this.props.schedule}
-                    /></div>
-                </Table.Cell>)
-
-              )}
-          </Table.Row>
+      </Table.Header>
+      <Table.Body>
+          {
+            <Table.Row style={{height: '100px'}}>
+                {week.map((day, indOfDate) =>
+                (<Table.Cell key={indOfDate}>
+                    <div key={indOfDate}><Empl
+                      key={indOfDate}
+                      day={day}
+                      first_name={this.props.user.first_name}
+                      schedule={this.props.schedule}
+                      /></div>
+                  </Table.Cell>)
+                )}
+            </Table.Row>
           }
-    </Table.Body>
-    </Table>
-    </Grid.Column>
-            </Grid.Row>
-
-          </Grid>
-        </Segment>
+      </Table.Body>
+  </Table>
+</Grid.Column>
+</Grid.Row>
+</Grid>
+</Segment>
         </div> : null
     )
   }
@@ -153,12 +148,15 @@ class HomepageLayout extends Component {
 const Empl = ({ day, first_name, schedule}) => {
   var needed;
   var ind;
+if (schedule) {
   schedule.forEach((one, i) => {
     if (one.first_name === first_name && moment(day).format("YYYY MMM DD") === moment(one.start).format("YYYY MMM DD")) {
       needed = one;
       ind = i;
     }
   })
+}
+
     return (
       <div>
       {
@@ -183,7 +181,8 @@ HomepageLayout.propTypes = {
 const mapStateToProps = state => ({
   users: state.users.users,
   user: state.users.user,
-  schedule: state.scheduleReducer.schedule
+  schedule: state.scheduleReducer.schedule,
+  fetchMonth: state.scheduleReducer.fetchedMonthsForHome,
 });
 
 export default withRouter(connect(mapStateToProps, { fetchUsers, getSchedule })(HomepageLayout));
