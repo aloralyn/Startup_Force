@@ -16,6 +16,8 @@ import Messages from './Messages/Messages.jsx';
 import { logout } from '../actions/dashboardActions.js';
 import Contracts from './Contracts/Contracts.jsx';
 import { getNotifications } from '../actions/messageActions.js';
+import NewContracts from './Contracts/NewContractForm.jsx';
+import ExistingContracts from './Contracts/ExistingContract.jsx';
 
 import {
   Container,
@@ -25,6 +27,7 @@ import {
   Input,
   Image,
   List,
+  Dropdown,
   Menu,
   Responsive,
   Segment,
@@ -62,6 +65,7 @@ class DesktopContainer extends Component {
 
   render() {
     const { fixed } = this.state;
+    const { user: { id, company_id }, messageUserId } = this.props;
     return (
       <Responsive {...Responsive.onlyComputer}>
         <div>
@@ -69,69 +73,69 @@ class DesktopContainer extends Component {
             <Image src='http://www.hipsterpig.com/wp-content/uploads/2014/05/fc550x550orange17.jpg' style={{height: '100px', width: '100px'}}/>
           </Container> */}
           <Router>
-          <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
-            <Segment inverted textAlign='center'  vertical>
-
-              <Menu
-                fixed={fixed ? 'top' : null}
-                inverted={!fixed}
-                pointing={!fixed}
-                secondary={!fixed}
-                size='small'
-              >
-
-              { this.props.user.is_manager ?
-              <Container>
-                <Menu.Item name="home" active={this.state.activeItem === 'home'} onClick={this.handleTabClick}><Link to="/">Home</Link></Menu.Item>
-                <Menu.Item name="info" active={this.state.activeItem === 'info'} onClick={this.handleTabClick}><Link to="/my_info">My Info</Link></Menu.Item>
-                <Menu.Item name="schedules" active={this.state.activeItem === 'schedules'} onClick={this.handleTabClick}><Link to="/schedules">Schedules</Link></Menu.Item>
-                <Menu.Item name="onboarding" active={this.state.activeItem === 'onboarding'} onClick={this.handleTabClick}><Link to="/onboarding">Onboarding</Link></Menu.Item>
-                <Menu.Item name="reports" active={this.state.activeItem === 'reports'} onClick={this.handleTabClick}><Link to="/reports">Reports</Link></Menu.Item>
-                <Menu.Item name="messages" active={this.state.activeItem === 'messages'} onClick={this.handleTabClick}><Link to="/messages">Messages</Link></Menu.Item>
-                <Menu.Item name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>
-                  <Menu.Menu position='right'>
-                    <Menu.Item>
-                      <Menu.Item name='logout' onClick={() => {
-                        this.props.logout(this.props.user.id, this.props.messageUserId, this.props.user.company_id)
-                      }}  />
-                    </Menu.Item>
-                  </Menu.Menu>
-                </Container>
-                :
-
-                <Container>
-                  <Menu.Item name="home" active={this.state.activeItem === 'home'} onClick={this.handleTabClick}><Link to="/">Home</Link></Menu.Item>
-                  <Menu.Item name="info" active={this.state.activeItem === 'info'} onClick={this.handleTabClick}><Link to="/my_info">My Info</Link></Menu.Item>
-                  <Menu.Item name="reports" active={this.state.activeItem === 'reports'} onClick={this.handleTabClick}><Link to="/reports">Reports</Link></Menu.Item>
-                  <Menu.Item name="messages" active={this.state.activeItem === 'messages'} onClick={this.handleTabClick}><Link to="/messages">Messages</Link></Menu.Item>
-                  <Menu.Item name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>
-                <Menu.Menu position='right'>
-                  <Menu.Item>
-                    <Menu.Item name='logout' onClick={() => this.props.logout(this.props.user.id, this.props.messageUserId, this.props.user.company_id)}  />
-                  </Menu.Item>
-                </Menu.Menu>
-                </Container>
-              }
-
-              </Menu>
-
-            </Segment>
-           <Switch>
-              <Route exact path="/" component={HomepageLayout} />
-              <Route path="/my_info" component={MyInfo} />
-              <Route path="/schedules" component={Schedules} />
-              <Route path="/onboarding" component={Onboarding} />
-              <Route path="/reports" component={Reports} />
-              <Route path="/messages" component={Messages} />
-              <Route path="/contracts" component={Contracts} />
-            </Switch>
-
-          </Visibility>
-
+            <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
+              <Segment inverted textAlign='center'  vertical>
+                <Menu
+                  fixed={fixed ? 'top' : null}
+                  inverted={!fixed}
+                  pointing={!fixed}
+                  secondary={!fixed}
+                  size="small"
+                >
+                  {
+                    this.props.user.is_manager
+                    ?
+                      <Container>
+                        <Menu.Item><Link to="/">Home</Link></Menu.Item>
+                        <Menu.Item><Link to="/my_info">My Info</Link></Menu.Item>
+                        <Menu.Item><Link to="/schedules">Schedules</Link></Menu.Item>
+                        <Menu.Item><Link to="/onboarding">Onboarding</Link></Menu.Item>
+                        <Menu.Item><Link to="/reports">Reports</Link></Menu.Item>
+                        <Menu.Item><Link to="/messages">Messages</Link></Menu.Item>
+                        <Menu.Item><Link to="/contracts">Contracts</Link></Menu.Item>
+                        <Menu.Menu position="right">
+                          <Menu.Item>
+                            <Menu.Item
+                              name="logout"
+                              onClick={() => {
+                                this.props.logout(id, messageUserId, company_id);
+                              }}
+                            />
+                          </Menu.Item>
+                        </Menu.Menu>
+                      </Container>
+                    :
+                      <Container>
+                        <Menu.Item><Link to="/">Home</Link></Menu.Item>
+                        <Menu.Item><Link to="/my_info">My Info</Link></Menu.Item>
+                        <Menu.Item><Link to="/reports">Reports</Link></Menu.Item>
+                        <Menu.Item><Link to="/messages">Messages</Link></Menu.Item>
+                        <Menu.Item><Link to="/contracts">Contracts</Link></Menu.Item>
+                        <Menu.Menu position="right">
+                          <Menu.Item>
+                            <Menu.Item name="logout" onClick={() => this.props.logout()} />
+                          </Menu.Item>
+                        </Menu.Menu>
+                      </Container>
+                    }
+                </Menu>
+              </Segment>
+              <Switch>
+                <Route exact path="/" component={HomepageLayout} />
+                <Route path="/my_info" component={MyInfo} />
+                <Route path="/schedules" component={Schedules} />
+                <Route path="/onboarding" component={Onboarding} />
+                <Route path="/reports" component={Reports} />
+                <Route path="/messages" component={Messages} />
+                <Route path="/contracts" component={Contracts} />
+                <Route path="/contracts/existing" component={ExistingContracts} />
+                <Route path="/contracts/new" component={NewContracts} />
+              </Switch>
+            </Visibility>
           </Router>
-          </div>
+        </div>
       </Responsive>
-    )
+    );
   }
 }
 

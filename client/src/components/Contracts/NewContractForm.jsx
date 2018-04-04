@@ -95,101 +95,116 @@ export default class NewContractForm extends React.Component {
             <p>Successfully Saved Contract!</p>
           </Segment>
         </TransitionablePortal>
-        <Grid.Column width={8}>
-          <Header size="large">Add a Contract</Header>
-          <Form>
-            <Form.Group widths="equal">
-              <Form.Field
-                value={this.state.clientName}
-                control={Input}
-                label="Client Name"
-                name="clientName"
-                placeholder="Client Name"
-                onChange={this.handleChange}
-              />
-              <Form.Field
-                value={this.state.contractName}
-                control={Input}
-                label="Contract Name"
-                name="contractName"
-                placeholder="Contract Name"
-                onChange={this.handleChange}
-              />
-              <Form.Field
-                value={this.state.contractAmount}
-                type="number"
-                min="0.01"
-                step="0.01"
-                control={Input}
-                label="Contract Amount"
-                name="contractAmount"
-                placeholder="Contract Amount"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Form.Group widths="equal">
-              <Form.Dropdown
-                fluid
-                selection
-                search
-                label="Employee In Charge"
-                name="awardedToId"
-                placeholder="Employees"
-                options={this.props.employeeDropdown}
-                onChange={this.handleChange}
-              />
-              <Form.Field>
-                <label>Contract Start Date</label>
-                <DatePicker
-                  selected={this.state.contractStartDate}
-                  onChange={this.handleStartDateChange}
-                  placeholderText="Start Date"
-                />
-              </Form.Field>
-              <Form.Field>
-                <label>Contract End Date</label>
-                <DatePicker
-                  selected={this.state.contractEndDate}
-                  onChange={this.handleEndDateChange}
-                  placeholderText="End Date"
-                />
-              </Form.Field>
-            </Form.Group>
-            <Form.Group widths="equal">
-              <Form.Field
-                id="form-contract-new-description"
-                value={this.state.contractDescription}
-                control={TextArea}
-                label="Contract Description"
-                name="contractDescription"
-                placeholder="Enter Description of Contract"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Form.Group widths="equal">
-              <Form.Field
-                control={Button}
-                positive
-                fluid
-                type="submit"
-                onClick={this.handleSubmit}
-              >
-                Save Contract
-              </Form.Field>
-            </Form.Group>
-            <Form.Group widths="equal">
-              <Form.Field
-                control={Button}
+        <Grid.Column width={9}>
+          <Header size="large">New Contract Form</Header>
+          <Segment>
+            <Form>
+              <Form.Group widths="equal">
+                <Form.Field
+                  value={this.state.clientName}
+                  control={Input}
+                  label="Client Name"
+                  name="clientName"
+                  placeholder="Client Name"
+                  onChange={this.handleChange}
+                  />
+                <Form.Field
+                  value={this.state.contractName}
+                  control={Input}
+                  label="Contract Name"
+                  name="contractName"
+                  placeholder="Contract Name"
+                  onChange={this.handleChange}
+                  />
+                <Form.Field
+                  value={this.state.contractAmount}
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  control={Input}
+                  label="Contract Amount"
+                  name="contractAmount"
+                  placeholder="Contract Amount"
+                  onChange={this.handleChange}
+                  />
+              </Form.Group>
+              <Form.Group widths="equal">
+                <Form.Dropdown
+                  fluid
+                  selection
+                  search
+                  label="Employee In Charge"
+                  name="awardedToId"
+                  placeholder="Employees"
+                  options={this.props.employeeDropdown}
+                  onChange={this.handleChange}
+                  />
+                <Form.Field>
+                  <label>Contract Start Date</label>
+                  <DatePicker
+                    selected={this.state.contractStartDate}
+                    onChange={this.handleStartDateChange}
+                    placeholderText="Start Date"
+                    />
+                </Form.Field>
+                <Form.Field>
+                  <label>Contract End Date</label>
+                  <DatePicker
+                    selected={this.state.contractEndDate}
+                    onChange={this.handleEndDateChange}
+                    placeholderText="End Date"
+                    />
+                </Form.Field>
+              </Form.Group>
+              <Form.Group widths="equal">
+                <Form.Field
+                  id="form-contract-new-description"
+                  value={this.state.contractDescription}
+                  control={TextArea}
+                  label="Contract Description"
+                  name="contractDescription"
+                  placeholder="Enter Description of Contract"
+                  onChange={this.handleChange}
+                  />
+              </Form.Group>
+              <Form.Group widths="equal">
+                <Form.Field
+                  control={Button}
+                  positive
+                  fluid
+                  type="submit"
+                  onClick={this.handleSubmit}
+                  >
+                  Save Contract
+                </Form.Field>
+              </Form.Group>
+            </Form>
+          </Segment>
+          <Form.Group widths="equal">
+            <Form.Field>
+              <Button
+                icon
+                labelPosition="left"
                 fluid
                 type="toggleview"
                 onClick={this.props.toggleView}
               >
+                <Icon name="left arrow" />
                 Search Existing Contracts
-              </Form.Field>
-            </Form.Group>
-          </Form>
+              </Button>
+            </Form.Field>
+          </Form.Group>
         </Grid.Column>
       </div>
     );
   }
 }
+
+// <Form.Field
+//   control={Button}
+//   fluid
+//   type="toggleview"
+//   onClick={this.props.toggleView}
+// >
+//   Search Existing Contracts
+// </Form.Field>
