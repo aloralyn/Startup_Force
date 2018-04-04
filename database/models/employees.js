@@ -35,16 +35,14 @@ exports.createEmployeeProfile = (input) => {
 };
 
 exports.uploadPhoto = (input) => {
-  let queryStr = `UPDATE employees SET profilePicId='${input.profilePicId}' WHERE id=${input.id};`;;
-  return db.query(queryStr, (err, results) => {
-    if (err)
-      console.log('There was updating the profile pic for this employee', err);
-  });
+  let queryStr = `UPDATE employees SET profilePicId='${input.profilePicId}' WHERE id=${input.id} RETURNING *;`;;
+  return db.query(queryStr)
+    .then(res => res.rows[0])
+      .catch(err => console.log(err.stack))
 }
 
 exports.retrieveManagers = (input) => {
   let queryStr = `SELECT * FROM employees WHERE company_id = ${input} AND is_manager = true;`;
-
   return db.query(queryStr)
            .then(res =>
             res.rows
