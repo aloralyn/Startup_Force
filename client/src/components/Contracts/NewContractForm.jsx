@@ -107,7 +107,7 @@ export default class NewContractForm extends React.Component {
                   name="clientName"
                   placeholder="Client Name"
                   onChange={this.handleChange}
-                  />
+                />
                 <Form.Field
                   value={this.state.contractName}
                   control={Input}
@@ -115,7 +115,7 @@ export default class NewContractForm extends React.Component {
                   name="contractName"
                   placeholder="Contract Name"
                   onChange={this.handleChange}
-                  />
+                />
                 <Form.Field
                   value={this.state.contractAmount}
                   type="number"
@@ -126,7 +126,7 @@ export default class NewContractForm extends React.Component {
                   name="contractAmount"
                   placeholder="Contract Amount"
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Dropdown
@@ -138,14 +138,14 @@ export default class NewContractForm extends React.Component {
                   placeholder="Employees"
                   options={this.props.employeeDropdown}
                   onChange={this.handleChange}
-                  />
+                />
                 <Form.Field>
                   <label>Contract Start Date</label>
                   <DatePicker
                     selected={this.state.contractStartDate}
                     onChange={this.handleStartDateChange}
                     placeholderText="Start Date"
-                    />
+                  />
                 </Form.Field>
                 <Form.Field>
                   <label>Contract End Date</label>
@@ -153,7 +153,7 @@ export default class NewContractForm extends React.Component {
                     selected={this.state.contractEndDate}
                     onChange={this.handleEndDateChange}
                     placeholderText="End Date"
-                    />
+                  />
                 </Form.Field>
               </Form.Group>
               <Form.Group widths="equal">
@@ -165,7 +165,7 @@ export default class NewContractForm extends React.Component {
                   name="contractDescription"
                   placeholder="Enter Description of Contract"
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Field
@@ -174,7 +174,7 @@ export default class NewContractForm extends React.Component {
                   fluid
                   type="submit"
                   onClick={this.handleSubmit}
-                  >
+                >
                   Save Contract
                 </Form.Field>
               </Form.Group>
@@ -199,12 +199,3 @@ export default class NewContractForm extends React.Component {
     );
   }
 }
-
-// <Form.Field
-//   control={Button}
-//   fluid
-//   type="toggleview"
-//   onClick={this.props.toggleView}
-// >
-//   Search Existing Contracts
-// </Form.Field>

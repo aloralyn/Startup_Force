@@ -15,7 +15,6 @@ export default class Metrics extends React.Component {
       loaded: false,
     };
     this.getAllContracts = this.getAllContracts.bind(this);
-    this.testingFunction = this.testingFunction.bind(this);
     this.setChartColumnData = this.setChartColumnData.bind(this);
     this.setChartXData = this.setChartXData.bind(this);
     this.setPieChartData = this.setPieChartData.bind(this);
@@ -24,7 +23,6 @@ export default class Metrics extends React.Component {
   }
 
   componentWillMount() {
-    console.log('running');
     this.getAllContracts();
   }
 
@@ -76,14 +74,6 @@ export default class Metrics extends React.Component {
 
   convertDollarsToNumber(dollars) {
     return Number(dollars.replace(/[^0-9\.-]+/g,""));
-  }
-
-  testingFunction() {
-    // console.log('current state: ', this.state);
-    // console.log('current props: ', this.props);
-    // console.log('output of setChartXDate(): ', this.setChartXData());
-    // console.log(this.state.contractData.sort((a, b) => new Date(a.contract_end_date) - new Date(b.contract_end_date)));
-    // console.log('this is the contractData: ', this.state.contractData);
   }
 
   render() {
@@ -145,10 +135,9 @@ export default class Metrics extends React.Component {
 
     return (
       <div>
-        <div id="barchart"></div>
-        <div id="piechart"></div>
-        <div id="gaugechart"></div>
-        <Button onClick={this.testingFunction}>TestingButton</Button>
+        <div id="barchart" />
+        <div id="piechart" />
+        <div id="gaugechart" />
       </div>
     );
   }
