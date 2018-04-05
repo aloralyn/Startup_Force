@@ -19,7 +19,7 @@ exports.retrieveEmployeeData = (id, employeeId) => {
 };
 
 exports.createFirstEmployee = (input) => {
-  let queryStr = `INSERT INTO employees (company_id, first_name, last_name, email, pw) VALUES (${input.company_id}, '${input.first_name}', '${input.last_name}', '${input.email}', '${input.pw}');`;
+  let queryStr = `INSERT INTO employees (company_id, first_name, last_name, email, pw, main_admin) VALUES (${input.company_id}, '${input.first_name}', '${input.last_name}', '${input.email}', '${input.pw}', true);`;
   return db.query(queryStr, (err, results) => {
     if (err)
       console.log('There was an error creating an employee', err);

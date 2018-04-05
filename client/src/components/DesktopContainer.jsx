@@ -101,14 +101,14 @@ class DesktopContainer extends Component {
                       ''
                     }
                   </Link></Menu.Item>
-                <Menu.Item name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>
-                  <Menu.Menu position='right'>
-                    <Menu.Item>
-                      <Menu.Item name='logout' onClick={() => {
-                        this.props.logout(this.props.user.id, this.props.messageUserId, this.props.user.company_id)
-                      }}  />
-                    </Menu.Item>
-                  </Menu.Menu>
+                <Menu.Item name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>           
+                <Menu.Menu position='right'>
+                  <Menu.Item>
+                    <Menu.Item name='logout' onClick={() => {
+                      this.props.logout(this.props.user.id, this.props.messageUserId, this.props.user.company_id)
+                    }}  />
+                  </Menu.Item>
+                </Menu.Menu>
                 </Container>
               </Menu>
             </Segment>
@@ -145,11 +145,11 @@ class DesktopContainer extends Component {
                 <Menu.Item name="reports" active={this.state.activeItem === 'reports'} onClick={this.handleTabClick}><Link to="/reports">Reports</Link></Menu.Item>
                 <Menu.Item name="messages" active={this.state.activeItem === 'messages'} onClick={this.handleTabClick}><Link to="/messages">Messages</Link></Menu.Item>
                 <Menu.Item name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>
-              <Menu.Menu position='right'>
-                <Menu.Item>
-                  <Menu.Item name='logout' onClick={() => this.props.logout(this.props.user.id, this.props.messageUserId, this.props.user.company_id)}  />
-                </Menu.Item>
-              </Menu.Menu>
+                <Menu.Menu position='right'>
+                  <Menu.Item>
+                    <Menu.Item name='logout' onClick={() => this.props.logout(this.props.user.id, this.props.messageUserId, this.props.user.company_id)}  />
+                  </Menu.Item>
+                </Menu.Menu>
               </Container>
           
               </Menu>

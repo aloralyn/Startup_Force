@@ -51,7 +51,7 @@ import {
       <Container style={{ padding: '8em 0em' }}>
         <Grid container stackable>
           <Grid.Row>
-             <Grid.Column width={6}>
+             <Grid.Column width={5}>
                <EditableProfilePic />
              </Grid.Column>
 
@@ -185,7 +185,7 @@ import {
                   </Table.Header>
                   <Table.Body>
                     <Table.Row>
-                      <Table.Cell>{this.props.user.street_1}t</Table.Cell>
+                      <Table.Cell>{this.props.user.street_1}</Table.Cell>
                       <Table.Cell>{this.props.user.street_2}</Table.Cell>
                       <Table.Cell>{this.props.user.zip_code}</Table.Cell>
                       <Table.Cell>{this.props.user.city}</Table.Cell>
@@ -219,7 +219,7 @@ import {
                   <Table.Body>
                     <Table.Row>
                       <Table.Cell>{this.props.user.email}</Table.Cell>
-                      <Table.Cell>*********</Table.Cell>
+                      <Table.Cell>*************</Table.Cell>
                     </Table.Row>
                   </Table.Body>
                 </Table>
