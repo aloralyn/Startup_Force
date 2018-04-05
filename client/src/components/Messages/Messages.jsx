@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { messageUser, getMessages, clearNotification, eraseNotification, countNotifications } from '../../actions/messageActions.js';
 import MessageForm from './MessageForm.jsx';
 import {
+  //Image,
   Label,
   Button,
   Container,
@@ -11,13 +12,13 @@ import {
   Header,
   Icon,
   Input,
-  Image,
   List,
   Menu,
   Responsive,
   Segment,
   Visibility,
 } from 'semantic-ui-react';
+//import { Image, Transformation } from 'cloudinary-react';
 
 export const nameFromId = (id, users) => {
   for (var i = 0; i < users.length; i++) {
@@ -38,7 +39,7 @@ const timeFromDate = date => {
   	hours = 12;
   }
   let minutes = date.slice(18, 21);
-  return (hours + minutes + period);
+  return (hours + minutes + ' ' + period);
 };
 
 class Messages extends Component {
@@ -52,32 +53,48 @@ class Messages extends Component {
     }
   }
 
+  componentDidUpdate() {
+  var messageDiv = document.getElementById('messages');
+    if (messageDiv) {
+      messageDiv.scrollTop = messageDiv.scrollHeight;
+    }
+  }
+
   render() {
     if (this.props.messageUserId) {
       return (<Container style={{ padding: '8em 0em' }}>
         <Grid container stackable divided>
           <Grid.Row>
             <Grid.Column width={6}>
-              <Header as='h2'>Employees</Header>
-              <List as='ul'>
+              <Header as='h2'>{this.props.company.company_name} Employees</Header>
+              <List style={{height: '400px'}}>
                 {this.props.users.map((user) => {
                   var notifications;
                   if (this.props.notifications && this.props.notifications[user.id]) {
                     notifications = countNotifications(this.props.notifications[user.id]);
                   } else { notifications = ''; }
                   if (user.id !== this.props.userId) {
+                    // consider inserting photo for each user
+                    // console.log('photo info', user.profilepicid, this.props.user.profilepicid)
                     return (
-                      <List.Item as='li' key={user.id}>
-                        <Button 
-                        value={user.id.toString()}
-                        onClick={(e) => {
-                          let userToMessage = parseInt(e.target.value, 10)
-                          this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
-                        }}
-                        >{user.first_name + ' ' + user.last_name}
+                      <List.Item key={user.id}>
+                        <Button toggle
+                          active={user.id === this.props.messageUserId}
+                          value={user.id.toString()}
+                          onClick={(e) => {
+                            let userToMessage = parseInt(e.target.value, 10)
+                            this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
+                          }}
+                          >
+                          {/*<Image src={'https://res.cloudinary.com/dblinea1z/image/upload/w_300,h_200,c_crop/' + user.profilepicid + '.jpg'} />*/}
+                          {/*<Image cloudName='dblinea1z' publicId='enmajsfckpzcby8oohq7'>
+                            <Transformation width="30" height="30" crop="scale" />
+                          </Image>*/}
+                          {' ' + user.first_name + ' ' + user.last_name}
                         </Button>
                         {notifications ? 
                           <Label
+                            circular={true}
                             color={user.id === this.props.user.reports_to ? 'red' : 'blue'}>
                             {notifications}
                           </Label>
@@ -90,17 +107,24 @@ class Messages extends Component {
               </List>
             </Grid.Column>
             <Grid.Column width={8}>
-              <Header as='h2'>{nameFromId(this.props.userId, this.props.users)}'s messages with {nameFromId(this.props.messageUserId, this.props.users)}</Header>
-              <List as='ul'>
-                {this.props.messages.map((message, index) => {
+              <Header as='h2'>Direct Messages with {nameFromId(this.props.messageUserId, this.props.users)}</Header>
+              <div id='messages' style={{height: '400px', overflowY: 'scroll'}}>
+              <List divided relaxed>
+                {
+                  this.props.messages.map((message, index) => {
                   if (message.name) {
-                    return (<List.Item as='li' key={index}>{message.name + ', ' + timeFromDate(message.time)}<br />{message.message}</List.Item>)
+                    // to insert divider for day: define 'lastDay' in state, render a day divider if message date is new, reset state
+                    return (<List.Item key={index}>
+                      <b>{message.name + ' '}</b>
+                      <em style={{fontSize: '10px'}}>{' ' + timeFromDate(message.time) + ', ' + message.time.slice(0, 10)}</em>
+                      <br />{message.message}</List.Item>)
                   } else {
-                    return (<List.Item as='li' key={index}>{message}</List.Item>)
+                    return (<List.Item key={index}>{message}</List.Item>)
                   }
                 })}
               </List>
-              <Grid.Row>{/*trying to set in row below*/}
+              </div>
+              <Grid.Row>
                 <MessageForm />
               </Grid.Row>
             </Grid.Column>
@@ -112,8 +136,8 @@ class Messages extends Component {
         <Grid container stackable>
           <Grid.Row>
             <Grid.Column width={6}>
-              <Header as='h2'>Employees</Header>
-              <List as='ul'>
+              <Header as='h2'>{this.props.company.company_name} Employees</Header>
+              <List style={{height: '400px'}}>
                 {this.props.users.map((user) => {
                   var notifications;
                   if (this.props.notifications && this.props.notifications[user.id]) {
@@ -121,17 +145,19 @@ class Messages extends Component {
                   } else { notifications = ''; } 
                   if (user.id !== this.props.userId) {
                     return (
-                      <List.Item as='li' key={user.id}>
+                      <List.Item key={user.id}>
                         <Button 
-                        value={user.id.toString()}
-                        onClick={(e) => {
-                          let userToMessage = parseInt(e.target.value, 10)
-                          this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
-                        }}
-                        >{user.first_name + ' ' + user.last_name}
+                          value={user.id.toString()}
+                          onClick={(e) => {
+                            let userToMessage = parseInt(e.target.value, 10)
+                            this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
+                          }}
+                          >
+                          {' ' + user.first_name + ' ' + user.last_name}
                         </Button>
                         {notifications ? 
                           <Label
+                            circular={true}
                             color={user.id === this.props.user.reports_to ? 'red' : 'blue'}>
                             {notifications}
                           </Label>
@@ -143,6 +169,24 @@ class Messages extends Component {
                 })}
               </List>
             </Grid.Column>
+            <Grid.Column width={8}>
+            <div>
+              {this.props.notificationCount ?
+              <Icon.Group style={{display: 'block', margin: 'auto'}} size='massive'>
+                <Icon style={{display: 'block', margin: 'auto'}} size='huge' loading name='sun' color='green' />
+                <Icon style={{display: 'block', margin: 'auto'}} size='big' name='mail outline' />   
+              </Icon.Group>
+              :
+              <Icon.Group style={{display: 'block', margin: 'auto'}} size='massive'>
+                <Icon style={{display: 'block', margin: 'auto'}} size='huge' name='dont' color='red' />
+                <Icon style={{display: 'block', margin: 'auto'}} size='big' name='mail outline' color='black' />   
+              </Icon.Group>
+              }
+              <h1 style={{textAlign: 'center'}}>You have {this.props.notificationCount} {this.props.notificationCount === 1 ? 'Message' : 'Messages'}
+              {this.props.notificationCount === 0 ? ' :(' : '!'}
+              </h1>
+            </div>
+            </Grid.Column>
           </Grid.Row>
         </Grid>
       </Container>) 
@@ -152,6 +196,7 @@ class Messages extends Component {
 
 
 const mapStateToProps = state => ({
+  company: state.users.company,
   users: state.users.users,
   user: state.users.user,
   username: state.users.user.username,
@@ -159,7 +204,8 @@ const mapStateToProps = state => ({
   messages: state.messages.messages,
   messageUserId: state.messages.messageUserId,
   company_id: state.users.user.company_id,
-  notifications: state.messages.notifications
+  notifications: state.messages.notifications,
+  notificationCount: state.messages.notificationCount
 });
 
 export default withRouter(connect(mapStateToProps, { messageUser, getMessages, clearNotification, eraseNotification })(Messages));
