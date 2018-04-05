@@ -60,15 +60,7 @@ class Messages extends Component {
     }
   }
 
-  sort() {
-    // sort users alphabetically by first name
-    // let sorted = this.props.users.sort((a, b) => (a.first_name - b.first_name));
-    let sorted = this.props.users.sort();
-    console.log ('sorted users', sorted, this.props.users)
-  }
-
   render() {
-    this.sort();
     if (this.props.messageUserId) {
       return (<Container style={{ padding: '8em 0em' }}>
         <Grid container stackable divided>
@@ -82,6 +74,7 @@ class Messages extends Component {
                     notifications = countNotifications(this.props.notifications[user.id]);
                   } else { notifications = ''; }
                   if (user.id !== this.props.userId) {
+                    // consider inserting photo for each user
                     // console.log('photo info', user.profilepicid, this.props.user.profilepicid)
                     return (
                       <List.Item key={user.id}>
@@ -117,11 +110,13 @@ class Messages extends Component {
               <Header as='h2'>Direct Messages with {nameFromId(this.props.messageUserId, this.props.users)}</Header>
               <div id='messages' style={{height: '400px', overflowY: 'scroll'}}>
               <List divided relaxed>
-                {this.props.messages.map((message, index) => {
+                {
+                  this.props.messages.map((message, index) => {
                   if (message.name) {
+                    // to insert divider for day: define 'lastDay' in state, render a day divider if message date is new, reset state
                     return (<List.Item key={index}>
                       <b>{message.name + ' '}</b>
-                      <em style={{fontSize: '10px'}}>{' ' + timeFromDate(message.time)}</em>
+                      <em style={{fontSize: '10px'}}>{' ' + timeFromDate(message.time) + ', ' + message.time.slice(0, 10)}</em>
                       <br />{message.message}</List.Item>)
                   } else {
                     return (<List.Item key={index}>{message}</List.Item>)
@@ -176,9 +171,20 @@ class Messages extends Component {
             </Grid.Column>
             <Grid.Column width={8}>
             <div>
-              <Icon style={{display: 'block', margin: 'auto'}} name='mail outline' size='massive' />
-              <br />
-              <h1 style={{textAlign: 'center'}}>You have {this.props.notificationCount} {this.props.notificationCount === 1 ? 'Message' : 'Messages'}!</h1>
+              {this.props.notificationCount ?
+              <Icon.Group style={{display: 'block', margin: 'auto'}} size='massive'>
+                <Icon style={{display: 'block', margin: 'auto'}} size='huge' loading name='sun' color='green' />
+                <Icon style={{display: 'block', margin: 'auto'}} size='big' name='mail outline' />   
+              </Icon.Group>
+              :
+              <Icon.Group style={{display: 'block', margin: 'auto'}} size='massive'>
+                <Icon style={{display: 'block', margin: 'auto'}} size='huge' name='dont' color='red' />
+                <Icon style={{display: 'block', margin: 'auto'}} size='big' name='mail outline' color='black' />   
+              </Icon.Group>
+              }
+              <h1 style={{textAlign: 'center'}}>You have {this.props.notificationCount} {this.props.notificationCount === 1 ? 'Message' : 'Messages'}
+              {this.props.notificationCount === 0 ? ' :(' : '!'}
+              </h1>
             </div>
             </Grid.Column>
           </Grid.Row>
