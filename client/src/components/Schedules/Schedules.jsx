@@ -14,7 +14,7 @@ import * as Actions from '../../actions/scheduleActions';
 import { fetchUsers } from '../../actions/dashboardActions.js';
 
 
-import { Header, Form, Segment, Table, Icon, Button, Modal, Accordion, TransitionablePortal } from 'semantic-ui-react'
+import { Container, Header, Form, Segment, Table, Icon, Button, Menu, Modal, Accordion, TransitionablePortal } from 'semantic-ui-react'
 
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import TimePicker from 'rc-time-picker';
@@ -169,7 +169,7 @@ class Schedules extends Component {
 		if (confirm) { setTimeout(() => { this.setState({confirm: false})}, 1000)} 
 console.log("ACTIONS: ", this.props)
 	return (
-		<div style={{margin: '10px'}}>
+    <Container style={{ padding: '8em 0em'}}>
 
 		{/*****************************************************************
 										Modal-Popup for EDIT/POST schedule
@@ -254,55 +254,65 @@ console.log("ACTIONS: ", this.props)
       {/*****************************************************************
 																	Calendar
 		*******************************************************************/}
-		<Form>
-		<Button onClick={()=>this.weekBack()} icon="caret left"/>
-		<DayPickerInput
-			style={{height: '100px'}}
-			placeholder="          Calendar"
-			fixedWeeks
-			firstDayOfWeek={1}
-      onDayChange={day => this.renderCalendar(day)}
-    />
-		<Button onClick={()=>this.weekForth()} icon="caret right"/>
-		</Form>
+		
+        <Form width={2}>
+        <Form.Group>
+        <Form.Field control={Button} style={{ padding: '0.5em 0.5em'}} onClick={()=>this.weekBack()} icon="caret left"/>
+        
+        <Form.Field>
+        <DayPickerInput
+          style={{padding: '0.5em 0.5em'}}
+          placeholder="           Calendar"
+          fixedWeeks
+          firstDayOfWeek={1}
+          onDayChange={day => this.renderCalendar(day)}
+        />
+        </Form.Field>
+        
+        <Form.Field control={Button} style={{ padding: '0.5em 0.5em'}} onClick={()=>this.weekForth()} icon="caret right"/>
+        </Form.Group>
+        </Form>
+     
     {/*****************************************************************
 																		Table
 		*******************************************************************/}
-		<Button onClick={()=>this.setState({email:true})} content="Send Emails"/>
-<Table celled selectable textAlign={'center'} verticalAlign={'middle'}>
-  <Table.Header>
-    <Table.Row>
-				<Table.HeaderCell width={2}>Employees</Table.HeaderCell>
-				{week.map((d, i) => { let color = moment().format("YYYY MMM DD") === moment(d).format("YYYY MMM DD") ? '#EF9A9A' : null;
-					return <Table.HeaderCell 
-					style={{'backgroundColor': color}} 
-					width={1} key={i}>{moment(d).format('YYYY MMM DD ddd')}</Table.HeaderCell>})}
-		</Table.Row>
-  </Table.Header>
-	<Table.Body>
-			{this.props.employees.map((empl, indOfEmpl) => (
-				<Table.Row key={indOfEmpl} style={{height: '90px'}}>
-					<Table.Cell>{empl.first_name}</Table.Cell>
-						{week.map((day, indOfDate) => (
-							<Table.Cell key={indOfDate}>
-							<div>
-								<OneEmpl 
-								key={indOfEmpl*indOfDate} 
-								schedules={this.props.schedules} 
-								showModal={this.showModal} 
-								day={day} 
-								empl={empl} />
-							</div>
-							</Table.Cell>))}
-				</Table.Row>))}
-	</Table.Body>
-</Table>
+		    <br/>
+       
+        <Button onClick={()=>this.setState({email:true})} content="Send Emails"/>
+  
+    <Table celled selectable textAlign={'center'} verticalAlign={'middle'}>
+      <Table.Header>
+        <Table.Row>
+            <Table.HeaderCell width={2}>Employees</Table.HeaderCell>
+            {week.map((d, i) => { let color = moment().format("YYYY MMM DD") === moment(d).format("YYYY MMM DD") ? '#EF9A9A' : null;
+              return <Table.HeaderCell 
+              style={{'backgroundColor': color}} 
+              width={1} key={i}>{moment(d).format('YYYY MMM DD ddd')}</Table.HeaderCell>})}
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+          {this.props.employees.map((empl, indOfEmpl) => (
+            <Table.Row key={indOfEmpl} style={{height: '90px'}}>
+              <Table.Cell>{empl.first_name}</Table.Cell>
+                {week.map((day, indOfDate) => (
+                  <Table.Cell key={indOfDate}>
+                  <div>
+                    <OneEmpl 
+                    key={indOfEmpl*indOfDate} 
+                    schedules={this.props.schedules} 
+                    showModal={this.showModal} 
+                    day={day} 
+                    empl={empl} />
+                  </div>
+                  </Table.Cell>))}
+            </Table.Row>))}
+      </Table.Body>
+    </Table>
 
 		<br />
 		<br />
 
-
-		</div>
+</Container>
 	)
 }
 }

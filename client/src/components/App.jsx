@@ -5,10 +5,10 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { createBrowserHistory } from 'history';
 import axios from 'axios';
 import store from '../store.js';
-import Dashboard from './Dashboard.jsx';
 import Login from './Main/Login.jsx';
 import { load } from '../actions/dashboardActions.js';
 import Main from './Main/Main.jsx';
+import DesktopContainer from './DesktopContainer.jsx';
 
 const history = syncHistoryWithStore(createBrowserHistory(), store);
 
@@ -26,7 +26,7 @@ class App extends Component {
       <Router history={history}>
         {  !localStorage.authToken ?
         <Main/> :
-        <Dashboard />
+        <DesktopContainer />
         }       
       </Router>
     )
