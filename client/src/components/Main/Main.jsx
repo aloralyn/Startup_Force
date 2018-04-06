@@ -93,7 +93,7 @@ class DesktopContainer extends Component {
     return (
       <Responsive {...Responsive.onlyComputer}>  
         <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
-          <Segment id='landing' inverted textAlign='center' style={{ minHeight: 700, padding: '1em 0em' }} vertical>
+          <Segment inverted textAlign='center' style={{ minHeight: 700, padding: '1em 0em', backgroundImage: 'url("https://drive.google.com/uc?export=view&id=13f1jgnEua1e4pdKmHebKffG-f0Z3pr9s")', backgroundSize: 'cover' }} vertical>
             <Menu
               style={{borderStyle: 'none'}}
               fixed={fixed ? 'top' : null}
@@ -152,14 +152,14 @@ const Main = () => (
             </p>
           </Grid.Column>
           <Grid.Column floated='right' width={6}>
-            <Header as='h4' style={{ fontSize: '2em' }}>Development Team</Header>
+            <Header as='h4' style={{ fontSize: '2em', fontFamily: 'Titillium Web' }}>Development Team</Header>
             <Image
               bordered
               rounded
               size='large'
               src='https://drive.google.com/uc?export=view&id=1ur6MJA7xSAAyVRQ5tRE-sNesLGZ4qJTu'
             />
-            <Header as='h4' style={{ fontSize: '2em' }}>House GreyJoy</Header>
+            <Header as='h4' style={{ fontSize: '2em', fontFamily: 'Titillium Web' }}>House GreyJoy</Header>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
