@@ -198,14 +198,16 @@ export default class Metrics extends React.Component {
     // });
     return (
       <div>
-        <Header size="large" textAlign="center">Contract Revenue by Date</Header>
+        <br />
+        <Header size="large" textAlign="center" style={{fontFamily: 'Titillium Web'}}>Contract Revenue by Date</Header>
         <div id="barchart" />
         <Divider />
-        <Header size="large" textAlign="center">Percentage Sales by Team Member</Header>
+        <br />
+        <Header size="large" textAlign="center" style={{fontFamily: 'Titillium Web'}}>Percentage Sales by Team Member</Header>
         <div id="piechart" />
         <Divider />
-        <Header size="large" textAlign="center">Percentage of Sales Goal</Header>
-        <div id="gaugechart" />
+        {/* <Header size="large" textAlign="center" style={{fontFamily: 'Titillium Web'}}>Percentage of Sales Goal</Header>
+        <div id="gaugechart" /> */}
       </div>
     );
   }

@@ -58,12 +58,13 @@ export default class ExistingContract extends React.Component {
       <Grid.Column width={9}>
         <Form>
           <Form.Field>
-            <Label pointing="below" size="large">Select from or Search existing contracts</Label>
+            <Label pointing="below" size="large" style={{fontFamily: 'Titillium Web'}}>Select from or Search existing contracts</Label>
             <Dropdown
               placeholder="Existing Contracts"
               label="Existing Contracts List"
               search
               selection
+              style={{fontFamily: 'Titillium Web'}}
               options={this.state.existingDropdownOptions}
               defaultValue={this.state.existingDropdownOptions[0].value}
               onChange={this.handleExContractChange}
@@ -75,12 +76,12 @@ export default class ExistingContract extends React.Component {
             size="large"
             >
             {this.state.selectedContractData.contract_name}
-            <Header.Subheader>
+            <Header.Subheader style={{fontFamily: 'Titillium Web'}}>
               Contract Information
             </Header.Subheader>
           </Header>
           <Dimmer active={this.state.loadingState}>
-            <Loader size="large">Retrieving Contract Info</Loader>
+            <Loader size="large" style={{fontFamily: 'Titillium Web'}}>Retrieving Contract Info</Loader>
           </Dimmer>
           <Table attached="bottom" celled>
             <Table.Header>
@@ -124,6 +125,7 @@ export default class ExistingContract extends React.Component {
                 labelPosition="right"
                 fluid
                 type="toggleview"
+                style={{fontFamily: 'Titillium Web'}}
                 onClick={this.props.toggleView}
               >
                 Switch to New Contract Form View

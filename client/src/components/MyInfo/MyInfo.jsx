@@ -38,7 +38,7 @@ import {
       zip_code: this.props.zip_code,
       state: this.props.state,
       phone_number: this.props.phone_number,
-      linkedin_url: this.props.inkedin_url,
+      linkedin_url: this.props.linkedin_url,
       pw: this.props.pw,
       personal_email: this.props.personal_email
     }

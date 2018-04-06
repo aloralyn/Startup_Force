@@ -21,7 +21,7 @@ class ProfilePic extends React.Component {
        </Image>
         <Card.Content>
           <Card.Header style={{fontFamily: 'Titillium Web', fontWeight: 'bold'}}>
-            {this.props.user.first_name}
+            {this.props.user.first_name} {this.props.user.lastt_name}
           </Card.Header>
           <Card.Meta>
             <span className='date'>
