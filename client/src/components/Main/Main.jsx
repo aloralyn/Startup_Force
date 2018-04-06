@@ -5,6 +5,7 @@ import SignUpForm from './SignUp.jsx';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { DirectLink, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import {
   Button,
@@ -30,7 +31,7 @@ const HomepageHeading = ({ mobile }) => (
   <Container text>
     <Header
       as='h1'
-      content='Startup Force'
+      content='StartupForce'
       inverted
       style={{
         fontFamily: 'Cabin Sketch, cursive',
@@ -41,7 +42,6 @@ const HomepageHeading = ({ mobile }) => (
       }}
       />
   
-    {/* <h1 className="logo">Startup Force</h1> */}
     <Header
       as='h2'
       content='Arm your startup with the right tools to manage your employees and bring in business'
@@ -53,7 +53,9 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? '0.5em' : '1.5em',
       }}
     />
-    <Button primary size='huge'  style={{
+    <Button primary size='huge'  
+    onClick={() => scroll.scrollTo(685)}
+    style={{
         fontFamily: 'Titillium Web'}}>
       Learn More
       <Icon name='right arrow' />
@@ -136,30 +138,35 @@ ResponsiveContainer.propTypes = {
 
 const Main = () => (
   <ResponsiveContainer>
-    <Segment style={{ padding: '8em 0em' }} vertical>
+    <Segment style={{ padding: '7em 0em' }} vertical>
       <Grid container stackable verticalAlign='middle'>
         <Grid.Row>
           <Grid.Column width={8}>
-            <Header as='h3' style={{ fontSize: '2em', fontFamily: 'Titillium Web', }}>We Help You Work Smarter</Header>
+            <Header as='h3' style={{ fontSize: '2em', fontFamily: 'Titillium Web', color: '#1c3448'}}>We Help You Work Smarter</Header>
             <p style={{ fontSize: '1.33em' }}>
               We can give your small busineess tools to manage your day-to-day operations - so you can focus on your customers.
             </p>
-            <Header as='h3' style={{ fontSize: '2em', fontFamily: 'Titillium Web', }}>Powerful, Intuitive Tools</Header>
+            <br/>
+            <Header as='h3' style={{ fontSize: '2em', fontFamily: 'Titillium Web', color: '#1c3448'}}>Powerful, Intuitive Tools</Header>
             <p style={{ fontSize: '1.33em' }}>
-              - Intuitive scheduling management for employees <br />
-              - Powerful data analytics for sales,  <br />
-              - Instant messaging between managers and employees
+            <Icon name="add user" color='grey'/> Efficient onboarding for ease and engagment <br />
+            <br />
+            <Icon name="checked calendar" color='grey'/> Intuitive scheduling tool to manage employees <br />
+            <br />
+            <Icon name="signal" color='grey'/> Insightful data analytics for tracking revenue  <br />
+            <br />
+            <Icon name="wechat" color='grey'/> Instant messaging to bring all employees together
             </p>
           </Grid.Column>
           <Grid.Column floated='right' width={6}>
-            <Header as='h4' style={{ fontSize: '2em', fontFamily: 'Titillium Web' }}>Development Team</Header>
+            <Header as='h4' style={{ fontSize: '2em', fontFamily: 'Titillium Web', color: '#1c3448'}}>Development Team</Header>
             <Image
               bordered
               rounded
               size='large'
               src='https://drive.google.com/uc?export=view&id=1ur6MJA7xSAAyVRQ5tRE-sNesLGZ4qJTu'
             />
-            <Header as='h4' style={{ fontSize: '2em', fontFamily: 'Titillium Web' }}>House GreyJoy</Header>
+            <Header as='h4' style={{ fontSize: '1em', fontFamily: 'Titillium Web', color: '#1c3448'}}>House GreyJoy</Header>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
@@ -173,13 +180,13 @@ const Main = () => (
       <Grid celled='internally' columns='equal' stackable>
         <Grid.Row textAlign='center'>
           <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-            <Header as='h3' style={{ fontSize: '2em', fontFamily: 'Titillium Web', }}>Flexible, scalable management tools</Header>
-            <p style={{ fontSize: '1.33em' }}>We'll be with you as you grow - from 5 to 500 employees</p>
+            <Header as='h3' style={{ fontSize: '2em', fontFamily: 'Titillium Web', color: '#1c3448'}}>Flexible, scalable and fun management tools</Header>
+            <p style={{ fontSize: '1.33em' }}>Quickly set up your HR management system and hit the ground running. <br/>StartupForce will be with you as you grow - from 2 to 200 employees!</p>
             <SignUpForm />
           </Grid.Column>
           <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-            <Header as='h3' style={{ fontSize: '2em', fontFamily: 'Titillium Web', }}>"I should have chosen StartupForce at the beginning."</Header>
-            <p style={{ fontSize: '1.33em', fontFamily: 'Titillium Web', }}>
+            <Header as='h3' style={{ fontSize: '2em', fontFamily: 'Titillium Web', color: '#1c3448'}}>"I should have chosen StartupForce from the beginning."</Header>
+            <p style={{ fontSize: '1.33em', fontFamily: 'Titillium Web'}}>
               <Image avatar size='medium' src='https://drive.google.com/uc?export=view&id=1zpheJmeg3zn8XGB2yFaxAVvE-SWo7j3r' />
               <b> Jerry</b> Senior Software Engineer
             </p>

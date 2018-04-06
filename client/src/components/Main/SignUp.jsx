@@ -97,7 +97,7 @@ const PwErrorMessage = () => (
 
   render() {
     return (
-      <Modal trigger={<Button style={{fontFamily: 'Titillium Web', margin: '0.5em', width:'100px'}}>Signup</Button>} basic size='small' closeIcon>
+      <Modal trigger={<Button style={{fontFamily: 'Titillium Web', margin: '0.5em', width:'100px'}}>Sign up</Button>} basic size='small' closeIcon>
       <div className='login-form'>
       <style>{`
       body > div,
