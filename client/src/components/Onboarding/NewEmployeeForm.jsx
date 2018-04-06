@@ -53,6 +53,7 @@ const managerCred = [
 
 const ErrorMessage = () => (
   <Message
+    style={{fontFamily: 'Titillium Web'}}
     negative
     header='There were some errors with your submission'
     list={[
@@ -163,7 +164,7 @@ const ErrorMessage = () => (
     return (
       <Grid.Column width={8} >
       <div>
-        <Header size='large'>Add an Employee</Header>
+        <Header style={{fontFamily: 'Titillium Web'}} size='large'>Add an Employee</Header>
         <Form>
           <Form.Group widths='equal'>
             <Form.Field control={Input} required label='First name' name='first_name' placeholder='First name' value={this.props.first_name} onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
@@ -186,7 +187,7 @@ const ErrorMessage = () => (
             <Form.Field control={Input} required label='SSN' name='ssn' placeholder='SSN#'  value={this.props.ssn} onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}}  />
             <Form.Field control={Select} required label='Gender' options={genderOptions} name='gender' placeholder='Gender'  value={this.props.gender} onChange={(e, {value, name}) => {this.props.handleChange(name, value)}}/>
           </Form.Group>
-        <Header size='small'>Home Address</Header>
+        <Header style={{fontFamily: 'Titillium Web'}} size='small'>Home Address</Header>
           <Form.Group widths='equal'>
             <Form.Field control={Input} required label='Street 1' name='street_1' placeholder='Street 1'  value={this.props.street_1} onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}}  />
             <Form.Field control={Input} label='Street 2' name='street_2' placeholder='Street 2' value={this.props.street_2} onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}}  />
@@ -196,13 +197,13 @@ const ErrorMessage = () => (
             <Form.Field control={Input} required label='Zip Code' name='zip_code' placeholder='Zip Code' value={this.props.zip_code} onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}}  />
             <Form.Field control={Input} required label='State' name='state' placeholder='State' value={this.props.state} onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}}  />
           </Form.Group>
-        <Header size='small'>Contact Info</Header>
+        <Header style={{fontFamily: 'Titillium Web'}} size='small'>Contact Info</Header>
           <Form.Group widths='equal'>
             <Form.Field control={Input} required label='Personal Email Address' name='personal_email' value={this.props.personal_email} placeholder='Personal Email Address' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
             <Form.Field control={Input} required label='Phone Number' name='phone_number' placeholder='Phone Number' value={this.props.phone_number} onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
             <Form.Field control={Input} label='LinkedIn Profile URL' name='linkedin_url' placeholder='LinkedIn Profile URL' value={this.props.linkedin_url} onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
           </Form.Group>
-        <Header size='small'>Employee Status</Header>
+        <Header style={{fontFamily: 'Titillium Web'}} size='small'>Employee Status</Header>
           <Form.Group widths='equal'>
             <Form.Field control={Input} required label='Position/Title' name='position' placeholder='Position/Title' value={this.props.position} onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}}  />
             <Form.Field control={Select} required label='Employee Status' options={ employStatOptions } name='employee_status' placeholder='Full-time' value={this.props.employee_status} onChange={(e, {value, name}) => {this.props.handleChange(name, value)}} />
@@ -218,7 +219,7 @@ const ErrorMessage = () => (
             <Form.Field control={Select} label='Department' required options={ departmentOptions } name='department' placeholder='Department' value={this.props.department} onChange={(e, {value, name}) => {this.props.handleChange(name, value)}} />
             <Form.Field control={Select} label='Division' options={ divisionOptions } name='division' placeholder='Division' value={this.props.division} onChange={(e, {value, name}) => {this.props.handleChange(name, value)}} />
           </Form.Group>
-          <Header size='small'>Compensation</Header>
+          <Header style={{fontFamily: 'Titillium Web'}} size='small'>Compensation</Header>
           <Form.Group widths='equal'>
             <Form.Field control={Input} required label='Compensation' name='wage' placeholder='Compensation' value={this.props.compensation} onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}}  />
             <Form.Field control={Select} required label='Pay Per' options={ payScheduleOptions } name='pay_per' placeholder='Every other week' value={this.props.pay_per} onChange={(e, {value, name}) => {this.props.handleChange(name, value)}}/>  
@@ -226,13 +227,13 @@ const ErrorMessage = () => (
           <Form.Group>
             <Form.Field control={Select} required label='Pay Type' options={ payTypeOptions } name='pay_type' placeholder='Salary' value={this.props.salary} onChange={(e, {value, name}) => {this.props.handleChange(name, value)}}/>
           </Form.Group>
-          <Header size='small'>Profile Credentials</Header>
+          <Header style={{fontFamily: 'Titillium Web'}} size='small'>Profile Credentials</Header>
           <Form.Group widths='equal'>
             <Form.Field control={Input} required label={workEmail} name='email' placeholder='Email Address' value={this.props.email} onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
             <Form.Field control={Select} required label='Manager Role' options={ managerCred } name='is_manager' placeholder='false' value={this.props.is_manager} onChange={(e, {value, name}) => {this.props.handleChange(name, value)}} />
             <Form.Field control={Input} required label='Temporary Password' name='pw' placeholder='temporary password' value={this.props.pw} onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
             </Form.Group>
-          <Form.Field control={Button} type='submit' fluid onClick={this.handleSubmit}>Add New {this.props.company.company_name} Employee!</Form.Field>
+          <Form.Field style={{fontFamily: 'Titillium Web'}} control={Button} type='submit' fluid onClick={this.handleSubmit}>Add New {this.props.company.company_name} Employee!</Form.Field>
         </Form>
         </div>
         {this.state.showError ? <ErrorMessage /> : null }

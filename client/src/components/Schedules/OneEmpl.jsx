@@ -18,7 +18,8 @@ class OneEmpl extends Component {
 			<div>
 			{
 				match && moment().isBefore(moment(day, "YYYY MMM DD")) &&
-					<Button animated='fade' fluid 
+          <Button animated='fade' fluid 
+          style={{fontFamily: 'Titillium Web'}}
 					onClick={()=>this.props.showModal('edit', match, day)}>
 			      <Button.Content hidden>
 			      Edit
@@ -30,7 +31,7 @@ class OneEmpl extends Component {
 			    </Button>
 			    ||
 			   match && !moment().isBefore(moment(day, "YYYY MMM DD")) &&
-			   	<Button>
+			   	<Button  style={{fontFamily: 'Titillium Web'}}>
 			      <Button.Content>
 				      <div>{`${moment(match.start).format("h:mm a")}`}</div>
 							<div>{`${moment(match.finish).format("h:mm a")}`}</div>
@@ -38,7 +39,7 @@ class OneEmpl extends Component {
 			    </Button>
 			    ||
 			   	moment().isBefore(moment(day, "YYYY MMM DD")) &&
-			    <Button size='mini' onClick={()=>this.props.showModal('post', empl, day)}><Icon name='plus'/></Button>
+			    <Button  style={{fontFamily: 'Titillium Web'}} size='mini' onClick={()=>this.props.showModal('post', empl, day)}><Icon name='plus'/></Button>
 			}
 			</div>
 		)

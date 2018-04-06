@@ -17,7 +17,7 @@ class EditableProfilePic extends React.Component {
        </Image>
           <Card.Content extra>
             <a onClick={this.props.showPhotoUploader}>
-              <Icon name='picture'/>
+              <Icon style={{fontFamily: 'Titillium Web'}} name="picture"/>
               Edit photo
             </a>
           </Card.Content>

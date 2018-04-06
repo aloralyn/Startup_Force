@@ -31,6 +31,7 @@ class MessageForm extends React.Component {
           type="text" 
           size="50"
           placeholder="Type a message!" 
+          fontFamily= 'Titillium Web'
           value={this.state.input} 
           onChange={this.handleChange} />
         <button onClick={this.handleSubmit}>Send</button>

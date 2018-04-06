@@ -14,7 +14,7 @@ import * as Actions from '../../actions/scheduleActions';
 import { fetchUsers } from '../../actions/dashboardActions.js';
 
 
-import { Header, Form, Segment, Table, Icon, Button, Modal, Accordion, TransitionablePortal } from 'semantic-ui-react'
+import { Container, Header, Form, Segment, Table, Icon, Button, Menu, Modal, Accordion, TransitionablePortal } from 'semantic-ui-react'
 
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import TimePicker from 'rc-time-picker';
@@ -169,7 +169,7 @@ class Schedules extends Component {
 		if (confirm) { setTimeout(() => { this.setState({confirm: false})}, 1000)} 
 console.log("ACTIONS: ", this.props)
 	return (
-		<div style={{margin: '10px'}}>
+    <Container style={{ padding: '8em 0em'}}>
 
 		{/*****************************************************************
 										Modal-Popup for EDIT/POST schedule
@@ -177,11 +177,11 @@ console.log("ACTIONS: ", this.props)
 		<Modal size={'tiny'} open={open} onClose={this.close}
 		style={{position: 'absolute', top: '40%', left: '40%'}}>
 			<Modal.Content>
-			<Modal.Description>
+			<Modal.Description  style={{fontFamily: 'Titillium Web'}}>
         {this.state.action === 'edit' ? 
-		        <Header>Edit {empl.first_name}'s shift on {day}</Header>
+		        <Header  style={{fontFamily: 'Titillium Web'}}>Edit {empl.first_name}'s shift on {day}</Header>
 		        :
-		        <Header>Add {empl.first_name}'s shift on {day}</Header>}
+		        <Header  style={{fontFamily: 'Titillium Web'}}>Add {empl.first_name}'s shift on {day}</Header>}
         Start:
 	      <TimePicker
 			    showSecond={false}
@@ -214,7 +214,7 @@ console.log("ACTIONS: ", this.props)
       <Modal.Actions>
       {
       	!!empl.start ?
-        <Button color='red' style={{float: 'left'}}
+        <Button style={{fontFamily: 'Titillium Web'}}  color='red' style={{float: 'left'}}
 	        onClick={() => {
 	        	this.props.deleteSchedule({id: empl.id, start: empl.start, finish: empl.finish})
 	        	this.close()
@@ -225,8 +225,8 @@ console.log("ACTIONS: ", this.props)
         :
         null
       }
-        <Button content="Cancel" color='black' onClick={this.close} />
-        <Button positive icon='checkmark' labelPosition='right' content="Add new time"
+        <Button  style={{fontFamily: 'Titillium Web'}} content="Cancel" color='black' onClick={this.close} />
+        <Button  style={{fontFamily: 'Titillium Web'}}positive icon='checkmark' labelPosition='right' content="Add new time"
         	onClick={() => this.compileTimeToNeededFormat()} />
       </Modal.Actions>
       </Modal>
@@ -248,61 +248,71 @@ console.log("ACTIONS: ", this.props)
             		<br />
 								<Mailer empl={this.props.employees}/>
 								<br />
-								<Button onClick={()=>this.setState({email: false})} content="Close window" />
+								<Button style={{fontFamily: 'Titillium Web'}} onClick={()=>this.setState({email: false})} content="Cancel" />
             </Segment>
           </TransitionablePortal>
       {/*****************************************************************
 																	Calendar
 		*******************************************************************/}
-		<Form>
-		<Button onClick={()=>this.weekBack()} icon="caret left"/>
-		<DayPickerInput
-			style={{height: '100px'}}
-			placeholder="          Calendar"
-			fixedWeeks
-			firstDayOfWeek={1}
-      onDayChange={day => this.renderCalendar(day)}
-    />
-		<Button onClick={()=>this.weekForth()} icon="caret right"/>
-		</Form>
+		
+        <Form width={2}>
+        <Form.Group>
+        <Form.Field control={Button} style={{ padding: '0.5em 0.5em'}} onClick={()=>this.weekBack()} icon="caret left"/>
+        
+        <Form.Field>
+        <DayPickerInput
+          style={{padding: '0.5em 0.5em', fontFamily: 'Titillium Web'}}
+          placeholder="           Calendar"
+          fixedWeeks
+          firstDayOfWeek={1}
+          onDayChange={day => this.renderCalendar(day)}
+        />
+        </Form.Field>
+        
+        <Form.Field control={Button} style={{ padding: '0.5em 0.5em'}} onClick={()=>this.weekForth()} icon="caret right"/>
+        </Form.Group>
+        </Form>
+     
     {/*****************************************************************
 																		Table
 		*******************************************************************/}
-		<Button onClick={()=>this.setState({email:true})} content="Send Emails"/>
-<Table celled selectable textAlign={'center'} verticalAlign={'middle'}>
-  <Table.Header>
-    <Table.Row>
-				<Table.HeaderCell width={2}>Employees</Table.HeaderCell>
-				{week.map((d, i) => { let color = moment().format("YYYY MMM DD") === moment(d).format("YYYY MMM DD") ? '#EF9A9A' : null;
-					return <Table.HeaderCell 
-					style={{'backgroundColor': color}} 
-					width={1} key={i}>{moment(d).format('YYYY MMM DD ddd')}</Table.HeaderCell>})}
-		</Table.Row>
-  </Table.Header>
-	<Table.Body>
-			{this.props.employees.map((empl, indOfEmpl) => (
-				<Table.Row key={indOfEmpl} style={{height: '90px'}}>
-					<Table.Cell>{empl.first_name}</Table.Cell>
-						{week.map((day, indOfDate) => (
-							<Table.Cell key={indOfDate}>
-							<div>
-								<OneEmpl 
-								key={indOfEmpl*indOfDate} 
-								schedules={this.props.schedules} 
-								showModal={this.showModal} 
-								day={day} 
-								empl={empl} />
-							</div>
-							</Table.Cell>))}
-				</Table.Row>))}
-	</Table.Body>
-</Table>
+		    <br/>
+       
+        <Button style={{fontFamily: 'Titillium Web'}} onClick={()=>this.setState({email:true})} content="Email Schedule Updates"/>
+  
+    <Table celled selectable textAlign={'center'} verticalAlign={'middle'}>
+      <Table.Header>
+        <Table.Row>
+            <Table.HeaderCell width={2}>Employees</Table.HeaderCell>
+            {week.map((d, i) => { let color = moment().format("YYYY MMM DD") === moment(d).format("YYYY MMM DD") ? '#EF9A9A' : null;
+              return <Table.HeaderCell 
+              style={{'backgroundColor': color}} 
+              width={1} key={i}>{moment(d).format('MMM DD dddd')}</Table.HeaderCell>})}
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+          {this.props.employees.map((empl, indOfEmpl) => (
+            <Table.Row key={indOfEmpl} style={{height: '90px'}}>
+              <Table.Cell>{empl.first_name}</Table.Cell>
+                {week.map((day, indOfDate) => (
+                  <Table.Cell key={indOfDate}>
+                  <div>
+                    <OneEmpl 
+                    key={indOfEmpl*indOfDate} 
+                    schedules={this.props.schedules} 
+                    showModal={this.showModal} 
+                    day={day} 
+                    empl={empl} />
+                  </div>
+                  </Table.Cell>))}
+            </Table.Row>))}
+      </Table.Body>
+    </Table>
 
 		<br />
 		<br />
 
-
-		</div>
+</Container>
 	)
 }
 }

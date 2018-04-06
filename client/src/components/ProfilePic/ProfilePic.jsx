@@ -20,7 +20,7 @@ class ProfilePic extends React.Component {
        <Transformation width="200" height="250" crop="scale" />
        </Image>
         <Card.Content>
-          <Card.Header>
+          <Card.Header style={{fontFamily: 'Titillium Web', fontWeight: 'bold'}}>
             {this.props.user.first_name}
           </Card.Header>
           <Card.Meta>

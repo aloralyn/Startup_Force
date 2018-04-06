@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addEmployee } from '../../actions/onboardingActions.js';
-import { onDrop, handlePhotoUpload, showProfileEditor, updateProfile } from '../../actions/updateProfileActions.js';
+import { onDrop, handlePhotoUpload, showProfileEditor, updateProfile, hideProfileEditor, hidehotoUploader } from '../../actions/updateProfileActions.js';
 import {handleEditProfileChange } from '../../actions/formChangeActions.js';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
@@ -51,7 +51,7 @@ import {
       <Container style={{ padding: '8em 0em' }}>
         <Grid container stackable>
           <Grid.Row>
-             <Grid.Column width={6}>
+             <Grid.Column width={5}>
                <EditableProfilePic />
              </Grid.Column>
 
@@ -62,12 +62,13 @@ import {
                 <p>Drop your image file in here, or click to select your image to upload.</p>
               </Dropzone>
               <Segment>Selected: {this.props.fileName}</Segment>
-              <Button onClick={(a, b) => {this.props.handlePhotoUpload(this.props.file, this.props.user.id)}}>Save New Profile Pic</Button>
+              <Button onClick={(a, b) => {this.props.handlePhotoUpload(this.props.file, this.props.user.id)}}>Save New Profile Photo</Button>
+              <Button onClick={this.props.hidehotoUploader}>Cancel Photo Upload</Button>
              </Grid.Column>
 
              : this.props.showEditProfile ? 
              <Grid.Column width={8}>
-               <Header size='small'>Your Profile</Header> 
+               <Header style={{fontFamily: 'Titillium Web'}} size='small'>Your Profile</Header> 
                 <Table attached='bottom' celled>
                   <Table.Header>
                     <Table.Row>
@@ -145,12 +146,13 @@ import {
                   </Table.Body>
                 </Table>
                 <Button onClick={this.handleSubmit}>Submit Info</Button>
+                <Button onClick={(a) => {this.props.hideProfileEditor(this.props.user)}}>Cancel Edits</Button>
              </Grid.Column>
 
              :
 
              <Grid.Column width={8}>
-               <Header size='small'>Your Profile
+               <Header size='small' style={{fontFamily: 'Titillium Web'}}>Your Profile
                <Card.Content extra>
                   ( <a onClick={ (a)=> {this.props.showProfileEditor(this.props.user)}} >Edit info
                   <Icon name='edit'/></a> 
@@ -185,7 +187,7 @@ import {
                   </Table.Header>
                   <Table.Body>
                     <Table.Row>
-                      <Table.Cell>{this.props.user.street_1}t</Table.Cell>
+                      <Table.Cell>{this.props.user.street_1}</Table.Cell>
                       <Table.Cell>{this.props.user.street_2}</Table.Cell>
                       <Table.Cell>{this.props.user.zip_code}</Table.Cell>
                       <Table.Cell>{this.props.user.city}</Table.Cell>
@@ -219,7 +221,7 @@ import {
                   <Table.Body>
                     <Table.Row>
                       <Table.Cell>{this.props.user.email}</Table.Cell>
-                      <Table.Cell>*********</Table.Cell>
+                      <Table.Cell>*************</Table.Cell>
                     </Table.Row>
                   </Table.Body>
                 </Table>
@@ -237,7 +239,9 @@ MyInfo.propTypes = {
   handlePhotoUpload: PropTypes.func.isRequired,
   showProfileEditor: PropTypes.func.isRequired,
   handleEditProfileChange: PropTypes.func.isRequired,
-  updateProfile: PropTypes.func.isRequired
+  updateProfile: PropTypes.func.isRequired,
+  hideProfileEditor: PropTypes.func.isRequired,
+  hidehotoUploader: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -259,4 +263,4 @@ const mapStateToProps = state => ({
   personal_email: state.updateProfileReducer.personal_email
 })
 
-export default withRouter(connect(mapStateToProps, { onDrop, handlePhotoUpload, showProfileEditor , handleEditProfileChange, updateProfile})(MyInfo));
+export default withRouter(connect(mapStateToProps, { onDrop, handlePhotoUpload, showProfileEditor , handleEditProfileChange, updateProfile, hideProfileEditor, hidehotoUploader })(MyInfo));

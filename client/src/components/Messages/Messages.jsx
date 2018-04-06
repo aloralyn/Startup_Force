@@ -65,8 +65,8 @@ class Messages extends Component {
       return (<Container style={{ padding: '8em 0em' }}>
         <Grid container stackable divided>
           <Grid.Row>
-            <Grid.Column width={6}>
-              <Header as='h2'>{this.props.company.company_name} Employees</Header>
+            <Grid.Column width={6} style={{fontFamily: 'Titillium Web'}}>
+              <Header style={{fontFamily: 'Titillium Web'}} as='h2'>{this.props.company.company_name} Employees</Header>
               <List style={{height: '400px'}}>
                 {this.props.users.map((user) => {
                   var notifications;
@@ -79,6 +79,7 @@ class Messages extends Component {
                     return (
                       <List.Item key={user.id}>
                         <Button toggle
+                          style={{fontFamily: 'Titillium Web'}}
                           active={user.id === this.props.messageUserId}
                           value={user.id.toString()}
                           onClick={(e) => {
@@ -107,7 +108,7 @@ class Messages extends Component {
               </List>
             </Grid.Column>
             <Grid.Column width={8}>
-              <Header as='h2'>Direct Messages with {nameFromId(this.props.messageUserId, this.props.users)}</Header>
+              <Header style={{fontFamily: 'Titillium Web'}} as='h2'>Direct Messages with {nameFromId(this.props.messageUserId, this.props.users)}</Header>
               <div id='messages' style={{height: '400px', overflowY: 'scroll'}}>
               <List divided relaxed>
                 {
@@ -136,7 +137,7 @@ class Messages extends Component {
         <Grid container stackable>
           <Grid.Row>
             <Grid.Column width={6}>
-              <Header as='h2'>{this.props.company.company_name} Employees</Header>
+              <Header style={{fontFamily: 'Titillium Web'}} as='h2'>{this.props.company.company_name} Employees</Header>
               <List style={{height: '400px'}}>
                 {this.props.users.map((user) => {
                   var notifications;
@@ -147,6 +148,7 @@ class Messages extends Component {
                     return (
                       <List.Item key={user.id}>
                         <Button 
+                          style={{fontFamily: 'Titillium Web'}}
                           value={user.id.toString()}
                           onClick={(e) => {
                             let userToMessage = parseInt(e.target.value, 10)
@@ -182,7 +184,7 @@ class Messages extends Component {
                 <Icon style={{display: 'block', margin: 'auto'}} size='big' name='mail outline' color='black' />   
               </Icon.Group>
               }
-              <h1 style={{textAlign: 'center'}}>You have {this.props.notificationCount} {this.props.notificationCount === 1 ? 'Message' : 'Messages'}
+              <h1 style={{textAlign: 'center', fontFamily: 'Titillium Web'}}>You have {this.props.notificationCount} {this.props.notificationCount === 1 ? 'Message' : 'Messages'}
               {this.props.notificationCount === 0 ? ' :(' : '!'}
               </h1>
             </div>
@@ -192,8 +194,8 @@ class Messages extends Component {
       </Container>) 
     }
   }
-}
 
+}
 
 const mapStateToProps = state => ({
   company: state.users.company,

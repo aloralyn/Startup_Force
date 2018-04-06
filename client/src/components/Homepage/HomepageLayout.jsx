@@ -90,29 +90,36 @@ class HomepageLayout extends Component {
     }*/}
     return (
       this.props.fetchMonth.length > 0 ?
-      <div>
-        <Segment style={{ padding: '8em 0em' }} vertical>
-          <Grid container stackable verticalAlign='middle'>
+      <Container style={{ padding: '8em 0em' }}>
+        <Grid container stackable>
             <Grid.Row>
               <Grid.Column width={5}>
                 <ProfilePic />
               </Grid.Column>
               <Grid.Column width={10}>
-              <Header size='large' verticalalign='text-top'>Welcome,  {this.props.user.first_name} {this.props.user.last_name}!</Header>
+              <Header size='large' verticalalign='text-top' style={{fontFamily: 'Titillium Web', fontWeight: 'bold'}}>Welcome,  {this.props.user.first_name} {this.props.user.last_name}!</Header>
 
     {/*****************************************************************
                                     Calendar
     *******************************************************************/}
-    <Form>
-    <Button onClick={()=>this.weekBack()} icon="caret left"/>
-    <DayPickerInput
-      placeholder="          Calendar"
-      fixedWeeks
-      firstDayOfWeek={1}
-      onDayChange={day => this.renderCalendar(day)}
-    />
-    <Button onClick={()=>this.weekForth()} icon="caret right"/>
-    </Form>
+    <Form width={2}>
+        <Form.Group>
+        <Form.Field control={Button} style={{ padding: '0.5em 0.5em'}} onClick={()=>this.weekBack()} icon="caret left"/>
+        
+        <Form.Field>
+        <DayPickerInput
+          style={{padding: '0.5em 0.5em', fontFamily: 'Titillium Web'}}
+          placeholder="           Calendar"
+          fixedWeeks
+          firstDayOfWeek={1}
+          onDayChange={day => this.renderCalendar(day)}
+        />
+        </Form.Field>
+        
+        <Form.Field control={Button} style={{ padding: '0.5em 0.5em'}} onClick={()=>this.weekForth()} icon="caret right"/>
+        </Form.Group>
+        </Form>
+     
     {/*****************************************************************
                                   Table VIEW >> WEEK
     *******************************************************************/}
@@ -144,8 +151,7 @@ class HomepageLayout extends Component {
 </Grid.Column>
 </Grid.Row>
 </Grid>
-</Segment>
-        </div> : null
+</Container> : null
     )
   }
 }

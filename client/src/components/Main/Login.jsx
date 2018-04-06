@@ -71,7 +71,7 @@ class Login extends Component {
 
   render() {
     return(
-      <Modal trigger={<Button>Login</Button>} basic size='small' closeIcon>
+      <Modal trigger={<Button style={{fontFamily: 'Titillium Web', margin: '0.5em', width:'100px'}}>Login</Button>} basic size='small' closeIcon>
       <div className='login-form'>
       <style>{`
       body > div,
@@ -90,13 +90,14 @@ class Login extends Component {
         <Form size="large">
         
           <Segment stacked>
-          <Header>Log into your account</Header>
+          <Header  style={{fontFamily: 'Titillium Web'}}>Log into your account</Header>
             <Form.Input
               fluid
               icon='user'
               label='Email' 
               name='email' 
               placeholder='Email'
+              style={{fontFamily: 'Titillium Web'}}
               onChange={this.changeEmail} />
             <Form.Input 
               fluid
@@ -104,10 +105,12 @@ class Login extends Component {
               type='password'
               label='Password' 
               name='pw'
-              placeholder='Password' 
+              placeholder='Password'
+              style={{fontFamily: 'Titillium Web'}} 
               onChange={this.changePw} />
           <Button
-            type='submit' 
+            type='submit'
+            style={{fontFamily: 'Titillium Web'}} 
             onClick={this.handleSubmit}>Login</Button>
             </Segment>
         </Form>
