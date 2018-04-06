@@ -115,7 +115,7 @@ export default class NewContractForm extends React.Component {
           </Segment>
         </TransitionablePortal>
         <Grid.Column width={9}>
-          <Header size="large">New Contract Form</Header>
+          <Header style={{ fontSize: '2em', fontFamily: 'Titillium Web', color: '#1c3448'}}>New Contract Form</Header>
           <Segment>
             <Form>
               <Form.Group widths="equal">
@@ -192,6 +192,7 @@ export default class NewContractForm extends React.Component {
                   positive
                   fluid
                   type="submit"
+                  style={{fontFamily: 'Titillium Web'}}
                   onClick={this.handleSubmit}
                 >
                   Save Contract
@@ -206,6 +207,7 @@ export default class NewContractForm extends React.Component {
                 labelPosition="left"
                 fluid
                 type="toggleview"
+                style={{fontFamily: 'Titillium Web'}}
                 onClick={this.props.toggleView}
               >
                 <Icon name="left arrow" />
