@@ -36,9 +36,9 @@ app.use('/*', (req, res) => res.redirect('/'));
 app.use(passport.initialize());
 //app.use(passport.session());
 
-app.set('port', 8001);
+const port = 8080;
 
-const port = 8001;
+app.set('port', port);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
