@@ -4,8 +4,7 @@ const departmentController = require('../database/models/departments.js');
 const employeeController = require('../database/models/employees.js');
 const contractsController = require('../database/models/contracts.js');
 
-const async = require('asyncawait/async');
-const await = require('asyncawait/await');
+
 
 bmtRouter.post('/api/create_company', async (req, res) => {
   try {
