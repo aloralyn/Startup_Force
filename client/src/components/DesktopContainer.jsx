@@ -11,7 +11,8 @@ import HomepageLayout from './Homepage/HomepageLayout.jsx';
 import MyInfo from './MyInfo/MyInfo.jsx';
 import Schedules from './Schedules/Schedules.jsx';
 import Onboarding from './Onboarding/Onboarding.jsx'
-import Reports from './Reports/Reports.jsx';
+// import Reports from './Reports/Reports.jsx';
+import Metrics from './Reports/Metrics.jsx';
 import Messages from './Messages/Messages.jsx';
 import { logout } from '../actions/dashboardActions.js';
 import Contracts from './Contracts/Contracts.jsx';
@@ -68,7 +69,7 @@ class DesktopContainer extends Component {
             <Image src='http://www.hipsterpig.com/wp-content/uploads/2014/05/fc550x550orange17.jpg' style={{height: '100px', width: '100px'}}/>
           </Container> */}
           { this.props.user.is_manager ?
-          
+
           <Router>
           <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
             <Segment style={{background: '#1c3448'}} inverted textAlign='center'  vertical>
@@ -86,7 +87,7 @@ class DesktopContainer extends Component {
                 <Menu.Item style={{fontFamily: 'Titillium Web'}} name="info" active={this.state.activeItem === 'info'} onClick={this.handleTabClick}><Link to="/my_info">My Info</Link></Menu.Item>
                 <Menu.Item style={{fontFamily: 'Titillium Web'}} name="schedules" active={this.state.activeItem === 'schedules'} onClick={this.handleTabClick}><Link to="/schedules">Schedules</Link></Menu.Item>
                 <Menu.Item style={{fontFamily: 'Titillium Web'}} name="onboarding" active={this.state.activeItem === 'onboarding'} onClick={this.handleTabClick}><Link to="/onboarding">Onboarding</Link></Menu.Item>
-                <Menu.Item style={{fontFamily: 'Titillium Web'}} name="reports" active={this.state.activeItem === 'reports'} onClick={this.handleTabClick}><Link to="/reports">Reports</Link></Menu.Item>
+                <Menu.Item style={{fontFamily: 'Titillium Web'}} name="metrics" active={this.state.activeItem === 'metrics'} onClick={this.handleTabClick}><Link to="/metrics">Metrics</Link></Menu.Item>
                 <Menu.Item style={{fontFamily: 'Titillium Web'}} name="messages" active={this.state.activeItem === 'messages'} onClick={this.handleTabClick}><Link to="/messages">
                     Messages {
                       this.props.notificationCount > 0 ?
@@ -95,13 +96,13 @@ class DesktopContainer extends Component {
                       ''
                     }
                   </Link></Menu.Item>
-                <Menu.Item style={{fontFamily: 'Titillium Web'}} name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>           
+                <Menu.Item style={{fontFamily: 'Titillium Web'}} name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>
                 <Menu.Menu style={{fontFamily: 'Titillium Web'}} position='right'>
-                  
+
                     <Menu.Item style={{fontFamily: 'Titillium Web'}} name='logout' onClick={() => {
                       this.props.logout(this.props.user.id, this.props.messageUserId, this.props.user.company_id)
                     }}  />
-                  
+
                 </Menu.Menu>
                 </Container>
               </Menu>
@@ -111,13 +112,13 @@ class DesktopContainer extends Component {
               <Route path="/my_info" component={MyInfo} />
               <Route path="/schedules" component={Schedules} />
               <Route path="/onboarding" component={Onboarding} />
-              <Route path="/reports" component={Reports} />
+              <Route path="/metrics" component={Metrics} />
               <Route path="/messages" component={Messages} />
               <Route path="/contracts" component={Contracts} />
             </Switch>
           </Visibility>
           </Router>
-          
+
           :
 
           <Router>
@@ -133,25 +134,25 @@ class DesktopContainer extends Component {
                 style={{background: '#1c3448', borderStyle: 'none'}}
               >
 
-              
+
               <Container>
                 <Menu.Item style={{fontFamily: 'Titillium Web'}} name="home" active={this.state.activeItem === 'home'} onClick={this.handleTabClick}><Link to="/">Home</Link></Menu.Item>
                 <Menu.Item style={{fontFamily: 'Titillium Web'}} name="info" active={this.state.activeItem === 'info'} onClick={this.handleTabClick}><Link to="/my_info">My Info</Link></Menu.Item>
-                <Menu.Item style={{fontFamily: 'Titillium Web'}} name="reports" active={this.state.activeItem === 'reports'} onClick={this.handleTabClick}><Link to="/reports">Reports</Link></Menu.Item>
+                <Menu.Item style={{fontFamily: 'Titillium Web'}} name="metrics" active={this.state.activeItem === 'metrics'} onClick={this.handleTabClick}><Link to="/metrics">Metrics</Link></Menu.Item>
                 <Menu.Item style={{fontFamily: 'Titillium Web'}} name="messages" active={this.state.activeItem === 'messages'} onClick={this.handleTabClick}><Link to="/messages">Messages</Link></Menu.Item>
                 <Menu.Item style={{fontFamily: 'Titillium Web'}} name="contracts" active={this.state.activeItem === 'contracts'} onClick={this.handleTabClick}><Link to="/contracts">Contracts</Link></Menu.Item>
                 <Menu.Menu position='right'>
                   <Menu.Item style={{fontFamily: 'Titillium Web'}} name='logout' onClick={() => this.props.logout(this.props.user.id, this.props.messageUserId, this.props.user.company_id)}  />
                 </Menu.Menu>
               </Container>
-          
+
               </Menu>
 
             </Segment>
            <Switch>
               <Route exact path="/" component={HomepageLayout} />
               <Route path="/my_info" component={MyInfo} />
-              <Route path="/reports" component={Reports} />
+              <Route path="/metrics" component={Metrics} />
               <Route path="/messages" component={Messages} />
               <Route path="/contracts" component={Contracts} />
             </Switch>

@@ -5,6 +5,62 @@ import c3 from 'c3';
 import * as d3 from "d3";
 import moment from 'moment';
 
+// const salesChart = c3.generate({
+//   bindto: '#barchart',
+//   x: 'x',
+//   data: {
+//     columns: [
+//       ['Contract Amount', ...this.setChartColumnData()],
+//     ],
+//     type: 'bar',
+//   },
+//   axis: {
+//     x: {
+//       type: 'category',
+//       categories: [...this.setChartXData()],
+//       tick: {
+//         rotate: 45,
+//       },
+//     },
+//     y: {
+//       label: {
+//         text: 'USD Contract Amount',
+//         position: 'outer-middle',
+//       },
+//       tick: {
+//         format: d3.format('$,'),
+//       },
+//     },
+//   },
+// });
+//
+// const pieChart = c3.generate({
+//   bindto: '#piechart',
+//   data: {
+//     columns: this.setPieChartData(),
+//     type: 'pie',
+//   },
+// });
+//
+// const gaugeChart = c3.generate({
+//   bindto: '#gaugechart',
+//   data: {
+//     columns: [
+//       ['Total Sales', this.setGaugeChartData()],
+//     ],
+//     type: 'gauge',
+//   },
+//   color: {
+//     pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+//     threshold: {
+//       values: [30, 60, 90, 100],
+//     },
+//   },
+//   size: {
+//     height: 180,
+//   },
+// });
+
 export default class Metrics extends React.Component {
   constructor(props) {
     super(props);
@@ -21,6 +77,14 @@ export default class Metrics extends React.Component {
     this.setPieChartData = this.setPieChartData.bind(this);
     this.setGaugeChartData = this.setGaugeChartData.bind(this);
     this.convertDollarsToNumber = this.convertDollarsToNumber.bind(this);
+
+    const pieChart = c3.generate({
+      bindto: '#piechart',
+      data: {
+        columns: this.setPieChartData(),
+        type: 'pie',
+      },
+    });
   }
 
   componentWillMount() {
@@ -33,7 +97,7 @@ export default class Metrics extends React.Component {
     })
       .then((res) => {
         res.data.sort((a, b) => new Date(a.contract_end_date) - new Date(b.contract_end_date));
-        this.setState({ contractData: res.data });
+        this.setState({ contractData: res.data }, () => console.log('updated contractData Array'));
       })
       .catch(err => console.error('ERROR in getAllContracts within Metrics.jsx, error: ', err));
   }
@@ -107,7 +171,6 @@ export default class Metrics extends React.Component {
         },
       },
     });
-
     const pieChart = c3.generate({
       bindto: '#piechart',
       data: {
@@ -115,26 +178,24 @@ export default class Metrics extends React.Component {
         type: 'pie',
       },
     });
-
-    const gaugeChart = c3.generate({
-      bindto: '#gaugechart',
-      data: {
-        columns: [
-          ['Total Sales', this.setGaugeChartData()],
-        ],
-        type: 'gauge',
-      },
-      color: {
-        pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
-        threshold: {
-          values: [30, 60, 90, 100],
-        },
-      },
-      size: {
-        height: 180,
-      },
-    });
-
+    // const gaugeChart = c3.generate({
+    //   bindto: '#gaugechart',
+    //   data: {
+    //     columns: [
+    //       ['Total Sales', this.setGaugeChartData()],
+    //     ],
+    //     type: 'gauge',
+    //   },
+    //   color: {
+    //     pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+    //     threshold: {
+    //       values: [30, 60, 90, 100],
+    //     },
+    //   },
+    //   size: {
+    //     height: 180,
+    //   },
+    // });
     return (
       <div>
         <Header size="large" textAlign="center">Contract Revenue by Date</Header>
@@ -145,7 +206,6 @@ export default class Metrics extends React.Component {
         <Divider />
         <Header size="large" textAlign="center">Percentage of Sales Goal</Header>
         <div id="gaugechart" />
-
       </div>
     );
   }
