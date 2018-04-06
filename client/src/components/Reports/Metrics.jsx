@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input} from 'semantic-ui-react';
+import { Button, Input, Divider, Header } from 'semantic-ui-react';
 import axios from 'axios';
 import c3 from 'c3';
 import * as d3 from "d3";
@@ -13,6 +13,7 @@ export default class Metrics extends React.Component {
       contractData: [],
       salesGoal: 100000,
       loaded: false,
+      salesTotal: null,
     };
     this.getAllContracts = this.getAllContracts.bind(this);
     this.setChartColumnData = this.setChartColumnData.bind(this);
@@ -69,6 +70,7 @@ export default class Metrics extends React.Component {
       const amount = this.convertDollarsToNumber(contract_amount);
       sum += amount;
     });
+    this.setState({ salesTotal: sum });
     return (sum / this.state.salesGoal) * 100;
   }
 
@@ -135,9 +137,15 @@ export default class Metrics extends React.Component {
 
     return (
       <div>
+        <Header size="large" textAlign="center">Contract Revenue by Date</Header>
         <div id="barchart" />
+        <Divider />
+        <Header size="large" textAlign="center">Percentage Sales by Team Member</Header>
         <div id="piechart" />
+        <Divider />
+        <Header size="large" textAlign="center">Percentage of Sales Goal</Header>
         <div id="gaugechart" />
+
       </div>
     );
   }
