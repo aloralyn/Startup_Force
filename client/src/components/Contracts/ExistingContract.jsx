@@ -33,13 +33,14 @@ export default class ExistingContract extends React.Component {
   handleExContractChange(e, d) {
     // match contract from props and setState using that contract data
     // contracts can be placed in a hash table for quicker lookup
+    const loadtime = Math.floor(Math.random() * (750) + 500);
     const { existingContractOptions } = this.props;
     if (d.value !== this.state.selectedContractData.contract_name) {
       this.handleLoading();
-      setTimeout(this.handleLoading.bind(this), 1000);
+      setTimeout(this.handleLoading.bind(this), loadtime);
       for (let i = 0; i < existingContractOptions.length; i += 1) {
         if (existingContractOptions[i].contract_name === d.value) {
-          setTimeout(() => { this.setState({ selectedContractData: existingContractOptions[i] }); }, 1000);
+          setTimeout(() => { this.setState({ selectedContractData: existingContractOptions[i] }); }, loadtime);
           break;
         }
       }

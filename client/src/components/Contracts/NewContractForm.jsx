@@ -1,8 +1,18 @@
 import React from 'react';
-import { Button, Form, Grid, Header, Input, Dropdown, TextArea, TransitionablePortal, Segment, Icon } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Input, Dropdown, Message, TextArea, TransitionablePortal, Segment, Icon } from 'semantic-ui-react';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import moment from 'moment';
+
+const ErrorMessage = () => (
+  <Message
+    negative
+    header="There were some errors with your submission"
+    list={[
+      'Please be sure to complete all required fields',
+    ]}
+  />
+);
 
 export default class NewContractForm extends React.Component {
   constructor(props) {
@@ -17,6 +27,7 @@ export default class NewContractForm extends React.Component {
       dateFormat: 'MM/DD/YYYY',
       contractDescription: '',
       confirm: false,
+      showError: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -56,6 +67,8 @@ export default class NewContractForm extends React.Component {
           this.props.getAllContracts();
         })
         .catch(err => console.log('ERROR in handleSubmit in NewContractForm, error: ', err));
+    } else {
+      this.setState({ showError: true });
     }
   }
 
@@ -63,7 +76,12 @@ export default class NewContractForm extends React.Component {
     const entries = Object.entries(this.state);
     let res = true;
     entries.forEach((input) => {
-      if (!input[1] && input[0] !== 'confirm' && input[0] !== 'contractDescription') res = false;
+      if (!input[1]
+        && input[0] !== 'confirm'
+        && input[0] !== 'contractDescription'
+        && input[0] !== 'showError') {
+        res = false;
+      }
     });
     if (!res) return false;
     return true;
@@ -79,6 +97,7 @@ export default class NewContractForm extends React.Component {
       contractEndDate: null,
       contractDescription: '',
       confirm: false,
+      showError: false,
     });
   }
 
@@ -89,7 +108,7 @@ export default class NewContractForm extends React.Component {
   render() {
     return (
       <div>
-        <TransitionablePortal open={this.state.confirm} transition={{ animation: 'fly up', duration: '1000' }}>
+        <TransitionablePortal open={this.state.confirm} transition={{ animation: 'fly up', duration: '1500' }}>
           <Segment style={{ left: '40%', position: 'fixed', top: '40%', zIndex: 991000 }}>
             <Icon name="check" size={'huge'} color={'green'}/>
             <p>Successfully Saved Contract!</p>
@@ -194,6 +213,7 @@ export default class NewContractForm extends React.Component {
               </Button>
             </Form.Field>
           </Form.Group>
+          {this.state.showError ? <ErrorMessage /> : null }
         </Grid.Column>
       </div>
     );
