@@ -36,10 +36,8 @@ class HomepageLayout extends Component {
     let week = this.getWeekByDay(pickedDay)
     let date = this.month_year(pickedDay)
     if (this.props.fetchMonth.includes(date.join(' ')) ) {
-      console.log("FIRST RENDER includes: ", this.props, week)
       this.setState({ week, pickedDay })
     } else {
-      console.log("first RENDER NOT include: ", this.props)
       this.props.getSchedule(date[1], date[0], this.props.user.id);
       this.setState({ week, pickedDay })
     }
@@ -53,7 +51,7 @@ class HomepageLayout extends Component {
     let pickedDay = moment(this.state.pickedDay).add(7, 'day').format();
     this.renderCalendar(pickedDay)
   }
-  
+
 
   month_year = day => {
     let month = moment(day).format("MMM");
@@ -65,7 +63,6 @@ class HomepageLayout extends Component {
   {/*Function to compute whole week by one day*/}
   let weekNum = moment(d).isoWeeks();
   let year = moment(d).get('year');
-  console.log("GET WEEK: ", weekNum)
   let week = [];
     for (let i = 0; i < 7; i++) {
       let days = (weekNum - 1) * 7 + 1 + i;
@@ -82,7 +79,6 @@ class HomepageLayout extends Component {
   }
 
   render() {
-    console.log("RENDER PROPS: ",this.props)
     const { week} = this.state;
   {/*if (this.props.user.id && !this.state.rendered) {
       this.renderCalendar();
@@ -105,7 +101,7 @@ class HomepageLayout extends Component {
     <Form width={2}>
         <Form.Group>
         <Form.Field control={Button} style={{ padding: '0.5em 0.5em'}} onClick={()=>this.weekBack()} icon="caret left"/>
-        
+
         <Form.Field>
         <DayPickerInput
           style={{padding: '0.5em 0.5em', fontFamily: 'Titillium Web'}}
@@ -115,11 +111,11 @@ class HomepageLayout extends Component {
           onDayChange={day => this.renderCalendar(day)}
         />
         </Form.Field>
-        
+
         <Form.Field control={Button} style={{ padding: '0.5em 0.5em'}} onClick={()=>this.weekForth()} icon="caret right"/>
         </Form.Group>
         </Form>
-     
+
     {/*****************************************************************
                                   Table VIEW >> WEEK
     *******************************************************************/}
