@@ -71,13 +71,14 @@ class DesktopContainer extends Component {
           
           <Router>
           <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
-            <Segment inverted textAlign='center'  vertical>
+            <Segment style={{background: '#1c3448'}} inverted textAlign='center'  vertical>
               <Menu
                 fixed={fixed ? 'top' : null}
                 inverted={!fixed}
                 pointing={!fixed}
                 secondary={!fixed}
                 size='small'
+                style={{background: '#1c3448', borderStyle: 'none'}}
               >
 
               <Container>
@@ -121,7 +122,7 @@ class DesktopContainer extends Component {
 
           <Router>
           <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
-            <Segment inverted textAlign='center'  vertical>
+            <Segment style={{background: '#1c3448'}} inverted textAlign='center'  vertical>
 
               <Menu
                 fixed={fixed ? 'top' : null}
@@ -129,6 +130,7 @@ class DesktopContainer extends Component {
                 pointing={!fixed}
                 secondary={!fixed}
                 size='small'
+                style={{background: '#1c3448', borderStyle: 'none'}}
               >
 
               

@@ -67,7 +67,7 @@ class Messages extends Component {
           <Grid.Row>
             <Grid.Column width={6} style={{fontFamily: 'Titillium Web'}}>
               <Header style={{fontFamily: 'Titillium Web'}} as='h2'>{this.props.company.company_name} Employees</Header>
-              <List style={{height: '400px'}}>
+              <List style={{height: '400px', overflowY: 'scroll'}}>
                 {this.props.users.map((user) => {
                   var notifications;
                   if (this.props.notifications && this.props.notifications[user.id]) {
@@ -138,7 +138,7 @@ class Messages extends Component {
           <Grid.Row>
             <Grid.Column width={6}>
               <Header style={{fontFamily: 'Titillium Web'}} as='h2'>{this.props.company.company_name} Employees</Header>
-              <List style={{height: '400px'}}>
+              <List style={{height: '400px', overflowY: 'scroll'}}>
                 {this.props.users.map((user) => {
                   var notifications;
                   if (this.props.notifications && this.props.notifications[user.id]) {
@@ -174,18 +174,18 @@ class Messages extends Component {
             <Grid.Column width={8}>
             <div>
               {this.props.notificationCount ?
-              <Icon.Group style={{display: 'block', margin: 'auto'}} size='massive'>
+              <Icon.Group style={{display: 'block', margin: 'auto'}} size='huge'>
                 <Icon style={{display: 'block', margin: 'auto'}} size='huge' loading name='sun' color='green' />
-                <Icon style={{display: 'block', margin: 'auto'}} size='big' name='mail outline' />   
+                <Icon style={{display: 'block', margin: 'auto'}} size='large' name='mail outline' />   
               </Icon.Group>
               :
-              <Icon.Group style={{display: 'block', margin: 'auto'}} size='massive'>
-                <Icon style={{display: 'block', margin: 'auto'}} size='huge' name='dont' color='red' />
-                <Icon style={{display: 'block', margin: 'auto'}} size='big' name='mail outline' color='black' />   
+              <Icon.Group style={{display: 'block', margin: 'auto'}} size='huge'>
+                {/*<Icon style={{display: 'block', margin: 'auto'}} size='huge' name='dont' color='red' />*/}
+                <Icon style={{display: 'block', margin: 'auto'}} size='large' name='mail outline' color='black' />   
               </Icon.Group>
               }
               <h1 style={{textAlign: 'center', fontFamily: 'Titillium Web'}}>You have {this.props.notificationCount} {this.props.notificationCount === 1 ? 'Message' : 'Messages'}
-              {this.props.notificationCount === 0 ? ' :(' : '!'}
+              {this.props.notificationCount === 0 ? <Icon name='frown' /> : '!'}
               </h1>
             </div>
             </Grid.Column>
