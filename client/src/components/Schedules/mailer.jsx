@@ -33,7 +33,7 @@ get = (obj) => {
 
 send = (arr) => {
 	console.log("----",arr)
-	this.setState({message: 'Emails have been sent'}, () => Promise.all(arr.map(this.get)))
+	this.setState({message: 'Schedule email updates have been sent'}, () => Promise.all(arr.map(this.get)))
 }
 
 render() {
@@ -48,16 +48,16 @@ this.props.empl.forEach(e => arr.push({value: e.id, text: e.first_name, key: e.i
 				<Button 
 				value={e} key={e} 
 				onClick={(ev, d) => this.delete(d.value)} 
-				style={{margin: '3px', width: '150px'}} 
+				style={{margin: '3px', width: '150px', fontFamily: 'Titillium Web'}} 
 				content={this.state.empls[e].first_name} 
 				icon='close' labelPosition='right'>
 				</Button>)}
 		<br />
 		<Dropdown 
-		placeholder='Select Friend' selection options={arr} 
+		placeholder='Select an Employee' selection options={arr} 
 		onChange={(e, d) => this.change(d.value)}/>
-		<br />
-		<Button content="send" onClick={() => this.send(Object.values(this.state.empls))}/>
+	
+		<Button style={{fontFamily: 'Titillium Web', margin:'15px'}} content="Send email(s)" onClick={() => this.send(Object.values(this.state.empls))}/>
 		<div>{this.state.message}</div>
 		</div>
 	)

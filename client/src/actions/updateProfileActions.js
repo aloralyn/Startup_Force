@@ -10,11 +10,39 @@ export const showPhotoUploader = () => dispatch => {
   });
 };
 
+export const hidehotoUploader = () => dispatch => {
+  dispatch({
+    type: 'SHOW_PHOTOUPLOAD',
+    payload: {
+      showPhotoUpload: false
+    }
+  });
+};
+
 export const showProfileEditor = (user) => dispatch => {
   dispatch({
     type: 'SHOW_EDITPROFILE',
     payload: {
       showEditProfile: true,
+      preferred_name: user.preferred_name,
+      street_1: user.street_1,
+      street_2: user.street_2,
+      city: user.city,
+      zip_code: user.zip_code,
+      state: user.state,
+      phone_number: user.phone_number,
+      linkedin_url: user.linkedin_url,
+      pw: user.pw,
+      personal_email: user.personal_email
+    }
+  });
+};
+
+export const hideProfileEditor = (user) => dispatch => {
+  dispatch({
+    type: 'SHOW_EDITPROFILE',
+    payload: {
+      showEditProfile: false,
       preferred_name: user.preferred_name,
       street_1: user.street_1,
       street_2: user.street_2,

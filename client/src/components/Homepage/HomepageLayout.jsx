@@ -97,7 +97,7 @@ class HomepageLayout extends Component {
                 <ProfilePic />
               </Grid.Column>
               <Grid.Column width={10}>
-              <Header size='large' verticalalign='text-top'>Welcome,  {this.props.user.first_name} {this.props.user.last_name}!</Header>
+              <Header size='large' verticalalign='text-top' style={{fontFamily: 'Titillium Web', fontWeight: 'bold'}}>Welcome,  {this.props.user.first_name} {this.props.user.last_name}!</Header>
 
     {/*****************************************************************
                                     Calendar
@@ -108,7 +108,7 @@ class HomepageLayout extends Component {
         
         <Form.Field>
         <DayPickerInput
-          style={{padding: '0.5em 0.5em'}}
+          style={{padding: '0.5em 0.5em', fontFamily: 'Titillium Web'}}
           placeholder="           Calendar"
           fixedWeeks
           firstDayOfWeek={1}

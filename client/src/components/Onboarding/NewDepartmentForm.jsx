@@ -42,13 +42,13 @@ class NewDepartmentForm extends Component {
   render() {
     return (
       <Grid.Column width={8} >
-        <Header size='large'>Add an Employee</Header>
+        <Header style={{fontFamily: 'Titillium Web'}} size='large'>Add a Department</Header>
         <Form>
           <Form.Group widths='equal'>
             <Form.Field control={Input} label='Department' name='name' onChange={this.handleChange} />
             <Form.Field control={Input} label='Division' name='division' onChange={this.handleChange} />
           </Form.Group>
-          <Form.Field control={Button} type='submit' onClick={this.handleSubmit}>Add</Form.Field>
+          <Form.Field style={{fontFamily: 'Titillium Web'}} control={Button} type='submit' onClick={this.handleSubmit}>Add</Form.Field>
         </Form>
       </Grid.Column>
     )

@@ -20,17 +20,21 @@ import {
 const style = {
   h1: {
     marginTop: '3em',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    fontFamily: 'Titillium Web'
   },
   h2: {
     margin: '4em 0em 2em',
+    fontFamily: 'Titillium Web'
   },
   h3: {
     marginTop: '0em',
     padding: '2em 0em',
+    fontFamily: 'Titillium Web'
   },
   last: {
     marginBottom: '30px',
+    fontFamily: 'Titillium Web'
   }
 };
 
@@ -93,7 +97,7 @@ const PwErrorMessage = () => (
 
   render() {
     return (
-      <Modal trigger={<Button>Signup</Button>} basic size='small' closeIcon>
+      <Modal trigger={<Button style={{fontFamily: 'Titillium Web', margin: '0.5em', width:'100px'}}>Signup</Button>} basic size='small' closeIcon>
       <div className='login-form'>
       <style>{`
       body > div,
@@ -141,7 +145,7 @@ const PwErrorMessage = () => (
             <Form.Field required control={Input} label='Password' name='pw' onChange={(e) => {this.props.handleChange(e.target.name, e.target.value)}} />
             <Form.Field required control={Input} label='Retype password' name='retype_pw' onChange={(e) => {this.handleRetypePw(e.target.value)}}  />
           </Form.Group >
-          <Form.Field control={Button} type='submit' onClick={this.handleSubmit}>Create your new Startup Force Account</Form.Field>
+          <Form.Field style={{fontFamily: 'Titillium Web'}} control={Button} type='submit' onClick={this.handleSubmit}>Create your new Startup Force Account</Form.Field>
         </Form>
         { this.state.showPwError ? <PwErrorMessage /> : null }
         </Segment>
