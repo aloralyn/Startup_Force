@@ -3,24 +3,12 @@ const cf = require('../server/config.js');
 
 const { Pool, Client } = require('pg');
 
-// const config = {
-  // user: 'aloralynayran',
-  // user: 'artemipatev',
-  // user: 'christopherrigoli',
-  // user: 'brenthagen',
-  // host: 'localhost',
-  // password: '',
-  // database: 'bmttools',
-  // port: 5432,
-// };
-// @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
-
 const config = {
-  user: cf.pgUser,
-  host: cf.pgHost,
-  password: cf.pgPassword,
-  database: cf.pgDatabase,
-  port: cf.pgPort
+  user:  process.env.PG_USER || 'aloralynayran',
+  host: process.env.PG_HOST || 'localhost',
+  password: process.env.PG_PASSWORD || '',
+  database: process.env.PG_DATABASE || 'bmttools',
+  port: process.env.PG_PORT || 5432
 }
 
 const client = new Client(config)
