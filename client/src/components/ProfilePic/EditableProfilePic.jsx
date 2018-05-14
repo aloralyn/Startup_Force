@@ -23,7 +23,7 @@ class EditableProfilePic extends React.Component {
           </Card.Content>
         <Card.Content>
           <Card.Header>
-          {this.props.user.first_name} {this.props.user.lastt_name}
+          {this.props.user.first_name} {this.props.user.last_name}
           </Card.Header>
           <Card.Meta>
             <span className='date'>

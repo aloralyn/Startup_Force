@@ -55,7 +55,8 @@ CREATE TABLE employees (
   is_manager boolean,
   pw VARCHAR(50) NOT NULL,
   profilepicid VARCHAR(250),
-  personal_email VARCHAR(25) NOT NULL,
+  personal_email VARCHAR(25),
+  main_admin boolean,
   FOREIGN KEY (company_id) REFERENCES companies(id),
   FOREIGN KEY (reports_to) REFERENCES employees(id)
 );

@@ -68,9 +68,20 @@ loginRouter.post('/login', (req, res) => {
       db.query(`SELECT * FROM employees WHERE company_id = ${data.rows[0].company_id};`, (err, data2) => {
         if (err) { console.log(err); }
         else {
+          // DON'T NEED TO NEST AT ALL - TALK WITH ARA ABOUT NESTED PROMIES
+          //JUST simply create am object and augment along the way
+          // call each database model/worker and construct the object within the promise
+          //example:
+          // let obj = {};
+          // employeeController.retrieveEmployees(data.rows[0].company_id)
+          // .then((results) => {
+          //    obj[users] = results;
+          //   return obj; }).catch....
+
+          
         employeeController.retrieveEmployees(data.rows[0].company_id)
           .then((results) => {
-            employeeController.retrieveManagers(data.rows[0].company_id)
+             employeeController.retrieveManagers(data.rows[0].company_id)
             .then((results1) => {
               companyController.retrieveCompany(data.rows[0].company_id)
                 .then((results2) => {

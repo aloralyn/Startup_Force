@@ -89,7 +89,7 @@ const PwErrorMessage = () => (
 
     if (Object.values(company).indexOf('') === -1 && Object.values(company).indexOf('') === -1) {
       e.preventDefault();;
-      company[street_2] = this.props.street_2;
+      company['street_2'] = this.props.street_2;
       this.props.createCompany(company, admin)
     }
     
