@@ -36,7 +36,7 @@ app.use('/*', (req, res) => res.redirect('/'));
 app.use(passport.initialize());
 //app.use(passport.session());
 
-const port = 8080;
+const port = 8080 || process.env.PORT;
 
 app.set('port', port);
 
