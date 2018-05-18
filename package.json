@@ -43,6 +43,7 @@
     "cookie-parser": "^1.4.3",
     "css-loader": "^0.28.11",
     "d3": "^5.0.0",
+    "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "firebase": "^4.12.0",

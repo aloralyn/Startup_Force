@@ -2,8 +2,6 @@ import { GET_SCHEDULES, GET_SCHEDULE, POST_SCHEDULE, EDIT_SCHEDULE, DELETE_SCHED
 import axios from 'axios';
 import moment from 'moment';
 
-
-
 export const getSchedule = ( year, month, id ) => dispatch => {
 	console.log("dispatch from schedule actions",moment().format("m:s SSS"))
 	axios.get(`/schedule/${year}/${month}/${id}`)

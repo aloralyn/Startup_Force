@@ -2,7 +2,6 @@ import axios from 'axios';
 import { Router } from 'react-router';
 import { endNotifications, endMessagingListener } from './messageActions.js';
 import moment from 'moment'
-//import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 export function fetchUsers(email) {
   return (dispatch) => {

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { messageUser, getMessages, clearNotification, eraseNotification, countNotifications } from '../../actions/messageActions.js';
 import MessageForm from './MessageForm.jsx';
 import {
-  //Image,
   Label,
   Button,
   Container,
@@ -18,7 +17,6 @@ import {
   Segment,
   Visibility,
 } from 'semantic-ui-react';
-//import { Image, Transformation } from 'cloudinary-react';
 
 export const nameFromId = (id, users) => {
   for (var i = 0; i < users.length; i++) {
@@ -74,8 +72,6 @@ class Messages extends Component {
                     notifications = countNotifications(this.props.notifications[user.id]);
                   } else { notifications = ''; }
                   if (user.id !== this.props.userId) {
-                    // consider inserting photo for each user
-                    // console.log('photo info', user.profilepicid, this.props.user.profilepicid)
                     return (
                       <List.Item key={user.id}>
                         <Button toggle
@@ -87,10 +83,6 @@ class Messages extends Component {
                             this.props.messageUser(this.props.userId, userToMessage, notifications, this.props.company_id);
                           }}
                           >
-                          {/*<Image src={'https://res.cloudinary.com/dblinea1z/image/upload/w_300,h_200,c_crop/' + user.profilepicid + '.jpg'} />*/}
-                          {/*<Image cloudName='dblinea1z' publicId='enmajsfckpzcby8oohq7'>
-                            <Transformation width="30" height="30" crop="scale" />
-                          </Image>*/}
                           {' ' + user.first_name + ' ' + user.last_name}
                         </Button>
                         {notifications ? 
@@ -114,7 +106,6 @@ class Messages extends Component {
                 {
                   this.props.messages.map((message, index) => {
                   if (message.name) {
-                    // to insert divider for day: define 'lastDay' in state, render a day divider if message date is new, reset state
                     return (<List.Item key={index}>
                       <b>{message.name + ' '}</b>
                       <em style={{fontSize: '10px'}}>{' ' + timeFromDate(message.time) + ', ' + message.time.slice(0, 10)}</em>
@@ -180,7 +171,6 @@ class Messages extends Component {
               </Icon.Group>
               :
               <Icon.Group style={{display: 'block', margin: 'auto'}} size='huge'>
-                {/*<Icon style={{display: 'block', margin: 'auto'}} size='huge' name='dont' color='red' />*/}
                 <Icon style={{display: 'block', margin: 'auto'}} size='large' name='mail outline' color='black' />   
               </Icon.Group>
               }

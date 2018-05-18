@@ -18,7 +18,6 @@ var jwtOptions = {
 
 var strategy = new JwtStrategy(jwtOptions, (jwt_payload, next) => {
   db.query(`SELECT * FROM employees WHERE id = ${jwt_payload.uid};`, (err, data) => {
-    // console.log(data)
     if (data.rows.length) {
       next(null, data.rows[0].id);
     } else {

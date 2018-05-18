@@ -30,13 +30,10 @@ app.use('/', loginRouter);
 app.use('/', profileRouter);
 
 app.use('/*', (req, res) => res.redirect('/'));
-//app.use('/*', (req, res) => res.sendFile(path.join(__dirname, '/../client/dist')));
-// initialize Passport
-//app.use(session({ secret: '369lex' }));
-app.use(passport.initialize());
-//app.use(passport.session());
 
-const port = 8080 || process.env.PORT;
+app.use(passport.initialize());
+
+const port = process.env.PORT || 8080;
 
 app.set('port', port);
 

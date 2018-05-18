@@ -7,6 +7,7 @@ import {
 	Dropdown
 } from 'semantic-ui-react'
 import axios from 'axios';
+
 class Mailer extends Component {
 	constructor(props) {
 		super(props)
