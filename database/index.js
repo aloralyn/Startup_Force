@@ -2,12 +2,20 @@ const pg = require('pg');
 
 const { Pool, Client } = require('pg');
 
+// const config = {
+//   user:  process.env.PG_USER || 'aloralynayran',
+//   host: process.env.PG_HOST || 'localhost',
+//   password: process.env.PG_PASSWORD || '',
+//   database: process.env.PG_DATABASE || 'bmttools',
+//   port: process.env.PG_PORT || 5432
+// }
+
 const config = {
-  user:  process.env.PG_USER || 'aloralynayran',
-  host: process.env.PG_HOST || 'localhost',
-  password: process.env.PG_PASSWORD || '',
-  database: process.env.PG_DATABASE || 'bmttools',
-  port: process.env.PG_PORT || 5432
+  user:  process.env.PG_USER,
+  host: process.env.PG_HOST,
+  password: process.env.PG_PASSWORD,
+  database: process.env.PG_DATABASE,
+  port: process.env.PG_PORT
 }
 
 const client = new Client(config)
