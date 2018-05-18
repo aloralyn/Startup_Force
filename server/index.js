@@ -29,7 +29,11 @@ app.use('/', reportsRouter);
 app.use('/', loginRouter);
 app.use('/', profileRouter);
 
-app.use('/*', (req, res) => res.redirect('/'));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, './../client/dist/index.html'), (err) => {
+    res.status(500).send(err);
+  })
+})
 
 app.use(passport.initialize());
 
